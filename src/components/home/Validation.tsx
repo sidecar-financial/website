@@ -36,25 +36,27 @@ export default function Validation() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          {steps.map((step, index) => (
-            <div key={step.number} className="relative">
-              {/* Connecting line */}
-              {index < steps.length - 1 && (
-                <div className="hidden md:block absolute top-7 left-[calc(50%+28px)] w-[calc(100%-56px)] h-0.5 bg-[#e8e4ff]" />
-              )}
-              
-              <div className="text-center relative z-10">
-                <div className="w-14 h-14 rounded-full bg-[#5046e5] text-white text-xl font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#5046e5]/25">
-                  {step.number}
+        {/* Steps with connecting line */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Connecting line - visible on md and up */}
+          <div className="hidden md:block absolute top-7 left-[calc(16.67%+28px)] right-[calc(16.67%+28px)] h-0.5 bg-gradient-to-r from-[#5046e5]/30 via-[#5046e5]/50 to-[#5046e5]/30" />
+          
+          <div className="grid md:grid-cols-3 gap-8">
+            {steps.map((step) => (
+              <div key={step.number} className="relative">
+                <div className="text-center relative z-10">
+                  {/* Step number circle */}
+                  <div className="w-14 h-14 rounded-full bg-[#5046e5] text-white text-xl font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#5046e5]/25 border-4 border-[#f8f7ff]">
+                    {step.number}
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600 leading-relaxed text-[15px]">{step.description}</p>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">{step.description}</p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

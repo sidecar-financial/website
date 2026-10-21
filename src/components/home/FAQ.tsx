@@ -47,39 +47,29 @@ export default function FAQ() {
           </p>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className={`bg-[#f8f7ff] rounded-xl overflow-hidden transition-all ${
-                openIndex === index ? 'ring-2 ring-[#5046e5]/20' : ''
-              }`}
+              className="border border-gray-200 rounded-lg overflow-hidden bg-white"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-[#f0eeff] transition-colors"
+                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
               >
-                <span className="font-semibold text-gray-900 pr-4 text-[15px]">
+                <span className="font-medium text-gray-900 pr-4 text-[15px]">
                   {faq.question}
                 </span>
-                <span className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
-                  openIndex === index ? 'bg-[#5046e5] text-white' : 'bg-white text-[#5046e5]'
-                }`}>
-                  <svg 
-                    className={`w-4 h-4 transition-transform ${openIndex === index ? 'rotate-180' : ''}`} 
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
+                {/* Plus/Minus icon */}
+                <span className="flex-shrink-0 text-gray-400 text-xl font-light">
+                  {openIndex === index ? '−' : '+'}
                 </span>
               </button>
               <div className={`overflow-hidden transition-all duration-200 ${
                 openIndex === index ? 'max-h-48' : 'max-h-0'
               }`}>
-                <div className="px-6 pb-5">
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                <div className="px-6 pb-5 pt-0">
+                  <p className="text-gray-600 leading-relaxed text-[15px]">{faq.answer}</p>
                 </div>
               </div>
             </div>

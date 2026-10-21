@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 export default function Problem() {
   const spreadsheetProblems = [
     "Carry rules depend on spreadsheets and people",
@@ -19,20 +17,28 @@ export default function Problem() {
     "Scale carry without needing more spreadsheets",
   ];
 
+  const compensationHistory = [
+    { year: "2022", salary: "$250,000", bonus: "$1,200,000", carryDistributed: "$401,835", dueDate: "—" },
+    { year: "2021", salary: "$250,000", bonus: "$1,200,000", carryDistributed: "$401,835", dueDate: "—" },
+    { year: "2020", salary: "$250,000", bonus: "$1,200,000", carryDistributed: "$401,835", dueDate: "—" },
+    { year: "2019", salary: "$250,000", bonus: "$1,200,000", carryDistributed: "$401,835", dueDate: "—" },
+  ];
+
   return (
     <section className="py-24 bg-gradient-to-b from-white to-[#f8f7ff]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Left side - Header and comparison cards */}
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          {/* Left side - Header */}
           <div>
             <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
               The Problem
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-gray-900 leading-[1.15] mb-2">
+            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-gray-900 leading-[1.15]">
               When Growth Outpaces
             </h2>
-            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.15] mb-6">
-              <span className="text-gray-900">Excel, </span>
+            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.15]">
+              <span className="text-[#5046e5]">Excel</span>
+              <span className="text-gray-900">, </span>
               <span className="text-[#5046e5]">Change Gets</span>
             </h2>
             <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#5046e5] leading-[1.15] mb-6">
@@ -44,22 +50,55 @@ export default function Problem() {
             </p>
           </div>
 
-          {/* Right side - Image placeholder */}
+          {/* Right side - 3D Isometric Grid/Table Illustration */}
           <div className="relative">
-            <div className="rounded-xl shadow-xl shadow-gray-900/10 overflow-hidden border border-gray-100 bg-white">
-              <Image
-                src="/images/spreadsheet-illustration.png"
-                alt="Spreadsheet illustration showing the complexity of manual carry tracking"
-                width={600}
-                height={400}
-                className="w-full h-auto"
-              />
+            {/* Isometric spreadsheet visualization */}
+            <div className="bg-white rounded-xl shadow-xl shadow-gray-900/10 overflow-hidden border border-gray-100 transform perspective-1000">
+              {/* Header row */}
+              <div className="bg-gray-50 border-b border-gray-200 px-4 py-3">
+                <div className="grid grid-cols-5 gap-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">
+                  <span>Year</span>
+                  <span>Salary</span>
+                  <span>Bonus</span>
+                  <span className="col-span-1 text-[10px]">Total Carry Distributed</span>
+                  <span>Due Date</span>
+                </div>
+              </div>
+              {/* Data rows */}
+              <div className="divide-y divide-gray-100">
+                {compensationHistory.map((row, index) => (
+                  <div 
+                    key={index} 
+                    className={`grid grid-cols-5 gap-2 px-4 py-3 text-sm ${index === 0 ? 'bg-[#f8f7ff]' : ''}`}
+                  >
+                    <span className="font-medium text-gray-900">{row.year}</span>
+                    <span className="text-gray-600">{row.salary}</span>
+                    <span className="text-gray-600">{row.bonus}</span>
+                    <span className="text-gray-600">{row.carryDistributed}</span>
+                    <span className="text-gray-400">{row.dueDate}</span>
+                  </div>
+                ))}
+              </div>
+              {/* Decorative grid overlay for 3D effect */}
+              <div className="absolute inset-0 pointer-events-none">
+                <svg className="w-full h-full opacity-[0.03]" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                      <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#5046e5" strokeWidth="1"/>
+                    </pattern>
+                  </defs>
+                  <rect width="100%" height="100%" fill="url(#grid)" />
+                </svg>
+              </div>
             </div>
+            {/* Shadow depth layers */}
+            <div className="absolute -bottom-2 -right-2 left-2 h-full bg-[#e8e4ff] rounded-xl -z-10" />
+            <div className="absolute -bottom-4 -right-4 left-4 h-full bg-[#d4ccff] rounded-xl -z-20" />
           </div>
         </div>
 
         {/* Comparison cards */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mt-16">
+        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mt-20">
           {/* With Spreadsheets */}
           <div className="bg-white rounded-2xl p-8 shadow-lg shadow-gray-900/5 border border-gray-100">
             <div className="flex items-center gap-3 mb-8">

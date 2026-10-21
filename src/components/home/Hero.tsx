@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-white/20 pointer-events-none" />
       
       <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-20 lg:py-28">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left content */}
           <div className="max-w-xl">
             <p className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-5">
@@ -49,40 +49,46 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right side - Product mockup */}
-          <div className="relative lg:ml-8">
-            {/* Main dashboard card */}
-            <div className="rounded-2xl shadow-2xl shadow-gray-900/10 overflow-hidden bg-white border border-gray-100">
-              <Image
-                src="/images/hero-dashboard.png"
-                alt="Navable carry management dashboard showing John Roberts' total compensation, salary breakdown, and carry value"
-                width={1024}
-                height={640}
-                className="w-full h-auto"
-                priority
-              />
+          {/* Right side - Overlapping layered product screenshots */}
+          <div className="relative h-[500px] lg:h-[580px]">
+            {/* Back layer - Admin Dashboard (left side) */}
+            <div className="absolute left-0 top-0 w-[75%] lg:w-[80%] z-10">
+              <div className="rounded-xl shadow-2xl shadow-gray-900/20 overflow-hidden bg-white border border-gray-200">
+                <Image
+                  src="/images/hero-dashboard.png"
+                  alt="Navable admin dashboard showing company fund management with carry plans and participant details"
+                  width={800}
+                  height={560}
+                  className="w-full h-auto"
+                  priority
+                />
+              </div>
             </div>
             
-            {/* Floating employee portal card */}
-            <div className="absolute -bottom-8 -left-8 lg:-left-16 w-44 lg:w-56 rounded-xl shadow-2xl shadow-gray-900/15 overflow-hidden border border-gray-100 bg-white">
-              <Image
-                src="/images/employee-portal.png"
-                alt="Employee portal showing Alex Morgan's compensation breakdown with benefits details"
-                width={320}
-                height={512}
-                className="w-full h-auto"
-              />
+            {/* Front layer - Employee Portal (right side, overlapping) */}
+            <div className="absolute right-0 top-12 lg:top-16 w-[55%] lg:w-[50%] z-20">
+              <div className="rounded-xl shadow-2xl shadow-gray-900/25 overflow-hidden bg-white border border-gray-200">
+                <Image
+                  src="/images/employee-portal.png"
+                  alt="Employee portal showing John Roberts' total compensation summary with salary, bonus, and carry value breakdown"
+                  width={500}
+                  height={640}
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
 
-            {/* Small floating card on top right */}
-            <div className="absolute -top-4 -right-4 lg:-right-8 w-32 lg:w-40 rounded-lg shadow-xl shadow-gray-900/10 overflow-hidden border border-gray-100 bg-white">
-              <Image
-                src="/images/vesting-timeline.png"
-                alt="Vesting timeline overview"
-                width={240}
-                height={180}
-                className="w-full h-auto"
-              />
+            {/* Small floating vesting timeline card */}
+            <div className="absolute -bottom-4 left-4 lg:left-8 w-40 lg:w-48 z-30">
+              <div className="rounded-lg shadow-xl shadow-gray-900/15 overflow-hidden bg-white border border-gray-100">
+                <Image
+                  src="/images/vesting-timeline.png"
+                  alt="Vesting timeline chart"
+                  width={200}
+                  height={150}
+                  className="w-full h-auto"
+                />
+              </div>
             </div>
           </div>
         </div>

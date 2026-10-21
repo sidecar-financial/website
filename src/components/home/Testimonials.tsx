@@ -1,14 +1,13 @@
 "use client";
 
-import { useState } from "react";
+const featuredTestimonial = {
+  quote:
+    "We switched to Navable due to data accuracy issues with our legacy provider. It's paramount that our software gets these things right.",
+  author: "Director of Finance",
+  company: "$4Bn AUM Venture Capital Firm",
+};
 
-const testimonials = [
-  {
-    quote:
-      "We switched to Navable due to data accuracy issues with our legacy provider. It's paramount that our software gets these things right.",
-    author: "Director of Finance",
-    company: "$4Bn AUM Venture Capital Firm",
-  },
+const sideTestimonials = [
   {
     quote:
       "Probably one of the more thoughtful, comprehensive software solutions we've seen built for our industry.",
@@ -29,8 +28,6 @@ const testimonials = [
 ];
 
 export default function Testimonials() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
   return (
     <section className="py-24 bg-[#1a1a2e]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -46,61 +43,58 @@ export default function Testimonials() {
           </h2>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          {/* Featured quote */}
-          <div className="bg-[#23233a] rounded-2xl p-10 md:p-12 mb-8 border border-[#2d2d4a]">
-            <div className="text-[#fbbf24] mb-6">
-              <svg
-                className="w-12 h-12 opacity-80"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-              </svg>
+        {/* Two-column layout: Featured quote on left, grid on right */}
+        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
+          {/* Featured large quote - Left side */}
+          <div className="bg-[#23233a] rounded-2xl p-8 lg:p-10 border border-[#2d2d4a] flex flex-col justify-between h-full">
+            <div>
+              <div className="text-[#fbbf24] mb-6">
+                <svg
+                  className="w-10 h-10"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+              </div>
+
+              <blockquote className="text-xl lg:text-2xl font-medium text-white leading-relaxed mb-8">
+                {featuredTestimonial.quote}
+              </blockquote>
             </div>
 
-            <blockquote className="text-xl md:text-2xl font-medium text-white leading-relaxed mb-8">
-              {testimonials[activeIndex].quote}
-            </blockquote>
-
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="font-semibold text-white">– {testimonials[activeIndex].author}</p>
-                <p className="text-sm text-gray-400 mt-1">{testimonials[activeIndex].company}</p>
-              </div>
-              
-              {/* Navigation dots */}
-              <div className="flex gap-2">
-                {testimonials.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveIndex(index)}
-                    className={`w-2.5 h-2.5 rounded-full transition-all ${
-                      index === activeIndex
-                        ? "bg-[#fbbf24]"
-                        : "bg-white/20 hover:bg-white/40"
-                    }`}
-                    aria-label={`Go to testimonial ${index + 1}`}
-                  />
-                ))}
-              </div>
+            <div>
+              <p className="font-semibold text-white">– {featuredTestimonial.author}</p>
+              <p className="text-sm text-gray-400 mt-1">{featuredTestimonial.company}</p>
             </div>
           </div>
 
-          {/* Secondary testimonials grid */}
-          <div className="grid md:grid-cols-3 gap-4">
-            {testimonials.slice(1).map((testimonial, index) => (
+          {/* Three smaller quote cards - Right side in vertical stack */}
+          <div className="flex flex-col gap-4">
+            {sideTestimonials.map((testimonial, index) => (
               <div
                 key={index}
-                className="bg-[#23233a] rounded-xl p-6 border border-[#2d2d4a] hover:border-[#3d3d5a] transition-colors cursor-pointer"
-                onClick={() => setActiveIndex(index + 1)}
+                className="bg-[#23233a] rounded-xl p-6 border border-[#2d2d4a] hover:border-[#3d3d5a] transition-colors flex-1"
               >
-                <p className="text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
-                  &ldquo;{testimonial.quote}&rdquo;
-                </p>
-                <div>
-                  <p className="font-medium text-white text-sm">– {testimonial.author}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{testimonial.company}</p>
+                <div className="flex gap-3">
+                  <div className="text-[#fbbf24] flex-shrink-0">
+                    <svg
+                      className="w-5 h-5"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
+                      {testimonial.quote}
+                    </p>
+                    <div>
+                      <p className="font-medium text-white text-sm">– {testimonial.author}</p>
+                      <p className="text-xs text-gray-500 mt-0.5">{testimonial.company}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}

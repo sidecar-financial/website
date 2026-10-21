@@ -31,7 +31,7 @@ export default function WhyNavable() {
   return (
     <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left side - Header */}
           <div className="lg:sticky lg:top-24">
             <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
@@ -43,28 +43,28 @@ export default function WhyNavable() {
             <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#5046e5] leading-[1.15] mb-6">
               Choose Navable
             </h2>
-            <p className="text-gray-600 leading-relaxed max-w-md">
+            <p className="text-gray-600 leading-relaxed max-w-md text-[15px]">
               Moving carry off Excel only works if the replacement preserves the flexibility 
               and control Finance already has, without creating another operational burden.
             </p>
           </div>
 
-          {/* Right side - Reasons */}
-          <div className="space-y-6">
+          {/* Right side - Reasons with /01, /02, /03, /04 numbering */}
+          <div className="space-y-5">
             {reasons.map((reason) => (
               <div
                 key={reason.number}
-                className="bg-[#f8f7ff] rounded-xl p-8 hover:shadow-lg hover:shadow-gray-900/5 transition-all border border-transparent hover:border-[#5046e5]/10"
+                className="group"
               >
-                <div className="flex items-start gap-6">
-                  <span className="text-[#5046e5] font-bold text-xl shrink-0">
+                <div className="flex items-start gap-5">
+                  <span className="text-[#5046e5] font-bold text-lg tracking-tight shrink-0 pt-0.5">
                     /{reason.number}
                   </span>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-3">
+                  <div className="flex-1 pb-5 border-b border-gray-100 group-last:border-0 group-last:pb-0">
+                    <h3 className="text-lg font-bold text-gray-900 mb-2">
                       {reason.title}
                     </h3>
-                    <p className="text-gray-600 leading-relaxed">
+                    <p className="text-gray-600 leading-relaxed text-[15px]">
                       {reason.description}
                     </p>
                   </div>
