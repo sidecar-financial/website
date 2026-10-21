@@ -91,7 +91,7 @@ export default function FAQ() {
                     id={buttonId}
                     onClick={() => setOpenIndex(isOpen ? null : index)}
                     onKeyDown={(e) => handleKeyDown(e, index)}
-                    className={`flex w-full items-center justify-between gap-6 pt-[25px] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 ${
+                    className={`flex w-full items-center justify-between gap-6 pt-[25px] text-left transition-[padding] duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 ${
                       isOpen ? "pb-0" : "pb-[25px]"
                     }`}
                     aria-expanded={isOpen}
@@ -99,22 +99,45 @@ export default function FAQ() {
                   >
                     <span className="text-lg font-medium leading-6 text-ink">{faq.question}</span>
                     <span
-                      className="flex size-[26px] shrink-0 items-center justify-center rounded-full border border-line-strong text-ink"
+                      className={`flex size-[26px] shrink-0 items-center justify-center rounded-full border text-ink transition-[transform,border-color,background-color] duration-300 ease-out ${
+                        isOpen ? "rotate-180 border-orange bg-orange/10" : "border-line-strong"
+                      }`}
                       aria-hidden="true"
                     >
                       <svg className="size-2.5" viewBox="0 0 10 10" fill="none">
                         <path d="M2 5h6" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-                        {!isOpen && (
-                          <path d="M5 2v6" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-                        )}
+                        {/* The vertical stroke collapses away so plus morphs into minus */}
+                        <path
+                          d="M5 2v6"
+                          stroke="currentColor"
+                          strokeWidth="1.25"
+                          strokeLinecap="round"
+                          style={{
+                            transformBox: "fill-box",
+                            transformOrigin: "center",
+                            transform: isOpen ? "scaleY(0)" : "scaleY(1)",
+                            transition: "transform 300ms ease-out",
+                          }}
+                        />
                       </svg>
                     </span>
                   </button>
                 </h3>
-                <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!isOpen}>
-                  <p className="max-w-[520px] pb-[33px] pt-5 text-[15px] leading-[25px] text-body">
-                    {faq.answer}
-                  </p>
+                {/* 0fr -> 1fr grid rows animate to the content's natural height; `inert` keeps a closed panel out of the tab order and accessibility tree. */}
+                <div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={buttonId}
+                  inert={!isOpen}
+                  className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out ${
+                    isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                  }`}
+                >
+                  <div className="overflow-hidden">
+                    <p className="max-w-[520px] pb-[33px] pt-5 text-[15px] leading-[25px] text-body">
+                      {faq.answer}
+                    </p>
+                  </div>
                 </div>
               </div>
             );

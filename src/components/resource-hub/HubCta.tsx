@@ -4,7 +4,7 @@ import { DarkSection } from "@/components/ui/Frame";
 /** Navy call-to-action band shared by the hub index and article pages. */
 export default function HubCta() {
   return (
-    <DarkSection labelledBy="hub-cta-heading">
+    <DarkSection labelledBy="hub-cta-heading" traceLines>
       <div className="dot-grid-dark flex flex-col items-start gap-8 px-6 py-14 lg:flex-row lg:items-center lg:justify-between lg:px-12 lg:py-[63px]">
         <div className="max-w-[560px]">
           <h2

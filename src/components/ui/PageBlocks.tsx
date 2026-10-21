@@ -111,7 +111,7 @@ export function CtaBand({ id = "cta-heading", title, description, cta, href = "/
   return (
     <>
       <Gap />
-      <DarkSection labelledBy={id}>
+      <DarkSection labelledBy={id} traceLines>
         <div className="dot-grid-dark flex flex-col items-start gap-8 px-6 py-14 lg:flex-row lg:items-center lg:justify-between lg:px-12 lg:py-[63px]">
           <div className="max-w-[600px]">
             <h2

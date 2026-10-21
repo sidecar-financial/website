@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Button from "@/components/ui/Button";
 import { Section, SectionHeader } from "@/components/ui/Frame";
 
 type Tile = {
@@ -110,17 +110,23 @@ export default function Features() {
         ))}
 
         {/* CTA tile */}
-        <Link
-          href="/demo"
-          className="group flex min-h-[260px] items-end bg-navy bg-[url('/images/cta-pattern.png')] bg-cover bg-top p-8 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange"
-        >
-          <span className="text-base font-medium leading-6">
-            Book a Free Demo{" "}
-            <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">
-              →
-            </span>
-          </span>
-        </Link>
+        <div className="on-dark group relative flex min-h-[260px] flex-col justify-end gap-6 overflow-hidden bg-navy p-8 text-white">
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[url('/images/cta-pattern.png')] bg-cover bg-top transition-transform duration-700 ease-out group-hover:scale-110"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-[radial-gradient(circle_at_20%_100%,rgba(245,166,29,0.28),transparent_60%)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          />
+          <div className="relative">
+            <p className="text-[22px] font-semibold leading-[1.3]">See it on your own fund</p>
+            <p className="mt-2 text-[15px] leading-6 text-navy-text">Validate Navable before you commit.</p>
+          </div>
+          <Button href="/demo" size="lg" className="relative self-start">
+            Book a Free Demo
+          </Button>
+        </div>
       </div>
     </Section>
   );

@@ -17,6 +17,10 @@ interface ButtonProps {
   external?: boolean;
 }
 
+/** Soft orange glow on hover for primary CTAs (composes with the focus ring, which shares box-shadow). */
+const GLOW_ORANGE =
+  "hover:shadow-[0_8px_28px_-4px_rgba(245,166,29,0.6)] disabled:hover:shadow-none";
+
 const Arrow = () => (
   <svg
     className="ml-1.5 h-4 w-4 transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1"
@@ -42,10 +46,10 @@ export default function Button({
   external = false,
 }: ButtonProps) {
   const baseStyles =
-    "group inline-flex items-center justify-center font-medium rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 in-[.on-dark]:focus-visible:ring-white! in-[.on-dark]:focus-visible:ring-offset-navy!";
+    "group inline-flex items-center justify-center font-medium rounded-lg transition-[color,background-color,border-color,box-shadow] duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 in-[.on-dark]:focus-visible:ring-white! in-[.on-dark]:focus-visible:ring-offset-navy!";
 
   const variants = {
-    primary: "bg-orange text-ink hover:bg-orange-dark",
+    primary: `bg-orange text-ink hover:bg-orange-dark ${GLOW_ORANGE}`,
     secondary: "bg-white text-ink border border-line-strong hover:border-ink",
     outline: "bg-transparent border border-ink text-ink hover:bg-ink hover:text-white",
   };

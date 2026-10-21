@@ -117,6 +117,162 @@
   }
 }
 
+/* ================================
+   CTA band: light traveling dot-to-dot
+   ================================
+   A short orange comet runs clockwise around the band's frame (top rule ->
+   right rule -> bottom rule -> left rule), and each corner dot glows as it
+   passes. One 8s loop; each side owns a quarter of the timeline. */
+.trace-line {
+  position: absolute;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  opacity: 0;
+  filter: drop-shadow(0 0 3px rgba(245, 166, 29, 0.55));
+  animation-duration: 8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+.trace-line-top {
+  background-image: linear-gradient(90deg, transparent, rgba(245, 166, 29, 0.9));
+  background-size: 16% 100%;
+  animation-name: trace-top;
+}
+.trace-line-right {
+  background-image: linear-gradient(180deg, transparent, rgba(245, 166, 29, 0.9));
+  background-size: 100% 28%;
+  animation-name: trace-right;
+}
+.trace-line-bottom {
+  background-image: linear-gradient(270deg, transparent, rgba(245, 166, 29, 0.9));
+  background-size: 16% 100%;
+  animation-name: trace-bottom;
+}
+.trace-line-left {
+  background-image: linear-gradient(0deg, transparent, rgba(245, 166, 29, 0.9));
+  background-size: 100% 28%;
+  animation-name: trace-left;
+}
+
+@keyframes trace-top {
+  0% { background-position: 0% 0; opacity: 0; }
+  3% { opacity: 1; }
+  20% { opacity: 1; }
+  23%, 100% { background-position: 100% 0; opacity: 0; }
+}
+@keyframes trace-right {
+  0%, 25% { background-position: 0 0%; opacity: 0; }
+  28% { opacity: 1; }
+  45% { opacity: 1; }
+  48%, 100% { background-position: 0 100%; opacity: 0; }
+}
+@keyframes trace-bottom {
+  0%, 50% { background-position: 100% 0; opacity: 0; }
+  53% { opacity: 1; }
+  70% { opacity: 1; }
+  73%, 100% { background-position: 0% 0; opacity: 0; }
+}
+@keyframes trace-left {
+  0%, 75% { background-position: 0 100%; opacity: 0; }
+  78% { opacity: 1; }
+  95% { opacity: 1; }
+  98%, 100% { background-position: 0 0%; opacity: 0; }
+}
+
+.trace-dot {
+  animation: trace-dot 8s ease-out infinite;
+}
+@keyframes trace-dot {
+  0% { background-color: #f5a61d; box-shadow: 0 0 0 0 rgba(245, 166, 29, 0.55), 0 0 10px 2px rgba(245, 166, 29, 0.6); }
+  8%, 100% { box-shadow: 0 0 0 6px rgba(245, 166, 29, 0), 0 0 0 0 rgba(245, 166, 29, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trace-line,
+  .trace-dot {
+    animation: none !important;
+  }
+}
+
+/* ================================
+   Form feedback
+   ================================ */
+.field-error {
+  animation: field-error-in 0.25s ease-out both;
+}
+@keyframes field-error-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+
+.success-in {
+  animation: success-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes success-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to { opacity: 1; transform: none; }
+}
+
+.check-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: check-draw 0.55s 0.2s ease-out forwards;
+}
+.check-draw-tick {
+  animation-duration: 0.35s;
+  animation-delay: 0.55s;
+}
+@keyframes check-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ================================
+   Hero dot grid shimmer
+   ================================
+   Two soft pools of light drift across the grid and tint the dots under them
+   orange. Same 24px lattice as .dot-grid so the lit dots sit exactly on the
+   static ones; the layer sits behind the hero content. */
+.dot-grid-shimmer {
+  position: relative;
+  isolation: isolate;
+}
+.dot-grid-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: radial-gradient(circle, rgba(245, 166, 29, 0.85) 1.6px, transparent 1.7px);
+  background-size: 24px 24px;
+  background-position: 12px 14px;
+  -webkit-mask-image: radial-gradient(closest-side, #000, transparent), radial-gradient(closest-side, #000, transparent);
+  mask-image: radial-gradient(closest-side, #000, transparent), radial-gradient(closest-side, #000, transparent);
+  -webkit-mask-size: 340px 340px, 260px 260px;
+  mask-size: 340px 340px, 260px 260px;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: 0% 20%, 100% 80%;
+  mask-position: 0% 20%, 100% 80%;
+  animation: dot-shimmer 16s ease-in-out infinite;
+}
+@keyframes dot-shimmer {
+  0%, 100% {
+    -webkit-mask-position: 0% 20%, 100% 80%;
+    mask-position: 0% 20%, 100% 80%;
+  }
+  50% {
+    -webkit-mask-position: 100% 70%, 0% 25%;
+    mask-position: 100% 70%, 0% 25%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dot-grid-shimmer::after {
+    animation: none !important;
+    opacity: 0;
+  }
+}
+
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,

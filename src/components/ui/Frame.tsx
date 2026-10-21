@@ -113,14 +113,29 @@ export function Gap({ ruled = false }: { ruled?: boolean }) {
   );
 }
 
+type CornerDotsProps = {
+  dark?: boolean;
+  position?: "top" | "bottom";
+  /** When set, the dot glows once per 8s loop, `leftDelay`/`rightDelay` seconds into it (see `.trace-dot`). */
+  leftDelay?: number;
+  rightDelay?: number;
+};
+
 /** Small dots where the horizontal rule meets the vertical rules. */
-export function CornerDots({ dark = false, position = "bottom" }: { dark?: boolean; position?: "top" | "bottom" }) {
+export function CornerDots({ dark = false, position = "bottom", leftDelay, rightDelay }: CornerDotsProps) {
   const color = dark ? "bg-[#4b40b8]" : "bg-[#dcdcf0]";
   const y = position === "bottom" ? "-bottom-[3px]" : "-top-[3px]";
+  const dot = (side: "-left-[3px]" | "-right-[3px]", delay?: number) => (
+    <span
+      aria-hidden="true"
+      className={`absolute ${y} ${side} z-10 block size-[5px] rounded-full ${color} ${delay === undefined ? "" : "trace-dot"}`}
+      style={delay === undefined ? undefined : { animationDelay: `${delay}s` }}
+    />
+  );
   return (
     <>
-      <span aria-hidden="true" className={`absolute ${y} -left-[3px] z-10 block size-[5px] rounded-full ${color}`} />
-      <span aria-hidden="true" className={`absolute ${y} -right-[3px] z-10 block size-[5px] rounded-full ${color}`} />
+      {dot("-left-[3px]", leftDelay)}
+      {dot("-right-[3px]", rightDelay)}
     </>
   );
 }
@@ -130,26 +145,36 @@ type DarkSectionProps = {
   label?: string;
   id?: string;
   labelledBy?: string;
+  /** Run a light around the frame, dot to dot (decorative; disabled for reduced motion). */
+  traceLines?: boolean;
 };
 
 /**
  * Navy section: full-bleed background, 64px bands above and below the content
  * each closed by a rule, vertical rules continuing through the bands.
  */
-export function DarkSection({ children, label, id, labelledBy }: DarkSectionProps) {
+export function DarkSection({ children, label, id, labelledBy, traceLines = false }: DarkSectionProps) {
   return (
     <section id={id} aria-labelledby={labelledBy} className="on-dark relative bg-navy text-white">
       <div className={`relative mx-auto ${FRAME_WIDTH} border-x border-navy-line`}>
         <div aria-hidden="true" className="relative h-16 border-b border-navy-line">
-          <CornerDots dark position="bottom" />
+          {traceLines && <span className="trace-line trace-line-top -bottom-px left-0 right-0 h-px" />}
+          <CornerDots dark position="bottom" leftDelay={traceLines ? 7.84 : undefined} rightDelay={traceLines ? 1.84 : undefined} />
         </div>
         <div className="relative">
           {label && <SideLabel dark>{label}</SideLabel>}
           {children}
         </div>
         <div aria-hidden="true" className="relative h-16 border-t border-navy-line">
-          <CornerDots dark position="top" />
+          {traceLines && <span className="trace-line trace-line-bottom -top-px left-0 right-0 h-px" />}
+          <CornerDots dark position="top" leftDelay={traceLines ? 5.84 : undefined} rightDelay={traceLines ? 3.84 : undefined} />
         </div>
+        {traceLines && (
+          <>
+            <span aria-hidden="true" className="trace-line trace-line-left -left-px bottom-16 top-16 w-px" />
+            <span aria-hidden="true" className="trace-line trace-line-right -right-px bottom-16 top-16 w-px" />
+          </>
+        )}
       </div>
     </section>
   );

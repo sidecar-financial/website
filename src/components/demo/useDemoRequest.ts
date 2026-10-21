@@ -13,6 +13,21 @@ export type DemoFormField = keyof DemoFormData;
 
 const EMPTY_FORM: DemoFormData = { fullName: "", email: "", company: "", interest: "" };
 
+/** Quick horizontal nudge on a field that failed validation (skipped for reduced motion). */
+function shake(el: HTMLElement | null) {
+  if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  el.animate(
+    [
+      { transform: "translateX(0)" },
+      { transform: "translateX(-6px)" },
+      { transform: "translateX(5px)" },
+      { transform: "translateX(-3px)" },
+      { transform: "translateX(0)" },
+    ],
+    { duration: 380, easing: "ease-in-out" },
+  );
+}
+
 /**
  * Shared state, validation and submit handling for the demo-request forms
  * (landing page, About page and /demo), so they all behave the same.
@@ -52,9 +67,10 @@ export function useDemoRequest() {
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const found = validate();
-    const firstInvalid = (["fullName", "email", "company"] as const).find((f) => found[f]);
-    if (firstInvalid) {
-      document.getElementById(fieldId(firstInvalid))?.focus();
+    const invalid = (["fullName", "email", "company"] as const).filter((f) => found[f]);
+    if (invalid.length) {
+      document.getElementById(fieldId(invalid[0]))?.focus();
+      invalid.forEach((f) => shake(document.getElementById(fieldId(f))));
       return;
     }
 

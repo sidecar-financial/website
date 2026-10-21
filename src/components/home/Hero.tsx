@@ -6,7 +6,7 @@ export default function Hero() {
   return (
     <Section labelledBy="hero-heading" noBorder>
       {/* Headline block on the dot grid */}
-      <div className="dot-grid flex flex-col items-center px-6 pb-14 pt-16 text-center lg:pb-[54px] lg:pt-[88px]">
+      <div className="dot-grid dot-grid-shimmer flex flex-col items-center px-6 pb-14 pt-16 text-center lg:pb-[54px] lg:pt-[88px]">
         <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase leading-none tracking-[0.16em] text-subtle">
           <span aria-hidden="true" className="block size-2 bg-orange" />
           Software for Private Funds

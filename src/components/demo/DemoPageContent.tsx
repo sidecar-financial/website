@@ -7,9 +7,9 @@ import DemoSuccess from "./DemoSuccess";
 import { useDemoRequest } from "./useDemoRequest";
 
 const fieldBase =
-  "w-full h-14 rounded-[3px] border bg-transparent px-5 text-[15px] text-white placeholder:text-navy-text outline-none transition-colors focus:border-orange focus-visible:ring-1 focus-visible:ring-orange";
+  "w-full h-14 rounded-[3px] border bg-transparent px-5 text-[15px] text-white placeholder:text-navy-text outline-none transition-[border-color,box-shadow] duration-200 focus:border-orange focus:shadow-[0_0_24px_-8px_rgba(245,166,29,0.55)] focus-visible:ring-1 focus-visible:ring-orange";
 const labelClass = "mb-2 block text-sm font-medium text-white";
-const errorClass = "mt-1.5 text-sm text-error-dark";
+const errorClass = "field-error mt-1.5 text-sm text-error-dark";
 
 export default function DemoPageContent() {
   const { formData, setField, errors, isSubmitting, status, firstName, fieldId, handleSubmit } =

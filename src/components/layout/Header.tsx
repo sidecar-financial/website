@@ -357,7 +357,7 @@ export default function Header() {
                         <Link
                           href="/demo"
                           onClick={() => setOpenGroup(null)}
-                          className="group inline-flex h-10 shrink-0 items-center rounded-lg bg-orange px-4 text-sm font-medium text-ink transition-colors hover:bg-orange-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+                          className="group inline-flex h-10 shrink-0 items-center rounded-lg bg-orange px-4 text-sm font-medium text-ink transition-[color,background-color,box-shadow] hover:bg-orange-dark hover:shadow-[0_8px_24px_-4px_rgba(245,166,29,0.6)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
                         >
                           Book a Free Demo
                           <ArrowRight className="ml-1.5 group-hover:translate-x-1 group-focus-visible:translate-x-1" />
@@ -380,7 +380,7 @@ export default function Header() {
             </a>
             <Link
               href="/demo"
-              className="inline-flex h-10 items-center rounded-lg bg-ink px-[18px] text-sm font-medium text-white transition-colors hover:bg-[#2c2c5a] focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+              className="inline-flex h-10 items-center rounded-lg bg-ink px-[18px] text-sm font-medium text-white transition-[color,background-color,box-shadow] hover:bg-[#2c2c5a] hover:shadow-[0_8px_24px_-4px_rgba(76,70,163,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
             >
               Book a Free Demo
             </Link>

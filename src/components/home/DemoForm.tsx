@@ -6,7 +6,7 @@ import DemoSuccess from "@/components/demo/DemoSuccess";
 import { useDemoRequest } from "@/components/demo/useDemoRequest";
 
 const fieldBase =
-  "w-full h-[68px] rounded-[3px] border bg-transparent px-[26px] text-[15px] text-white placeholder:text-navy-text outline-none transition-colors focus:border-orange focus-visible:ring-1 focus-visible:ring-orange";
+  "w-full h-[68px] rounded-[3px] border bg-transparent px-[26px] text-[15px] text-white placeholder:text-navy-text outline-none transition-[border-color,box-shadow] duration-200 focus:border-orange focus:shadow-[0_0_24px_-8px_rgba(245,166,29,0.55)] focus-visible:ring-1 focus-visible:ring-orange";
 
 type DemoFormProps = {
   /** Anchor id of the section (e.g. "contact" on the About page). */
@@ -86,7 +86,7 @@ export default function DemoForm({
                   autoComplete="name"
                 />
                 {errors.fullName && (
-                  <p id={`${fieldId("fullName")}-error`} className="mt-1.5 text-sm text-error-dark" role="alert">
+                  <p id={`${fieldId("fullName")}-error`} className="field-error mt-1.5 text-sm text-error-dark" role="alert">
                     {errors.fullName}
                   </p>
                 )}
@@ -111,7 +111,7 @@ export default function DemoForm({
                   autoComplete="email"
                 />
                 {errors.email && (
-                  <p id={`${fieldId("email")}-error`} className="mt-1.5 text-sm text-error-dark" role="alert">
+                  <p id={`${fieldId("email")}-error`} className="field-error mt-1.5 text-sm text-error-dark" role="alert">
                     {errors.email}
                   </p>
                 )}
@@ -136,7 +136,7 @@ export default function DemoForm({
                   autoComplete="organization"
                 />
                 {errors.company && (
-                  <p id={`${fieldId("company")}-error`} className="mt-1.5 text-sm text-error-dark" role="alert">
+                  <p id={`${fieldId("company")}-error`} className="field-error mt-1.5 text-sm text-error-dark" role="alert">
                     {errors.company}
                   </p>
                 )}
@@ -183,7 +183,7 @@ export default function DemoForm({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="group !mt-[23px] inline-flex h-[53px] w-full items-center justify-center rounded-[4px] bg-orange text-[15px] font-medium text-ink transition-colors hover:bg-orange-dark focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy disabled:cursor-not-allowed disabled:opacity-70"
+                className="group !mt-[23px] inline-flex h-[53px] w-full items-center justify-center rounded-[4px] bg-orange text-[15px] font-medium text-ink transition-[color,background-color,box-shadow,transform] duration-200 hover:bg-orange-dark hover:shadow-[0_8px_28px_-4px_rgba(245,166,29,0.6)] active:scale-[0.985] disabled:hover:shadow-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {isSubmitting ? (
                   <>
