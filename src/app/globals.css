@@ -226,53 +226,6 @@
   to { stroke-dashoffset: 0; }
 }
 
-/* ================================
-   Hero dot grid shimmer
-   ================================
-   Two soft pools of light drift across the grid and tint the dots under them
-   orange. Same 24px lattice as .dot-grid so the lit dots sit exactly on the
-   static ones; the layer sits behind the hero content. */
-.dot-grid-shimmer {
-  position: relative;
-  isolation: isolate;
-}
-.dot-grid-shimmer::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: radial-gradient(circle, rgba(245, 166, 29, 0.85) 1.6px, transparent 1.7px);
-  background-size: 24px 24px;
-  background-position: 12px 14px;
-  -webkit-mask-image: radial-gradient(closest-side, #000, transparent), radial-gradient(closest-side, #000, transparent);
-  mask-image: radial-gradient(closest-side, #000, transparent), radial-gradient(closest-side, #000, transparent);
-  -webkit-mask-size: 340px 340px, 260px 260px;
-  mask-size: 340px 340px, 260px 260px;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: 0% 20%, 100% 80%;
-  mask-position: 0% 20%, 100% 80%;
-  animation: dot-shimmer 16s ease-in-out infinite;
-}
-@keyframes dot-shimmer {
-  0%, 100% {
-    -webkit-mask-position: 0% 20%, 100% 80%;
-    mask-position: 0% 20%, 100% 80%;
-  }
-  50% {
-    -webkit-mask-position: 100% 70%, 0% 25%;
-    mask-position: 100% 70%, 0% 25%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .dot-grid-shimmer::after {
-    animation: none !important;
-    opacity: 0;
-  }
-}
-
 /* Reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *,
