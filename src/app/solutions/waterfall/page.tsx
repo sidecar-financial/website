@@ -4,6 +4,14 @@ import WaitlistForm from "@/components/waterfall/WaitlistForm";
 import WaterfallAnimation from "@/components/waterfall/WaterfallAnimation";
 import DemoForm from "@/components/home/DemoForm";
 import { Gap, Section } from "@/components/ui/Frame";
+import {
+  EarlyAccessRepeat,
+  FeaturesSection,
+  HowItWorksSection,
+  PlatformFitSection,
+  ProductSection,
+  TiersSection,
+} from "@/components/waterfall/WaterfallSections";
 
 export const metadata: Metadata = {
   title: "Waterfall (Coming Soon) | Navable",
@@ -20,7 +28,8 @@ export const metadata: Metadata = {
 export default function WaterfallPage() {
   return (
     <>
-      <Section labelledBy="waterfall-hero">
+      {/* id: the repeat CTA further down the page links back here. */}
+      <Section id="early-access" labelledBy="waterfall-hero">
         <div className="dot-grid flex flex-col items-center px-5 py-[clamp(72px,11vw,144px)] text-center sm:px-8 lg:px-12">
           <p className="flex items-center gap-2.5 rounded-md border border-[#F2D29A] bg-[#FFF8EB] px-3 py-2 font-mono text-xs uppercase leading-none tracking-[0.12em] text-[#7A4A00]">
             <span aria-hidden="true" className="block size-[7px] bg-orange" />
@@ -54,6 +63,13 @@ export default function WaterfallPage() {
           </figure>
         </div>
       </Section>
+
+      <TiersSection />
+      <HowItWorksSection />
+      <FeaturesSection />
+      <PlatformFitSection />
+      <ProductSection />
+      <EarlyAccessRepeat />
 
       <Gap />
       <DemoForm
