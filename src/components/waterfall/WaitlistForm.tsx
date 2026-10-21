@@ -11,7 +11,7 @@ import Button from "@/components/ui/Button";
  * the row warms its border; focusing the input lifts the whole row with an
  * orange border and soft glow (same treatment as the demo form fields).
  */
-export default function WaitlistForm() {
+export default function WaitlistForm({ className = "mt-10 max-w-[560px]" }: { className?: string }) {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
@@ -19,6 +19,18 @@ export default function WaitlistForm() {
   const id = useId();
   const inputId = `${id}-email`;
   const errorId = `${id}-error`;
+
+  // Jumping here via an in-page `#early-access` link: put the cursor in the field.
+  // (Never on plain page load, so landing on /waterfall always stays at the top.)
+  useEffect(() => {
+    const focusIfTargeted = () => {
+      if (window.location.hash === "#early-access") {
+        document.getElementById(inputId)?.focus({ preventScroll: true });
+      }
+    };
+    window.addEventListener("hashchange", focusIfTargeted);
+    return () => window.removeEventListener("hashchange", focusIfTargeted);
+  }, [inputId]);
 
   // The form unmounts on success, so move focus to the confirmation message.
   useEffect(() => {
@@ -42,7 +54,7 @@ export default function WaitlistForm() {
     return (
       <div
         role="status"
-        className="success-in mt-10 flex w-full max-w-[560px] items-center gap-4 rounded-[14px] border border-orange bg-white px-5 py-4 text-left shadow-[0_0_32px_-8px_rgba(245,166,29,0.55)]"
+        className={`success-in flex w-full items-center gap-4 rounded-[14px] border border-orange bg-white px-5 py-4 text-left shadow-[0_0_32px_-8px_rgba(245,166,29,0.55)] ${className}`}
       >
         {/* Decorative: ring and tick draw themselves once on mount */}
         <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true" className="flex-none">
@@ -70,7 +82,7 @@ export default function WaitlistForm() {
       onSubmit={handleSubmit}
       noValidate
       aria-label="Get early access to Navable Waterfall"
-      className="mt-10 flex w-full max-w-[560px] flex-col gap-2 text-left"
+      className={`flex w-full flex-col gap-2 text-left ${className}`}
     >
       <div
         className={`flex flex-col gap-2 rounded-[14px] border bg-white p-1.5 shadow-[0_1px_2px_rgba(27,27,61,0.04)] transition-[border-color,box-shadow,transform] duration-200 ease-out sm:flex-row sm:items-center ${

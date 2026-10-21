@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import DemoForm from "@/components/home/DemoForm";
 import {
-  EarlyAccessSection,
   FeaturesSection,
   HeroSection,
   HowItWorksSection,
@@ -32,7 +31,6 @@ export default function WaterfallPage() {
   return (
     <>
       <HeroSection />
-      <EarlyAccessSection />
       <JobsSection />
       <ProblemSection />
       <HowItWorksSection />

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import Button from "@/components/ui/Button";
 import { DarkSection, Section } from "@/components/ui/Frame";
 import { PlatformFit } from "@/components/waterfall/PlatformFit";
 import SpotlightAnim, { type SpotlightKind } from "@/components/waterfall/SpotlightAnim";
@@ -48,61 +47,57 @@ function HeadingBand({
 export function HeroSection() {
   return (
     <Section labelledBy="waterfall-hero">
-      <div className="dot-grid flex flex-col items-center px-5 pb-[clamp(48px,6vw,72px)] pt-[clamp(64px,9vw,112px)] text-center sm:px-8 lg:px-12">
-        <p className="flex items-center gap-2.5 rounded-md border border-line bg-white px-3 py-2 font-mono text-xs uppercase leading-none tracking-[0.12em] text-ink">
-          <span aria-hidden="true" className="block size-[7px] bg-orange" />
-          Navable Waterfall
-        </p>
+      {/* Stacked, centered "vertical" hero (same structure as the earlier coming-soon page):
+          badges, headline, subcopy, early-access signup, secondary links, then the chart. */}
+      <div className="dot-grid flex flex-col items-center px-5 pb-[clamp(48px,6vw,72px)] pt-[clamp(40px,6vw,80px)] text-center sm:px-8 lg:px-12">
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <p className="flex items-center gap-2.5 rounded-md border border-line bg-white px-3 py-2 font-mono text-xs uppercase leading-none tracking-[0.12em] text-ink">
+            <span aria-hidden="true" className="block size-[7px] bg-orange" />
+            Navable Waterfall
+          </p>
+          <p className="rounded-md border border-[#F2D29A] bg-[#FFF8EB] px-3 py-2 font-mono text-xs uppercase leading-none tracking-[0.12em] text-[#7A4A00]">
+            Coming soon
+          </p>
+        </div>
         <h1
           id="waterfall-hero"
-          className="mt-7 max-w-[920px] text-[clamp(38px,5.6vw,68px)] font-semibold leading-[1.04] tracking-[-0.035em] text-ink text-pretty"
+          className="mt-6 max-w-[900px] text-[clamp(34px,4.8vw,60px)] font-semibold leading-[1.05] tracking-[-0.035em] text-ink text-pretty"
         >
           The provable waterfall engine fund administrators run and{" "}
           <span className="text-orange">auditors can recalculate</span>
         </h1>
-        <p className="mt-6 max-w-[660px] text-[clamp(16px,1.4vw,18px)] leading-[1.55] text-body text-pretty">
+        <p className="mt-5 max-w-[640px] text-[clamp(16px,1.4vw,18px)] leading-[1.55] text-body text-pretty">
           Waterfall turns the economics in a fund&apos;s LPA into a calculation that fund
           administrators run, GPs approve and auditors can recalculate, without rebuilding it in
           Excel.
         </p>
-        <div className="mt-9 flex flex-wrap justify-center gap-3">
-          <Button href="/demo" size="lg">
-            Book a walkthrough
-          </Button>
-          <Button href="#trace" variant="secondary" size="lg">
-            See how a number is traced
-          </Button>
+
+        {/* Primary CTA: early-access signup. `#early-access` anchors land here. */}
+        <div id="early-access" className="mt-8 flex w-full flex-col items-center">
+          <WaitlistForm className="max-w-[560px]" />
+          <p className="mt-3 max-w-[560px] text-sm leading-[1.5] text-body">
+            Enter your work email and we&apos;ll let you know when early access opens.
+          </p>
         </div>
-        <figure className="mt-14 w-full max-w-[960px] overflow-hidden rounded-xl border border-[#DCDBE6] bg-white py-2 shadow-[0_30px_60px_-30px_rgba(31,28,58,0.35)]">
+
+        <p className="mt-4 flex flex-wrap items-center justify-center gap-x-6 gap-y-0 text-[15px]">
+          <Link
+            href="/demo"
+            className="inline-flex min-h-[44px] items-center font-medium text-ink underline decoration-[#B8B6C9] underline-offset-4 transition-colors hover:decoration-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+          >
+            Book a walkthrough
+          </Link>
+          <a
+            href="#trace"
+            className="inline-flex min-h-[44px] items-center text-body underline decoration-[#B8B6C9] underline-offset-4 transition-colors hover:text-ink hover:decoration-ink focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+          >
+            See how a number is traced
+          </a>
+        </p>
+
+        <figure className="mt-10 w-full max-w-[960px] overflow-hidden rounded-xl border border-[#DCDBE6] bg-white py-2 shadow-[0_30px_60px_-30px_rgba(31,28,58,0.35)]">
           <WaterfallAnimation />
         </figure>
-      </div>
-    </Section>
-  );
-}
-
-/* ------------------------- Early access (waitlist) ------------------------- */
-
-/** Kept from the previous page: the early-access signup (`#early-access`). */
-export function EarlyAccessSection() {
-  return (
-    <Section id="early-access" labelledBy="waterfall-early-access">
-      <div className="flex flex-col items-center px-6 py-14 text-center sm:px-8 lg:px-12 lg:py-[72px]">
-        <p className="flex items-center gap-2.5 rounded-md border border-[#F2D29A] bg-[#FFF8EB] px-3 py-2 font-mono text-xs uppercase leading-none tracking-[0.12em] text-[#7A4A00]">
-          <span aria-hidden="true" className="block size-[7px] bg-orange" />
-          Coming soon
-        </p>
-        <h2
-          id="waterfall-early-access"
-          className="mt-6 text-[clamp(28px,3vw,36px)] font-semibold leading-[1.15] tracking-[-0.02em] text-ink"
-        >
-          Get early access.
-        </h2>
-        <p className="mt-4 max-w-[560px] text-[clamp(16px,1.4vw,18px)] leading-[1.55] text-body">
-          Distribution waterfalls are coming to the same platform you use for carry, commit, and
-          compensation. Enter your work email and we&apos;ll let you know when early access opens.
-        </p>
-        <WaitlistForm />
       </div>
     </Section>
   );
