@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -7,6 +7,12 @@ import Footer from "@/components/layout/Footer";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+});
+
+// Small uppercase eyebrow / index labels (e.g. "SOFTWARE FOR PRIVATE FUNDS", "/01")
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono-label",
 });
 
 export const metadata: Metadata = {
@@ -45,10 +51,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${inter.variable} ${mono.variable}`}>
       <body className="min-h-screen flex flex-col antialiased">
         <Header />
-        <main id="main-content" className="flex-1 pt-20" tabIndex={-1}>{children}</main>
+        <main id="main-content" className="flex-1 pt-[68px]" tabIndex={-1}>{children}</main>
         <Footer />
       </body>
     </html>

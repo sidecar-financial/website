@@ -1,180 +1,127 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
+import { Section, SectionHeader } from "@/components/ui/Frame";
+
+type Tile = {
+  title: string;
+  description: string;
+  image: string;
+  alt: string;
+  width: number;
+  height: number;
+  className?: string;
+};
+
+const tiles: Tile[] = [
+  {
+    title: "Carry Management",
+    description:
+      "Manage carry plans, allocations, vesting, distributions, and participant changes in one system, keeping data and documents linked across funds with full audit trail history.",
+    image: "/images/carry-plan-team.png",
+    alt: "Carry plan builder showing fund selection and team members with total compensation, carry values and vesting details",
+    width: 688,
+    height: 260,
+    className: "lg:col-span-2",
+  },
+  {
+    title: "Compensation & Reporting",
+    description:
+      "Bring compensation, carry, GP commit, and investment data into one clear view.",
+    image: "/images/employee-portal.png",
+    alt: "Participant compensation report with a salary, bonus and carry breakdown chart, benefits and forecasted carry value",
+    width: 312,
+    height: 722,
+    className: "lg:row-span-2",
+  },
+  {
+    title: "Employee & GP Portal",
+    description:
+      "Give participants direct access to carry, vesting, values, and documents.",
+    image: "/images/total-compensation.png",
+    alt: "Participant portal showing total compensation and carry by fund with vesting progress",
+    width: 312,
+    height: 260,
+  },
+  {
+    title: "Scenario & Firm-Wide Planning",
+    description: "Model allocations, vesting, and compensation with shared data.",
+    image: "/images/vesting-timeline.png",
+    alt: "Vesting timeline chart comparing the current plan with a scenario",
+    width: 312,
+    height: 260,
+  },
+  {
+    title: "GP Commit & Co-Investment",
+    description:
+      "Manage commitments, onboarding, subscriptions, and co-invest reporting.",
+    image: "/images/co-invest-card.png",
+    alt: "Co-investment card showing total value and total return",
+    width: 312,
+    height: 260,
+  },
+  {
+    title: "Document Lifecycle",
+    description:
+      "Create, send, track, sign and store documents in a single source of truth.",
+    image: "/images/award-document.png",
+    alt: "Award document with signature requirements and status tracking",
+    width: 312,
+    height: 260,
+  },
+];
+
+function FeatureTile({ title, description, image, alt, width, height, className = "" }: Tile) {
+  return (
+    <article className={`border-b border-line bg-white px-6 pb-10 pt-10 lg:border-b-0 lg:px-8 ${className}`}>
+      <Image
+        src={image}
+        alt={alt}
+        width={width}
+        height={height}
+        className="h-auto w-full rounded-lg"
+        style={{ maxWidth: width }}
+        unoptimized
+      />
+      <h3 className="mt-8 text-lg font-medium leading-6 text-ink">{title}</h3>
+      <p className="mt-2 text-[15px] leading-[25px] text-muted">{description}</p>
+    </article>
+  );
+}
 
 export default function Features() {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-16">
-          <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
-            Features
-          </p>
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-gray-900 leading-tight">
+    <Section id="features" label="Features" labelledBy="features-heading">
+      <SectionHeader
+        id="features-heading"
+        title={
+          <>
             Everything You Need to
-          </h2>
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight">
-            <span className="text-gray-900">Manage </span>
-            <span className="text-[#5046e5]">Carry, Comp &</span>
-          </h2>
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#5046e5] leading-tight">
-            Co-Invest With Control
-          </h2>
-          <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            Start with carry management, then extend the same system to compensation, 
-            GP commit, and employee co-investment as your firm&apos;s needs evolve.
-          </p>
-        </div>
+            <br className="hidden lg:block" /> Manage Carry, Comp &amp;
+            <br className="hidden lg:block" />{" "}
+            <span className="text-orange">Co-Invest With Control</span>
+          </>
+        }
+        description="Start with carry management, then extend the same system to compensation, GP commit, and employee co-investment as your firm's needs evolve."
+      />
 
-        {/* Main Product Screenshots Grid */}
-        <div className="grid lg:grid-cols-12 gap-6 mb-12">
-          {/* Left column - Carry Plan Team */}
-          <div className="lg:col-span-5">
-            <div className="rounded-xl shadow-2xl shadow-gray-900/15 overflow-hidden bg-white border border-gray-200">
-              <Image
-                src="/images/carry-plan-team.png"
-                alt="Carry plan management showing team members with total compensation, carry values, and vesting details"
-                width={600}
-                height={700}
-                className="w-full h-auto"
-              />
-            </div>
-          </div>
+      <div className="grid lg:grid-cols-3 lg:gap-px lg:bg-line">
+        {tiles.map((tile, index) => (
+          <FeatureTile key={`${tile.title}-${index}`} {...tile} />
+        ))}
 
-          {/* Right column - Stacked product images */}
-          <div className="lg:col-span-7 space-y-6">
-            {/* Total Compensation Card */}
-            <div className="rounded-xl shadow-2xl shadow-gray-900/15 overflow-hidden bg-white border border-gray-200">
-              <Image
-                src="/images/total-compensation.png"
-                alt="Total compensation breakdown showing salary, bonus, carry, and co-invest allocation with pie chart"
-                width={700}
-                height={300}
-                className="w-full h-auto"
-              />
-            </div>
-
-            {/* Two column layout for smaller cards */}
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Vesting Timeline */}
-              <div className="rounded-xl shadow-xl shadow-gray-900/10 overflow-hidden bg-white border border-gray-200">
-                <Image
-                  src="/images/vesting-timeline.png"
-                  alt="Vesting timeline chart showing current plan vs scenario projections"
-                  width={400}
-                  height={300}
-                  className="w-full h-auto"
-                />
-              </div>
-
-              {/* Co-Invest Card */}
-              <div className="rounded-xl shadow-xl shadow-gray-900/10 overflow-hidden bg-white border border-gray-200">
-                <Image
-                  src="/images/co-invest-card.png"
-                  alt="Co-investment card showing total return and investment details"
-                  width={400}
-                  height={300}
-                  className="w-full h-auto"
-                />
-              </div>
-            </div>
-
-            {/* Award Document */}
-            <div className="rounded-xl shadow-xl shadow-gray-900/10 overflow-hidden bg-white border border-gray-200">
-              <Image
-                src="/images/award-document.png"
-                alt="Award document management with signature requirements and status tracking"
-                width={700}
-                height={200}
-                className="w-full h-auto"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Carry Management description */}
-        <div className="bg-[#f8f7ff] rounded-2xl p-8 lg:p-10 mb-12">
-          <div className="max-w-3xl">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Carry Management</h3>
-            <p className="text-gray-600 leading-relaxed">
-              Manage carry plans, allocations, vesting, distributions, and participant changes in one 
-              system, keeping data and documents linked across funds with full audit trail history.
-            </p>
-          </div>
-        </div>
-
-        {/* Feature cards grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: "Employee & GP Portal",
-              description: "Give participants direct access to carry, vesting, values, and documents.",
-              icon: (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              ),
-            },
-            {
-              title: "Scenario & Firm-Wide Planning",
-              description: "Model allocations, vesting, and compensation with shared data.",
-              icon: (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-                </svg>
-              ),
-            },
-            {
-              title: "Compensation & Reporting",
-              description: "Bring compensation, carry, GP commit, and investment data into one clear view.",
-              icon: (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                </svg>
-              ),
-            },
-            {
-              title: "GP Commit & Co-Investment",
-              description: "Manage commitments, onboarding, subscriptions, and co-invest reporting.",
-              icon: (
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              ),
-            },
-          ].map((feature, index) => (
-            <div
-              key={index}
-              className="bg-[#f8f7ff] rounded-xl p-6 hover:shadow-lg transition-all group"
-            >
-              <div className="w-12 h-12 rounded-xl bg-white border border-[#e8e4ff] flex items-center justify-center text-[#5046e5] mb-4 group-hover:bg-[#5046e5] group-hover:text-white transition-colors">
-                {feature.icon}
-              </div>
-              <h3 className="text-base font-bold text-gray-900 mb-2">
-                {feature.title}
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {feature.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="text-center mt-12">
-          <Link
-            href="/demo"
-            className="inline-flex items-center px-8 py-4 text-base font-semibold text-white bg-[#5046e5] rounded-full hover:bg-[#4038c7] transition-colors shadow-lg shadow-[#5046e5]/25"
-          >
-            Book a Free Demo
-            <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-            </svg>
-          </Link>
-        </div>
+        {/* CTA tile */}
+        <Link
+          href="/demo"
+          className="group flex min-h-[260px] items-end bg-navy bg-[url('/images/cta-pattern.png')] bg-cover bg-top p-8 text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-orange"
+        >
+          <span className="text-base font-medium leading-6">
+            Book a Free Demo{" "}
+            <span aria-hidden="true" className="inline-block transition-transform group-hover:translate-x-1">
+              →
+            </span>
+          </span>
+        </Link>
       </div>
-    </section>
+    </Section>
   );
 }

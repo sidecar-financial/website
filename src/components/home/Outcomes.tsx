@@ -1,12 +1,21 @@
-"use client";
+import { Section, SectionHeader } from "@/components/ui/Frame";
+
+const iconProps = {
+  className: "size-12",
+  viewBox: "0 0 28 28",
+  fill: "none",
+  "aria-hidden": true,
+} as const;
 
 const outcomes = [
   {
     title: "More Senior Capacity",
     description: "Spend less time checking, reconciling, and maintaining carry.",
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      <svg {...iconProps}>
+        <circle cx="14" cy="14" r="11.5" stroke="#1b1b3d" strokeWidth="1.25" />
+        <path d="M14 7.5V14l4.25 3" stroke="#1b1b3d" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M14 2.5a11.5 11.5 0 0 1 11.5 11.5" stroke="#f5a61d" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -14,8 +23,11 @@ const outcomes = [
     title: "Easier Reviews & Year-End",
     description: "Keep history and documents easy to trace for year-end review.",
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+      <svg {...iconProps}>
+        <path d="M8 3.5h9.5L22 8v13.5a1.5 1.5 0 0 1-1.5 1.5h-12.5A1.5 1.5 0 0 1 6.5 21.5v-16A2 2 0 0 1 8 3.5Z" stroke="#1b1b3d" strokeWidth="1.25" strokeLinejoin="round" />
+        <path d="M10 10h6M10 13h8M10 16h4" stroke="#1b1b3d" strokeWidth="1.25" strokeLinecap="round" />
+        <path d="M3.5 7v16.5a1.5 1.5 0 0 0 1.5 1.5h13" stroke="#1b1b3d" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M15 19.5l2.25 2.25L21.5 17.5" stroke="#f5a61d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -23,8 +35,10 @@ const outcomes = [
     title: "More Capacity as You Grow",
     description: "Manage more funds and participants without adding admin work.",
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+      <svg {...iconProps}>
+        <path d="M14 3l10.5 5.5L14 14 3.5 8.5 14 3Z" stroke="#f5a61d" strokeWidth="1.5" strokeLinejoin="round" />
+        <path d="M3.5 13l10.5 5.5L24.5 13" stroke="#1b1b3d" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M3.5 17.5L14 23l10.5-5.5" stroke="#1b1b3d" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
@@ -32,39 +46,33 @@ const outcomes = [
 
 export default function Outcomes() {
   return (
-    <section className="py-24 bg-gradient-to-b from-[#f8f7ff] to-white" aria-labelledby="outcomes-heading">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
-            Outcomes
-          </p>
-          <h2 id="outcomes-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight">
-            <span className="text-gray-900">What Changes for Your </span>
-            <span className="text-[#5046e5]">Finance, HR and Operations Teams</span>
-          </h2>
-          <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            The value of better carry infrastructure isn&apos;t more software. It&apos;s less 
-            senior attention spent keeping the process under control.
-          </p>
-        </div>
+    <Section label="Outcomes" labelledBy="outcomes-heading">
+      <SectionHeader
+        id="outcomes-heading"
+        indent="wide"
+        topPadding="lg:pt-[54px]"
+        title={
+          <>
+            What Changes for
+            <br className="hidden lg:block" /> Your Finance, HR and
+            <br className="hidden lg:block" /> Operations Teams
+          </>
+        }
+        description="The value of better carry infrastructure isn't more software. It's less senior attention spent keeping the process under control."
+      />
 
-        <ul className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto" role="list">
-          {outcomes.map((outcome, index) => (
-            <li 
-              key={index} 
-              className="bg-white rounded-2xl p-8 shadow-lg shadow-gray-900/5 border border-gray-100 hover:shadow-xl hover:shadow-[#5046e5]/10 hover:border-[#5046e5]/20 transition-all"
-            >
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#f8f7ff] to-[#ede9fe] flex items-center justify-center mb-6 text-[#5046e5]">
-                {outcome.icon}
-              </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
-                {outcome.title}
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-[15px]">{outcome.description}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
+      <ul className="grid lg:grid-cols-3">
+        {outcomes.map((outcome) => (
+          <li
+            key={outcome.title}
+            className="border-b border-line px-6 pb-10 pt-10 last:border-b-0 lg:border-b-0 lg:border-r lg:px-8 lg:pb-[46px] lg:pt-[45px] lg:last:border-r-0"
+          >
+            {outcome.icon}
+            <h3 className="mt-8 text-base font-medium leading-6 text-ink">{outcome.title}</h3>
+            <p className="mt-2 max-w-[300px] text-sm leading-[25px] text-muted">{outcome.description}</p>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }

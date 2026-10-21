@@ -1,111 +1,120 @@
-"use client";
-
 import Image from "next/image";
+import { Section, SectionHeader } from "@/components/ui/Frame";
+
+const spreadsheetProblems = [
+  "Carry rules depend on spreadsheets and people",
+  "Participant changes force manual model rework",
+  "Historical decisions have to be reconstructed",
+  "Employees and GPs come back to Finance for answers",
+  "More funds and participants add to admin work",
+];
+
+const navableSolutions = [
+  "Plans, participants, and history live in one system",
+  "Run forfeitures, dilutions, and reallocations",
+  "Keep changes, records and documents connected",
+  "Participants can access their own carry information directly",
+  "Scale carry without needing more spreadsheets",
+];
+
+const MinusIcon = () => (
+  <svg className="size-3.5 shrink-0 text-[#a9abc0]" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <circle cx="7" cy="7" r="5.75" stroke="currentColor" strokeWidth="1" />
+    <path d="M4.5 7h5" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg className="size-3.5 shrink-0" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <rect width="14" height="14" rx="2.5" fill="#f5a61d" />
+    <path d="M3.8 7.2l2.1 2.1 4.3-4.4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+);
+
+const GridIcon = () => (
+  <svg className="size-3.5 shrink-0 text-ink" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+    <rect x="0.75" y="0.75" width="12.5" height="12.5" rx="1" stroke="currentColor" strokeWidth="1" />
+    <path d="M7 1v12M1 7h12" stroke="currentColor" strokeWidth="1" />
+  </svg>
+);
+
+type ComparisonProps = {
+  image: string;
+  imageAlt: string;
+  label: string;
+  icon: React.ReactNode;
+  items: string[];
+  itemIcon: React.ReactNode;
+  className?: string;
+};
+
+function Comparison({ image, imageAlt, label, icon, items, itemIcon, className = "" }: ComparisonProps) {
+  return (
+    <div className={`px-6 pb-12 pt-8 lg:px-12 lg:pb-[58px] lg:pt-[39px] ${className}`}>
+      <Image
+        src={image}
+        alt={imageAlt}
+        width={468}
+        height={278}
+        className="h-auto w-full max-w-[468px] rounded-lg"
+        unoptimized
+      />
+      <h3 className="mt-7 flex items-center gap-2 font-mono text-[11px] font-bold uppercase leading-[14px] tracking-[0.08em] text-ink">
+        {icon}
+        {label}
+      </h3>
+      <ul className="mt-[30px]">
+        {items.map((item) => (
+          <li
+            key={item}
+            className="flex min-h-16 items-center gap-2.5 border-t border-line text-sm leading-5 text-muted"
+          >
+            {itemIcon}
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 export default function Problem() {
-  const spreadsheetProblems = [
-    "Carry rules depend on spreadsheets and people",
-    "Participant changes force manual model rework",
-    "Historical decisions have to be reconstructed",
-    "Employees and GPs come back to Finance for answers",
-    "More funds and participants add to admin work",
-  ];
-
-  const navableSolutions = [
-    "Plans, participants, and history live in one system",
-    "Run forfeitures, dilutions, and reallocations",
-    "Keep changes, records and documents connected",
-    "Participants can access their own carry information directly",
-    "Scale carry without needing more spreadsheets",
-  ];
-
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-[#f8f7ff]" aria-labelledby="problem-heading">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left side - Header */}
-          <div>
-            <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
-              The Problem
-            </p>
-            <h2 id="problem-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.15] mb-6">
-              <span className="text-gray-900">When Growth Outpaces </span>
-              <span className="text-[#5046e5]">Excel, Change Gets Harder to Control</span>
-            </h2>
-            <p className="text-gray-600 leading-relaxed max-w-lg">
-              As carry complexity grows, spreadsheets create more risk, more manual work, 
-              and less control. Navable brings it into one system built for alternative asset firms.
-            </p>
-          </div>
+    <Section label="The Problem" labelledBy="problem-heading">
+      <SectionHeader
+        id="problem-heading"
+        title={
+          <>
+            When Growth Outpaces
+            <br className="hidden lg:block" /> Excel, Change{" "}
+            <span className="text-orange">
+              Gets
+              <br className="hidden lg:block" /> Harder to Control
+            </span>
+          </>
+        }
+        description="As carry complexity grows, spreadsheets create more risk, more manual work, and less control. Navable brings it into one system built for alternative asset firms."
+      />
 
-          {/* Right side - Spreadsheet Illustration Image */}
-          <div className="relative">
-            <div className="rounded-xl shadow-2xl shadow-gray-900/15 overflow-hidden">
-              <Image
-                src="/images/spreadsheet-illustration.png"
-                alt="Complex spreadsheet showing compensation history data that becomes difficult to manage at scale"
-                width={600}
-                height={400}
-                className="w-full h-auto"
-              />
-            </div>
-            {/* Decorative shadow depth layers */}
-            <div className="absolute -bottom-2 -right-2 left-2 h-full bg-[#e8e4ff] rounded-xl -z-10" aria-hidden="true" />
-            <div className="absolute -bottom-4 -right-4 left-4 h-full bg-[#d4ccff] rounded-xl -z-20" aria-hidden="true" />
-          </div>
-        </div>
-
-        {/* Comparison cards */}
-        <div className="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto mt-20">
-          {/* With Spreadsheets */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-gray-900/5 border border-gray-100">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center" aria-hidden="true">
-                <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900">With Spreadsheets</h3>
-            </div>
-            <ul className="space-y-5" role="list">
-              {spreadsheetProblems.map((problem, index) => (
-                <li key={index} className="flex items-start gap-4">
-                  <div className="w-5 h-5 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">
-                    <svg className="w-3 h-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-600 text-[15px] leading-relaxed">{problem}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* With Navable */}
-          <div className="bg-white rounded-2xl p-8 shadow-lg shadow-[#5046e5]/10 border-2 border-[#5046e5]">
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-full bg-[#ede9fe] flex items-center justify-center" aria-hidden="true">
-                <svg className="w-5 h-5 text-[#5046e5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-gray-900">With Navable</h3>
-            </div>
-            <ul className="space-y-5" role="list">
-              {navableSolutions.map((solution, index) => (
-                <li key={index} className="flex items-start gap-4">
-                  <div className="w-5 h-5 rounded-full bg-[#ede9fe] flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">
-                    <svg className="w-3 h-3 text-[#5046e5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-600 text-[15px] leading-relaxed">{solution}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+      <div className="grid lg:grid-cols-2">
+        <Comparison
+          className="border-b border-line lg:border-b-0 lg:border-r"
+          image="/images/spreadsheet-illustration.png"
+          imageAlt="Isometric illustration of disconnected spreadsheets"
+          label="With Spreadsheets"
+          icon={<GridIcon />}
+          items={spreadsheetProblems}
+          itemIcon={<MinusIcon />}
+        />
+        <Comparison
+          image="/images/abstract-3d.png"
+          imageAlt="Isometric illustration of a single connected Navable system"
+          label="With Navable"
+          icon={<span aria-hidden="true" className="block size-3.5 bg-orange" />}
+          items={navableSolutions}
+          itemIcon={<CheckIcon />}
+        />
       </div>
-    </section>
+    </Section>
   );
 }

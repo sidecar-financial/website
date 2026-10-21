@@ -1,53 +1,19 @@
 "use client";
 
-import { useState, useId } from "react";
 import Button from "../ui/Button";
+import { Section } from "../ui/Frame";
+import { CheckBadge } from "../ui/PageBlocks";
+import DemoSuccess from "./DemoSuccess";
+import { useDemoRequest } from "./useDemoRequest";
+
+const fieldBase =
+  "w-full h-14 rounded-[3px] border bg-transparent px-5 text-[15px] text-white placeholder:text-navy-text outline-none transition-colors focus:border-orange focus-visible:ring-1 focus-visible:ring-orange";
+const labelClass = "mb-2 block text-sm font-medium text-white";
+const errorClass = "mt-1.5 text-sm text-error-dark";
 
 export default function DemoPageContent() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    company: "",
-    interest: "",
-  });
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
-  const formId = useId();
-
-  const validateForm = () => {
-    const newErrors: Record<string, string> = {};
-    if (!formData.fullName.trim()) {
-      newErrors.fullName = "Full name is required";
-    }
-    if (!formData.email.trim()) {
-      newErrors.email = "Work email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
-    }
-    if (!formData.company.trim()) {
-      newErrors.company = "Company name is required";
-    }
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!validateForm()) return;
-
-    setIsSubmitting(true);
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      console.log("Form submitted:", formData);
-      setSubmitStatus("success");
-      setFormData({ fullName: "", email: "", company: "", interest: "" });
-    } catch {
-      setSubmitStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+  const { formData, setField, errors, isSubmitting, status, firstName, fieldId, handleSubmit } =
+    useDemoRequest();
 
   const demoFeatures = [
     "Manage allocations, vesting, and participant changes.",
@@ -56,225 +22,186 @@ export default function DemoPageContent() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#f8f7ff] to-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-start">
-          {/* Left content */}
+    <Section labelledBy="demo-page-heading">
+      <div className="grid lg:grid-cols-[1fr_1fr]">
+        {/* Left content */}
+        <div className="dot-grid border-b border-line px-6 pb-12 pt-14 lg:border-b-0 lg:border-r lg:px-12 lg:pb-[72px] lg:pt-[88px]">
           <div className="lg:sticky lg:top-32">
-            <h1 className="text-4xl sm:text-5xl font-bold text-gray-900 leading-tight">
+            <h1
+              id="demo-page-heading"
+              className="text-[34px] font-semibold leading-[1.15] text-ink sm:text-[42px] lg:text-[46px] lg:leading-[54px]"
+            >
               Carry Management Software for{" "}
-              <span className="text-[#5046e5]">Alternative Asset Firms</span>
+              <span className="text-orange">Alternative Asset Firms</span>
             </h1>
-            <p className="mt-6 text-lg text-gray-600">
+            <p className="mt-6 text-lg font-medium text-ink">
               See How Navable Fits Your Carry Structure
             </p>
-            <p className="mt-4 text-gray-600 leading-relaxed">
-              As funds and participants grow, Navable helps finance teams manage 
-              complex carry with greater confidence, less manual work, and reduced 
+            <p className="mt-4 max-w-[520px] text-[15px] leading-[25px] text-body">
+              As funds and participants grow, Navable helps finance teams manage
+              complex carry with greater confidence, less manual work, and reduced
               operational risk.
             </p>
 
             <div className="mt-10">
-              <h2 className="font-semibold text-gray-900 mb-4">
+              <h2 className="mb-4 flex items-center gap-2.5 font-mono text-[11px] font-bold uppercase leading-[14px] tracking-[0.08em] text-ink">
+                <span aria-hidden="true" className="block size-3.5 bg-orange" />
                 In your demo, you&apos;ll see how to:
               </h2>
               <ul className="space-y-3" role="list">
                 {demoFeatures.map((item, index) => (
-                  <li key={index} className="flex items-start">
-                    <svg
-                      className="w-5 h-5 text-[#5046e5] mr-3 mt-0.5 flex-shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    <span className="text-gray-600">{item}</span>
+                  <li key={index} className="flex items-start gap-3">
+                    <CheckBadge className="mt-0.5 size-5" />
+                    <span className="text-[15px] leading-6 text-body">{item}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="mt-12 p-6 bg-white rounded-xl border border-gray-100">
-              <p className="text-sm text-gray-500 mb-2">Trusted by Firms Managing</p>
-              <p className="text-3xl font-bold text-[#5046e5]">Over $150 Bn AUM.</p>
+            <div className="mt-12 border border-line bg-white p-6">
+              <p className="font-mono text-[11px] uppercase tracking-[0.12em] text-subtle">
+                Trusted by Firms Managing
+              </p>
+              <p className="mt-2 text-3xl font-semibold text-ink">Over $150 Bn AUM.</p>
             </div>
-          </div>
-
-          {/* Right form */}
-          <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100">
-            {/* Live region for form status */}
-            <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
-              {submitStatus === "success" && "Thank you! Your demo request has been submitted successfully."}
-              {submitStatus === "error" && "There was an error submitting your request. Please try again."}
-            </div>
-
-            {submitStatus === "success" ? (
-              <div className="text-center py-8">
-                <div className="w-16 h-16 mx-auto mb-4 bg-green-100 rounded-full flex items-center justify-center">
-                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h2 className="text-xl font-semibold text-gray-900 mb-2">Thank you!</h2>
-                <p className="text-gray-600">We&apos;ll be in touch shortly to schedule your demo.</p>
-              </div>
-            ) : (
-              <>
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                  Book a Free Demo
-                </h2>
-                <form onSubmit={handleSubmit} className="space-y-5" noValidate>
-                  <div>
-                    <label
-                      htmlFor={`${formId}-fullName`}
-                      className="block text-sm font-medium text-gray-700 mb-2"
-                    >
-                      Full Name<span aria-hidden="true">*</span>
-                      <span className="sr-only"> (required)</span>
-                    </label>
-                    <input
-                      type="text"
-                      id={`${formId}-fullName`}
-                      name="fullName"
-                      required
-                      aria-required="true"
-                      aria-invalid={!!errors.fullName}
-                      aria-describedby={errors.fullName ? `${formId}-fullName-error` : undefined}
-                      className={`w-full px-4 py-3 rounded-lg border ${
-                        errors.fullName ? "border-red-500" : "border-gray-200"
-                      } focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all`}
-                      placeholder="Your full name"
-                      value={formData.fullName}
-                      onChange={(e) => {
-                        setFormData({ ...formData, fullName: e.target.value });
-                        if (errors.fullName) setErrors({ ...errors, fullName: "" });
-                      }}
-                      autoComplete="name"
-                    />
-                    {errors.fullName && (
-                      <p id={`${formId}-fullName-error`} className="mt-1 text-sm text-red-600" role="alert">
-                        {errors.fullName}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor={`${formId}-email`}
-                      className="block text-sm font-medium text-gray-700 mb-2"
-                    >
-                      Work Email<span aria-hidden="true">*</span>
-                      <span className="sr-only"> (required)</span>
-                    </label>
-                    <input
-                      type="email"
-                      id={`${formId}-email`}
-                      name="email"
-                      required
-                      aria-required="true"
-                      aria-invalid={!!errors.email}
-                      aria-describedby={errors.email ? `${formId}-email-error` : undefined}
-                      className={`w-full px-4 py-3 rounded-lg border ${
-                        errors.email ? "border-red-500" : "border-gray-200"
-                      } focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all`}
-                      placeholder="you@company.com"
-                      value={formData.email}
-                      onChange={(e) => {
-                        setFormData({ ...formData, email: e.target.value });
-                        if (errors.email) setErrors({ ...errors, email: "" });
-                      }}
-                      autoComplete="email"
-                    />
-                    {errors.email && (
-                      <p id={`${formId}-email-error`} className="mt-1 text-sm text-red-600" role="alert">
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor={`${formId}-company`}
-                      className="block text-sm font-medium text-gray-700 mb-2"
-                    >
-                      Company Name<span aria-hidden="true">*</span>
-                      <span className="sr-only"> (required)</span>
-                    </label>
-                    <input
-                      type="text"
-                      id={`${formId}-company`}
-                      name="company"
-                      required
-                      aria-required="true"
-                      aria-invalid={!!errors.company}
-                      aria-describedby={errors.company ? `${formId}-company-error` : undefined}
-                      className={`w-full px-4 py-3 rounded-lg border ${
-                        errors.company ? "border-red-500" : "border-gray-200"
-                      } focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all`}
-                      placeholder="Your company"
-                      value={formData.company}
-                      onChange={(e) => {
-                        setFormData({ ...formData, company: e.target.value });
-                        if (errors.company) setErrors({ ...errors, company: "" });
-                      }}
-                      autoComplete="organization"
-                    />
-                    {errors.company && (
-                      <p id={`${formId}-company-error`} className="mt-1 text-sm text-red-600" role="alert">
-                        {errors.company}
-                      </p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor={`${formId}-interest`}
-                      className="block text-sm font-medium text-gray-700 mb-2"
-                    >
-                      What would you like to explore?
-                    </label>
-                    <select
-                      id={`${formId}-interest`}
-                      name="interest"
-                      className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all bg-white"
-                      value={formData.interest}
-                      onChange={(e) =>
-                        setFormData({ ...formData, interest: e.target.value })
-                      }
-                    >
-                      <option value="">Select an option</option>
-                      <option value="carry">Carry Management</option>
-                      <option value="compensation">Compensation Management</option>
-                      <option value="coinvest">Employee Co-Invest</option>
-                      <option value="gpcommit">GP Commit</option>
-                      <option value="all">All of the above</option>
-                    </select>
-                  </div>
-
-                  <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
-                    {isSubmitting ? "Submitting..." : "Book a Free Demo"}
-                  </Button>
-
-                  <p className="text-xs text-gray-500 text-center mt-4">
-                    By submitting, you agree to our{" "}
-                    <a href="/privacy" className="text-[#5046e5] hover:underline focus:outline-none focus:ring-2 focus:ring-[#5046e5] focus:ring-offset-2 rounded">
-                      Privacy Policy
-                    </a>
-                    .
-                  </p>
-                </form>
-              </>
-            )}
           </div>
         </div>
+
+        {/* Right form (navy panel, same field treatment as the landing page demo form) */}
+        <div className="on-dark bg-navy px-6 py-12 text-white lg:px-12 lg:py-[72px]">
+          {status === "success" ? (
+            <DemoSuccess firstName={firstName} headingLevel="h2" />
+          ) : (
+            <>
+              <h2 className="mb-8 text-[28px] font-semibold leading-9 text-white">
+                Book a <span className="text-orange">Free Demo</span>
+              </h2>
+              <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+                <div>
+                  <label htmlFor={`${fieldId("fullName")}`} className={labelClass}>
+                    Full Name<span aria-hidden="true">*</span>
+                    <span className="sr-only"> (required)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id={`${fieldId("fullName")}`}
+                    name="fullName"
+                    required
+                    aria-required="true"
+                    aria-invalid={!!errors.fullName}
+                    aria-describedby={errors.fullName ? `${fieldId("fullName")}-error` : undefined}
+                    className={`${fieldBase} ${errors.fullName ? "border-error-dark" : "border-navy-border"}`}
+                    placeholder="Your full name"
+                    value={formData.fullName}
+                    onChange={(e) => setField("fullName", e.target.value)}
+                    autoComplete="name"
+                  />
+                  {errors.fullName && (
+                    <p id={`${fieldId("fullName")}-error`} className={errorClass} role="alert">
+                      {errors.fullName}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor={`${fieldId("email")}`} className={labelClass}>
+                    Work Email<span aria-hidden="true">*</span>
+                    <span className="sr-only"> (required)</span>
+                  </label>
+                  <input
+                    type="email"
+                    id={`${fieldId("email")}`}
+                    name="email"
+                    required
+                    aria-required="true"
+                    aria-invalid={!!errors.email}
+                    aria-describedby={errors.email ? `${fieldId("email")}-error` : undefined}
+                    className={`${fieldBase} ${errors.email ? "border-error-dark" : "border-navy-border"}`}
+                    placeholder="you@company.com"
+                    value={formData.email}
+                    onChange={(e) => setField("email", e.target.value)}
+                    autoComplete="email"
+                  />
+                  {errors.email && (
+                    <p id={`${fieldId("email")}-error`} className={errorClass} role="alert">
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor={`${fieldId("company")}`} className={labelClass}>
+                    Company Name<span aria-hidden="true">*</span>
+                    <span className="sr-only"> (required)</span>
+                  </label>
+                  <input
+                    type="text"
+                    id={`${fieldId("company")}`}
+                    name="company"
+                    required
+                    aria-required="true"
+                    aria-invalid={!!errors.company}
+                    aria-describedby={errors.company ? `${fieldId("company")}-error` : undefined}
+                    className={`${fieldBase} ${errors.company ? "border-error-dark" : "border-navy-border"}`}
+                    placeholder="Your company"
+                    value={formData.company}
+                    onChange={(e) => setField("company", e.target.value)}
+                    autoComplete="organization"
+                  />
+                  {errors.company && (
+                    <p id={`${fieldId("company")}-error`} className={errorClass} role="alert">
+                      {errors.company}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label htmlFor={`${fieldId("interest")}`} className={labelClass}>
+                    What would you like to explore?
+                  </label>
+                  <select
+                    id={`${fieldId("interest")}`}
+                    name="interest"
+                    className={`${fieldBase} cursor-pointer border-navy-border ${
+                      formData.interest ? "text-white" : "text-navy-text"
+                    }`}
+                    value={formData.interest}
+                    onChange={(e) => setField("interest", e.target.value)}
+                  >
+                    <option value="" className="bg-navy text-navy-text">Select an option</option>
+                    <option value="carry" className="bg-navy text-white">Carry Management</option>
+                    <option value="compensation" className="bg-navy text-white">Compensation Management</option>
+                    <option value="coinvest" className="bg-navy text-white">Employee Co-Invest</option>
+                    <option value="gpcommit" className="bg-navy text-white">GP Commit</option>
+                    <option value="all" className="bg-navy text-white">All of the above</option>
+                  </select>
+                </div>
+
+                {status === "error" && (
+                  <p className={errorClass} role="alert">
+                    There was an error submitting your request. Please try again.
+                  </p>
+                )}
+
+                <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+                  {isSubmitting ? "Submitting..." : "Book a Free Demo"}
+                </Button>
+
+                <p className="mt-4 text-center text-[13px] leading-5 text-navy-text">
+                  By submitting, you agree to our{" "}
+                  <a
+                    href="/privacy"
+                    className="rounded-sm font-medium text-white underline decoration-orange decoration-2 underline-offset-[3px] transition-all hover:decoration-4"
+                  >
+                    Privacy Policy
+                  </a>
+                  .
+                </p>
+              </form>
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </Section>
   );
 }

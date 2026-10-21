@@ -1,4 +1,4 @@
-"use client";
+import { DarkSection } from "@/components/ui/Frame";
 
 const reasons = [
   {
@@ -29,49 +29,43 @@ const reasons = [
 
 export default function WhyNavable() {
   return (
-    <section className="py-24 bg-white" aria-labelledby="why-navable-heading">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
-          {/* Left side - Header */}
-          <div className="lg:sticky lg:top-24">
-            <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
-              Why Navable
-            </p>
-            <h2 id="why-navable-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.15]">
-              <span className="text-gray-900">Why Teams </span>
-              <span className="text-[#5046e5]">Choose Navable</span>
-            </h2>
-            <p className="text-gray-600 leading-relaxed max-w-md text-[15px] mt-6">
-              Moving carry off Excel only works if the replacement preserves the flexibility 
-              and control Finance already has, without creating another operational burden.
-            </p>
-          </div>
-
-          {/* Right side - Reasons with /01, /02, /03, /04 numbering */}
-          <ol className="space-y-5" role="list">
-            {reasons.map((reason) => (
-              <li
-                key={reason.number}
-                className="group"
-              >
-                <div className="flex items-start gap-5">
-                  <span className="text-[#5046e5] font-bold text-lg tracking-tight shrink-0 pt-0.5" aria-hidden="true">
-                    /{reason.number}
-                  </span>
-                  <div className="flex-1 pb-5 border-b border-gray-100 group-last:border-0 group-last:pb-0">
-                    <h3 className="text-lg font-bold text-gray-900 mb-2">
-                      {reason.title}
-                    </h3>
-                    <p className="text-gray-600 leading-relaxed text-[15px]">
-                      {reason.description}
-                    </p>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ol>
+    <DarkSection label="Why Navable" labelledBy="why-navable-heading">
+      <div className="grid lg:grid-cols-2">
+        {/* Left side - heading on a dot grid */}
+        <div className="dot-grid-dark border-b border-navy-line px-6 py-12 lg:border-b-0 lg:border-r lg:px-12 lg:pb-12 lg:pt-[63px]">
+          <h2
+            id="why-navable-heading"
+            className="text-[32px] font-semibold leading-[1.25] text-white lg:text-[40px] lg:leading-[50px]"
+          >
+            Why Teams
+            <br className="hidden lg:block" /> <span className="text-orange">Choose Navable</span>
+          </h2>
+          <p className="mt-5 max-w-[430px] text-[15px] leading-[25px] text-navy-text">
+            Moving carry off Excel only works if the replacement preserves the flexibility and
+            control Finance already has, without creating another operational burden.
+          </p>
         </div>
+
+        {/* Right side - numbered reasons */}
+        <ol className="grid lg:grid-rows-4">
+          {reasons.map((reason) => (
+            <li
+              key={reason.number}
+              className="flex items-baseline gap-6 border-b border-navy-line px-6 py-8 last:border-b-0 lg:gap-[42px] lg:pl-[50px] lg:pr-6 lg:pb-[34px] lg:pt-[38px]"
+            >
+              <span aria-hidden="true" className="w-5 shrink-0 font-mono text-[11px] leading-none text-orange">
+                /{reason.number}
+              </span>
+              <div>
+                <h3 className="text-xl font-medium leading-7 text-white">{reason.title}</h3>
+                <p className="mt-2 max-w-[400px] text-[15px] leading-[25px] text-navy-text">
+                  {reason.description}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
-    </section>
+    </DarkSection>
   );
 }

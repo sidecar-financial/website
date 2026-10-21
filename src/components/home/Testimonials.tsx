@@ -1,105 +1,87 @@
-"use client";
+import { Section } from "@/components/ui/Frame";
 
 const featuredTestimonial = {
   quote:
     "We switched to Navable due to data accuracy issues with our legacy provider. It's paramount that our software gets these things right.",
-  author: "Director of Finance",
-  company: "$4Bn AUM Venture Capital Firm",
+  attribution: ["Director of Finance", "$4Bn AUM Venture Capital Firm"],
 };
 
 const sideTestimonials = [
   {
     quote:
       "Probably one of the more thoughtful, comprehensive software solutions we've seen built for our industry.",
-    author: "CFO",
-    company: "The Sterling Group",
+    attribution: ["CFO at The Sterling Group"],
   },
   {
     quote: "It's easy, intuitive, and seamless.",
-    author: "MD, Business Technology Office",
-    company: "$15Bn AUM Global Private Equity Firm",
+    attribution: ["MD, Business Technology Office", "$15Bn AUM Global Private Equity Firm"],
   },
   {
     quote:
       "Navable dramatically simplified manual work with an intuitive digital experience.",
-    author: "COO",
-    company: "$85B AUM Global Private Equity Firm",
+    attribution: ["COO, $85B AUM Global Private Equity Firm"],
   },
 ];
 
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-[#1a1a2e]" aria-labelledby="testimonials-heading">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-14">
-          <p className="text-[#a5b4fc] text-xs font-bold tracking-[0.2em] uppercase mb-4">
-            Testimonials
-          </p>
-          <h2 id="testimonials-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight">
-            <span className="text-white">Built for Finance. </span>
-            <span className="text-[#fbbf24]">Proven in Practice.</span>
-          </h2>
-        </div>
-
-        {/* Two-column layout: Featured quote on left, grid on right */}
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
-          {/* Featured large quote - Left side */}
-          <figure className="bg-[#23233a] rounded-2xl p-8 lg:p-10 border border-[#2d2d4a] flex flex-col justify-between h-full">
-            <div>
-              <div className="text-[#fbbf24] mb-6" aria-hidden="true">
-                <svg
-                  className="w-10 h-10"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                </svg>
-              </div>
-
-              <blockquote className="text-xl lg:text-2xl font-medium text-white leading-relaxed mb-8">
-                <p>{featuredTestimonial.quote}</p>
-              </blockquote>
-            </div>
-
-            <figcaption>
-              <p className="font-semibold text-white">– {featuredTestimonial.author}</p>
-              <p className="text-sm text-gray-400 mt-1">{featuredTestimonial.company}</p>
-            </figcaption>
-          </figure>
-
-          {/* Three smaller quote cards - Right side in vertical stack */}
-          <div className="flex flex-col gap-4" role="list" aria-label="Additional testimonials">
-            {sideTestimonials.map((testimonial, index) => (
-              <figure
-                key={index}
-                role="listitem"
-                className="bg-[#23233a] rounded-xl p-6 border border-[#2d2d4a] hover:border-[#3d3d5a] transition-colors flex-1"
-              >
-                <div className="flex gap-3">
-                  <div className="text-[#fbbf24] flex-shrink-0" aria-hidden="true">
-                    <svg
-                      className="w-5 h-5"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <blockquote className="text-gray-300 text-sm leading-relaxed mb-3">
-                      <p>{testimonial.quote}</p>
-                    </blockquote>
-                    <figcaption>
-                      <p className="font-medium text-white text-sm">– {testimonial.author}</p>
-                      <p className="text-xs text-gray-500 mt-0.5">{testimonial.company}</p>
-                    </figcaption>
-                  </div>
-                </div>
-              </figure>
-            ))}
-          </div>
-        </div>
+    <Section label="Testimonials" labelledBy="testimonials-heading">
+      <div className="px-6 py-14 lg:px-12 lg:pb-[72px] lg:pt-[100px]">
+        <h2
+          id="testimonials-heading"
+          className="text-[32px] font-semibold leading-[1.25] text-ink lg:text-[40px] lg:leading-[50px]"
+        >
+          Built for Finance.
+          <br /> Proven in Practice.
+        </h2>
       </div>
-    </section>
+
+      {/* Featured quote */}
+      <figure className="bg-soft px-6 pb-14 pt-12 lg:min-h-[514px] lg:px-12 lg:pb-[100px] lg:pt-[63px]">
+        <svg
+          className="h-11 w-14 text-orange"
+          viewBox="0 0 36 30"
+          fill="currentColor"
+          aria-hidden="true"
+        >
+          <path d="M0 30V17.2C0 7.1 5.1 1.6 13.6 0l2.1 4.6C11.9 6 10 8.6 9.7 12.4H16V30H0Zm20 0V17.2C20 7.1 25.1 1.6 33.6 0l2.1 4.6c-3.8 1.4-5.7 4-6 7.8H36V30H20Z" />
+        </svg>
+        <blockquote className="mt-10 max-w-[640px] text-2xl font-semibold leading-[1.45] text-ink lg:text-[32px] lg:leading-[46px]">
+          <p>{featuredTestimonial.quote}</p>
+        </blockquote>
+        <figcaption className="mt-8 text-[13px] leading-5 text-muted">
+          {featuredTestimonial.attribution.map((line, i) => (
+            <span key={line} className="block">
+              {i === 0 ? "– " : ""}
+              {line}
+            </span>
+          ))}
+        </figcaption>
+      </figure>
+
+      {/* Supporting quotes */}
+      <ul className="grid border-t border-line lg:grid-cols-3">
+        {sideTestimonials.map((testimonial) => (
+          <li
+            key={testimonial.quote}
+            className="border-b border-line last:border-b-0 lg:border-b-0 lg:border-r lg:last:border-r-0"
+          >
+            <figure className="px-6 pb-8 pt-10 lg:px-8 lg:pb-[30px] lg:pt-12">
+              <blockquote className="text-lg font-medium leading-[30px] text-ink lg:min-h-[120px]">
+                <p>&ldquo;{testimonial.quote}&rdquo;</p>
+              </blockquote>
+              <figcaption className="mt-6 text-[13px] leading-5 text-muted">
+                {testimonial.attribution.map((line, i) => (
+                  <span key={line} className="block">
+                    {i === 0 ? "– " : ""}
+                    {line}
+                  </span>
+                ))}
+              </figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </Section>
   );
 }

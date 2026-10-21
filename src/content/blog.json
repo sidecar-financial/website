@@ -1,0 +1,4383 @@
+[
+  {
+    "slug": "how-to-automate-carry-and-allocation-management-without-losing-control",
+    "title": "How to Automate Carry and Allocation Management Without Losing Control",
+    "excerpt": "Automation isn't about removing humans from carry decisions. It's about removing carry decisions from spreadsheets.",
+    "description": "How a centralized carry engine replaces fragmented spreadsheets with a governed system of record — faster distributions, audit-ready outputs, and visibility across funds and participants.",
+    "date": "2026-04-08",
+    "author": "Navable Team",
+    "cover": {
+      "src": "/images/blog/how-to-automate-carry-and-allocation-management-without-losing-control-cover.webp",
+      "width": 1024,
+      "height": 474,
+      "alt": ""
+    },
+    "blocks": [
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Key Takeaways: Automating Carry Without Losing Control"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Carry management involves two types of work: judgment calls (who gets what, under what terms) and execution work (applying those decisions consistently across funds, participants, and time). The first should stay human. The second should be automated."
+            }
+          ],
+          [
+            {
+              "t": "Most firms resist automation because they're afraid of losing control over the most sensitive data in the firm. The right approach preserves control by moving it from undocumented spreadsheet edits to governed, auditable workflows."
+            }
+          ],
+          [
+            {
+              "t": "The highest-ROI carry processes to automate aren't waterfall calculations (most fund admins handle those). They're GP-side operations: vesting administration, allocation change tracking, forfeiture processing, participant reporting, and document management."
+            }
+          ],
+          [
+            {
+              "t": "Rules-based automation with human approval checkpoints is the model that works. The system applies the rules. People approve the exceptions. Every action is logged."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "There's a version of \"carry automation\" that makes every CFO nervous: a black box that ingests fund data, runs opaque calculations, and produces numbers nobody can explain or verify."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "That's not automation. That's abdication."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most carry management work isn't complex judgment. It's repetitive execution: applying defined rules to structured data, tracking changes that follow predictable patterns, producing outputs that should be identical every time. Humans do this reliably when volume is low. When volume is high, quality degrades with every additional manual touchpoint. A governed system can do the same work with perfect consistency, perfect documentation, and zero version control issues."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The real question isn't whether to automate. It's which parts to automate, which to keep human, and how to design the boundary so the firm gains efficiency without sacrificing oversight."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Two Types of Carry Work"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Every carry task falls into one of two categories. Failing to distinguish between them is what makes automation conversations unproductive."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Judgment Work"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Decisions that require context, negotiation, and human evaluation. They can't be encoded into rules because they depend on qualitative, political, or situation-specific factors:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Determining a new hire's carry allocation"
+            }
+          ],
+          [
+            {
+              "t": "Deciding how to handle a departing partner's unvested points"
+            }
+          ],
+          [
+            {
+              "t": "Designing the carry pool for a new fund"
+            }
+          ],
+          [
+            {
+              "t": "Approving exceptions to standard vesting terms"
+            }
+          ],
+          [
+            {
+              "t": "Setting reserve pool size and negotiating side letter provisions"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "These reflect strategy, culture, and partnership dynamics. No system should make them autonomously."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Execution Work"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Operational tasks that translate judgment into action and maintain the results accurately over time. They follow defined rules, produce predictable outputs, and need to run consistently across funds, participants, and reporting cycles:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Applying allocations to participant records across all affected funds"
+            }
+          ],
+          [
+            {
+              "t": "Advancing vesting schedules based on time or triggering events"
+            }
+          ],
+          [
+            {
+              "t": "Processing forfeitures and reallocating points per plan rules"
+            }
+          ],
+          [
+            {
+              "t": "Generating participant statements with current allocations and values"
+            }
+          ],
+          [
+            {
+              "t": "Producing management summaries and audit documentation"
+            }
+          ],
+          [
+            {
+              "t": "Tracking award letter execution: generated, sent, signed, stored"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Every manual touchpoint in execution work is an opportunity for inconsistency, delay, or error. Unlike judgment work, where human nuance adds value, execution work degrades in quality as volume increases."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Why Firms Resist Automation"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The hesitation isn't irrational. Carry data is the most sensitive information in the firm. An allocation tracking error can mean distributing real dollars to the wrong people. An undetected automation failure could compound across multiple funds and reporting cycles."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "CFOs and controllers have built their careers on being able to verify the numbers. Handing that to a system, especially one replacing a spreadsheet they built and understand intimately, feels like surrendering control."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The concern is valid, but it's based on a false comparison. A spreadsheet lets anyone edit any cell at any time with no approval requirement and no audit trail. A governed system:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Requires authorization before any change takes effect"
+            }
+          ],
+          [
+            {
+              "t": "Logs every modification with timestamps and rationale"
+            }
+          ],
+          [
+            {
+              "t": "Enforces rules consistently with no accidental formula overrides"
+            }
+          ],
+          [
+            {
+              "t": "Prevents unauthorized access through role-based controls"
+            }
+          ],
+          [
+            {
+              "t": "Preserves complete historical records so any output traces back to its source"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Control doesn't disappear with automation. It moves from informal, person-dependent oversight to structural, system-enforced governance."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "What to Automate First"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Not all carry automation delivers equal value. Start with the processes performed most frequently, most manually, and with the highest consequences for errors."
+          }
+        ]
+      },
+      {
+        "type": "h4",
+        "runs": [
+          {
+            "t": "Vesting administration"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Milestones occur on predictable schedules. In spreadsheets, someone has to remember to update each participant's status across every affected fund. Multiply that by forty participants across three vintages, and vesting alone consumes significant hours quarterly, with the risk of missed milestones producing incorrect statements. In an automated system, vesting advances on schedule, records update, statements reflect current status, and the audit trail captures the event without anyone needing to remember anything."
+          }
+        ]
+      },
+      {
+        "type": "h4",
+        "runs": [
+          {
+            "t": "Allocation change tracking"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Every change (grants, reallocations, forfeitures, transfers, step-ups) needs to be applied, documented, and reflected across all affected funds. In spreadsheets, that's manual edits to multiple files with documentation maintained separately, if at all. Automation routes every change through a defined workflow: initiation, approval, application, documentation. Downstream outputs update automatically."
+          }
+        ]
+      },
+      {
+        "type": "h4",
+        "runs": [
+          {
+            "t": "Forfeiture and reallocation processing"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When an employee departs, calculating vested vs. unvested carry, removing forfeited points, deciding where they go, applying the reallocation, and updating all downstream models is a multi-step manual process with high error potential. An automated system triggers the forfeiture from the departure event, calculates per plan rules, reallocates per defined mechanics, and updates every affected record simultaneously."
+          }
+        ]
+      },
+      {
+        "type": "h4",
+        "runs": [
+          {
+            "t": "Participant reporting"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Generating individual statements is one of the most time-consuming manual processes and one of the most valuable to automate. When statements pull from the same governed data that tracks allocations, they're always consistent and always current. No manual assembly, no formatting exercise, no risk of showing different numbers than the model."
+          }
+        ]
+      },
+      {
+        "type": "h4",
+        "runs": [
+          {
+            "t": "Document lifecycle management"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Award letters, amendments, and signature pages need to be created, executed, and stored alongside allocation data. Automation generates documents from carry plan templates, routes for electronic signature, and stores executed documents linked to participant and fund records."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Human Approval Layer"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The best automation systems are explicit about where human judgment is required. They don't eliminate approvals. They make approvals faster, better-informed, and documented."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Every allocation change, whether triggered automatically (vesting milestone) or initiated manually (new grant), passes through a human approval checkpoint before taking effect. The system presents the proposed change, shows the before-and-after impact, and waits for authorization. The approver reviews, decides, and the decision is logged."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Rules-based execution with human approval gates. The system handles repetitive work accurately. Humans make decisions and verify exceptions. Every action, automated or manual, is documented."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Waterfall Distinction"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "\"Automating carry\" and \"automating the waterfall\" are often conflated, but they're different problems solved by different tools."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Waterfall automation",
+            "b": 1
+          },
+          {
+            "t": " computes fund-level distribution splits based on LPA terms (hurdles, catch-ups, clawback provisions, LP/GP splits). Most firms delegate this to their fund administrator or a specialized engine. It determines the total carry pool for a given distribution event."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry management automation",
+            "b": 1
+          },
+          {
+            "t": " tracks how that pool is allocated among individual GP participants, manages vesting and forfeitures, produces statements, and maintains audit trails. It translates a fund-level number into forty individual records, each with their own percentages, vesting status, and change history."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most firms need both layers automated, but not in the same tool. The waterfall calculation lives with the fund admin or a dedicated engine. The carry management layer needs its own purpose-built system."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "What This Looks Like in Practice"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Three scenarios that illustrate the difference between spreadsheet carry management and automated carry management:"
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "New hire granted 3% carry in Fund III."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The managing partner approves the grant. The system creates the allocation record, generates the award letter, routes it for signature, and stores the executed document. The allocation reflects in the carry pool, the reserve adjusts, and the change appears in the next management summary and participant statement. "
+          },
+          {
+            "t": "Manual effort: one approval decision.",
+            "i": 1
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Quarterly vesting milestone"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The system advances vesting for all eligible participants based on their schedules. Updated percentages flow to statements and value calculations. The controller receives an approval notification for review. The audit trail logs each event. "
+          },
+          {
+            "t": "Manual effort: one review and confirmation.",
+            "i": 1
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "VP resigns"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "HR confirms the departure date. The system calculates vested vs. unvested carry, returns forfeited points to the reserve (or redistributes per plan rules), updates the participant's record across all funds, generates a termination memo, and adjusts remaining participants' records and statements. "
+          },
+          {
+            "t": "Manual effort: one departure confirmation, one governance review.",
+            "i": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Each of these events would take hours in a spreadsheet environment. With automation, execution is handled, documentation is automatic, and human involvement concentrates where it belongs: on the decision."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Making the Transition"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Moving from manual to automated doesn't require a big-bang transformation."
+          }
+        ]
+      },
+      {
+        "type": "ol",
+        "items": [
+          [
+            {
+              "t": "Start with the biggest pain point.",
+              "b": 1
+            },
+            {
+              "t": " Usually vesting administration or participant reporting. Automating one high-visibility process builds confidence without disrupting everything else."
+            }
+          ],
+          [
+            {
+              "t": "Keep humans in the loop explicitly.",
+              "b": 1
+            },
+            {
+              "t": " Define which events require approval and which proceed automatically. Make requirements visible in the system, not just understood informally."
+            }
+          ],
+          [
+            {
+              "t": "Run in parallel first.",
+              "b": 1
+            },
+            {
+              "t": " For the first cycle, compare automated outputs against your existing spreadsheets. Resolve discrepancies. Build trust before retiring the old process."
+            }
+          ],
+          [
+            {
+              "t": "Expand incrementally.",
+              "b": 1
+            },
+            {
+              "t": " Once the first process runs reliably, add the next: allocation changes, forfeitures, document management. Each addition reduces manual workload and extends the governed environment."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Control Is the Point"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The instinct to resist carry automation comes from a good place. These are the most consequential numbers in the firm, and the people responsible for them take that seriously."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "But the spreadsheet environment that feels like control is actually fragile, undocumented, dependent on individuals, and governed by convention rather than structure. Every quarter-end is a reconciliation exercise. Every audit is a reconstruction effort. Every distribution cycle carries the quiet risk that something changed somewhere and nobody caught it."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Automation gives the CFO a system that enforces the controls they've always wanted: consistently, at scale, with a complete record of every action. The judgment stays human. The execution becomes reliable. And the carry data that drives the firm's most important financial decisions is finally governed the way it deserves to be."
+          }
+        ]
+      },
+      {
+        "type": "h4",
+        "runs": [
+          {
+            "t": "If your carry process still runs on spreadsheets and institutional memory, "
+          },
+          {
+            "t": "Navable can help",
+            "href": "/platform"
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The platform automates carry allocation tracking, vesting, forfeitures, participant reporting, and document management with human approval workflows and complete audit trails at every step. "
+          },
+          {
+            "t": "Book a demo →",
+            "href": "/demo"
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "FAQs: Automating Carry Management"
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Does automating carry mean removing human oversight?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "No. The best systems use rules-based execution with human approval checkpoints. The system applies defined rules consistently. Humans approve decisions, review exceptions, and maintain strategic control."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "What's the difference between automating waterfall calculations and automating carry management?",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Waterfall automation computes fund-level distribution splits based on LPA terms. Carry management automation tracks how that pool is allocated among individual participants, manages vesting and forfeitures, produces statements, and maintains audit trails. Different problems, different tools."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "What carry processes should be automated first?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Vesting administration and participant reporting deliver the highest immediate ROI. They're performed most frequently, consume the most manual time, and directly affect participant experience. Allocation change tracking and forfeiture processing are strong second priorities."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "How do you maintain control over automated carry processes?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Role-based access controls, defined approval workflows for every change type, and complete audit trails that log who did what, when, and why. The system enforces governance structurally, which is more reliable than manual oversight in spreadsheets."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Is carry automation only relevant for large firms?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Any firm managing carry across more than one fund with more than a handful of participants benefits. The trigger is the volume and frequency of carry events (vesting, changes, reporting) that make manual processes unsustainable, not the firm's size."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "what-your-team-wants-to-know-about-their-carry",
+    "title": "What Your Team Really Wants to Know About Their Carry",
+    "excerpt": "Carry is your most powerful retention tool. Unless nobody understands what they hold.",
+    "description": "Most carry holders can't answer basic questions about their own position. Here's what they want to know, why opacity kills retention, and what a total compensation dashboard changes.",
+    "date": "2026-04-07",
+    "author": "Navable",
+    "cover": {
+      "src": "/images/blog/what-your-team-wants-to-know-about-their-carry-cover.webp",
+      "width": 1027,
+      "height": 328,
+      "alt": ""
+    },
+    "blocks": [
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Key Takeaways: Carry Transparency and Employee Retention"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Most employees with carry allocations can't answer basic questions about their own position: what's vested, what it's worth, what has to happen before they see a dollar, and what they'd lose if they left tomorrow."
+            }
+          ],
+          [
+            {
+              "t": "That opacity isn't intentional. It's the byproduct of carry data living in finance-team spreadsheets that were never designed to be shared or accessed by a broader audience."
+            }
+          ],
+          [
+            {
+              "t": "When carry is opaque, its value as a retention tool degrades. Employees discount what they can't see, and every unanswered question becomes an ad-hoc request on the CFO's desk."
+            }
+          ],
+          [
+            {
+              "t": "A total compensation dashboard that shows carry alongside co-invest, salary, and bonus turns carry from an abstract line item into a tangible reason to stay."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "You granted your team carry for a reason. It's the most meaningful long-term incentive your firm can offer, a direct stake in the economics you're building together. For founding partners, carry is the core of the business model. For the growing bench of principals, VPs, and operating partners who now participate, it's supposed to keep them invested in the firm's success over a ten-year fund cycle."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Here's the problem: most of them have no idea what they actually hold.",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "They received an award letter when they joined. They probably read it. They may remember the headline number: \"You'll receive X% carry in Fund III.\" Beyond that, the details are murky. What's vested? What's it worth? What has to happen before they see a distribution? What do they forfeit if they leave?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "These are the questions every rational employee with a carry grant thinks about, silently, constantly, and with increasing urgency as they approach career decision points. But most won't ask, because they worry it makes them look greedy or disloyal. So the questions go unasked, the uncertainty compounds, and the retention value of carry quietly erodes."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Carry Questions Your Team Won't Ask Out Loud"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Every carry holder is thinking about some version of these questions. They just express them differently depending on seniority and comfort level."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "1. \"What's actually vested?\""
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The most fundamental question, and remarkably few participants can answer it. They know they have carry. They may know their percentage. But the vesting schedule, set three years ago in a document they've filed away, isn't something they track."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When the answer requires digging out the award letter and doing mental math against a start date, most people don't bother. The carry sits in a mental category labeled \"probably worth something, eventually,\" which is not the engagement signal your firm intended."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "2. \"What's it worth right now?\""
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Even participants who know their allocation and vesting status rarely know the estimated dollar value. Getting there requires mapping their allocation against the fund's current NAV, applying waterfall mechanics, and distinguishing between vested and unvested value. Most employees can't do that calculation, and most firms don't provide it."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Firms spend enormous effort on fund valuations: quarterly NAV updates, portfolio reviews, investor reporting. But that data almost never flows down to the individual carry holder."
+          }
+        ]
+      },
+      {
+        "type": "quote",
+        "runs": [
+          {
+            "t": "The fund's performance gets reported to LPs in meticulous detail. The employee who holds 2% of the carry pool gets a number they made up.",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "3. \"What has to happen for me to see a dollar?\""
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "This separates theoretical compensation from tangible compensation. Carry sounds valuable in an offer letter, but for most employees it stays abstract until they understand the chain of events:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Investments need to exit"
+            }
+          ],
+          [
+            {
+              "t": "The fund needs to return capital and clear its hurdle"
+            }
+          ],
+          [
+            {
+              "t": "The GP's carry share gets calculated"
+            }
+          ],
+          [
+            {
+              "t": "Their individual allocation, at their current vesting percentage, determines their share"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "That chain is straightforward to anyone who's operated a fund. It's genuinely opaque to a principal from consulting, an operating partner from industry, or a VP two years into their first PE role. When the answer is \"your carry depends on exits that may not happen for five more years,\" the motivational power of the grant depends entirely on whether the employee trusts the numbers and understands the path."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "4. \"What happens if I leave?\""
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The question with the highest emotional stakes and the lowest transparency. Every carry holder has thought about it, not because they're planning to leave, but because understanding the downside is how people evaluate any financial position."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The answer lives in forfeiture provisions that vary enormously across firms:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "\"Good leaver\" vs. \"bad leaver\" definitions"
+            }
+          ],
+          [
+            {
+              "t": "What happens to unvested carry"
+            }
+          ],
+          [
+            {
+              "t": "Whether vested carry is retained or subject to conditions"
+            }
+          ],
+          [
+            {
+              "t": "How departure timing affects the outcome"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Few employees understand these terms in detail. The resulting dynamic is that people stay partly because of carry they believe they'd lose, without knowing exactly what they'd lose. That's ambiguity functioning as a handcuff, and it breaks the moment a recruiter shows up with a concrete offer."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "5. \"How does carry fit with everything else I earn?\""
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry doesn't exist in a vacuum. Employees also have base salary, bonus, co-invest returns, GP commit obligations, and benefits. The total picture is what determines how they evaluate their position relative to alternatives, and almost no firm presents it in an integrated way."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Instead, carry information comes from one source (if at all), bonus data from HR, co-invest statements from fund ops, and K-1s from tax. Assembling these into a coherent total compensation view falls to the employee, who typically can't do it because the data doesn't exist in a format that allows it."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "6. \"Am I being treated fairly?\""
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Nobody will ever ask this directly, but it underlies all the others. When carry is opaque, employees fill the vacuum with assumptions, comparisons, and speculation. They talk to peers at other firms. They compare notes with colleagues. They form beliefs about their position that may or may not be accurate, and they make career decisions based on those beliefs."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Transparency here doesn't mean disclosing everyone's allocations. It means giving each participant enough visibility into their own position that they don't need to guess."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Why Most Firms Don't Provide This Transparency"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "For most firms, the opacity is an operational constraint, not a deliberate strategy."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry data lives in finance-team spreadsheets built for internal tracking, not participant communication. Producing an individual statement means pulling data from fund-level models, calculating vested and unvested positions, estimating value, and formatting it all into something presentable. That's an hour per person. For forty carry holders, it's a multi-day project every quarter."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most finance teams don't have the bandwidth. They produce partner statements for the senior-most participants and handle everyone else ad-hoc. The VP who asks gets an answer. The principal who doesn't ask gets nothing. And the firm's carry program loses retention power across exactly the population most at risk of being recruited away."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The other barrier is sensitivity. Firms worry that showing unrealized estimates creates expectations that may not materialize. What if performance declines? What if employees fixate on the number? These are legitimate concerns, but complete opacity trades one risk for another: carry becoming valueless as a retention tool because nobody understands what they hold."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "What a Total Compensation Dashboard Changes"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The answer isn't better spreadsheets or more frequent ad-hoc statements. It's a participant-facing portal with a real-time, self-serve view of each person's complete compensation position."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "A well-designed dashboard shows:"
+          }
+        ]
+      },
+      {
+        "type": "img",
+        "src": "/images/blog/what-your-team-wants-to-know-about-their-carry-1.webp",
+        "alt": "",
+        "width": 1062,
+        "height": 572
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Carry allocations by fund, with vesting status and schedule"
+            }
+          ],
+          [
+            {
+              "t": "Estimated carry value (vested and unvested), updated each valuation cycle"
+            }
+          ],
+          [
+            {
+              "t": "Co-invest commitments, capital called, and performance"
+            }
+          ],
+          [
+            {
+              "t": "Base salary and bonus history"
+            }
+          ],
+          [
+            {
+              "t": "GP commit obligations if applicable"
+            }
+          ],
+          [
+            {
+              "t": "A consolidated total compensation view bringing everything together"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The dashboard doesn't replace conversations with the CFO for senior partners. It eliminates the sixty other conversations that are really just data requests disguised as questions."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When a principal can log in and see $1.2M in vested carry value across two funds, 60% vested on a four-year schedule, with $180K in co-invest returns, they don't need to email the controller. They have their answer. They can see, concretely, what they'd walk away from."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "That's what turns carry from an abstract promise into a tangible retention anchor."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Business Case for Carry Transparency"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The firms that provide real carry transparency do it because it works."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "1. Reduced ad-hoc reporting burden.",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Every question a participant answers through a portal is one that doesn't land on the finance team's desk. For firms with thirty or forty carry holders, the time savings are meaningful, especially around year-end."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "2. Stronger retention signal.",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "An employee who sees $800K in unvested carry, updated quarterly and clearly presented, makes a different career calculation than one who vaguely recalls \"some carry in Fund III.\""
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "3. Better hiring conversations.",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Showing prospective hires exactly what total compensation looks like, including projected carry value, makes offers more compelling than competitors who describe carry in abstract terms."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "4. Cleaner compensation reviews.",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When leadership has a consolidated view of every participant's total compensation, year-end reviews and promotion discussions are grounded in complete data rather than partial information stitched together from multiple sources."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Designing Transparency That Works"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry transparency doesn't mean radical openness. It means the right amount of visibility for each audience."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Role-based access is essential:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Partners see allocations across all funds"
+            }
+          ],
+          [
+            {
+              "t": "Employees see their own position only"
+            }
+          ],
+          [
+            {
+              "t": "HR sees compensation-level views"
+            }
+          ],
+          [
+            {
+              "t": "Finance sees everything"
+            }
+          ],
+          [
+            {
+              "t": "One data source, different views based on role"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Estimated values need context:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Label unrealized estimates clearly, tied to the most recent fund valuation"
+            }
+          ],
+          [
+            {
+              "t": "Present enough context that participants understand what drives the number"
+            }
+          ],
+          [
+            {
+              "t": "Build trust through responsible transparency, not naivety"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Consistency matters more than frequency:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "A quarterly update participants can rely on beats sporadic statements produced on request"
+            }
+          ],
+          [
+            {
+              "t": "A steady cadence signals institutional commitment, not a one-off initiative"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Carry Conversation Your Firm Should Be Having"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "If your carry program is designed to retain your best people, ask yourself:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Can those people actually see what they hold?"
+            }
+          ],
+          [
+            {
+              "t": "Do they know what's vested?"
+            }
+          ],
+          [
+            {
+              "t": "Do they understand what it might be worth?"
+            }
+          ],
+          [
+            {
+              "t": "Can they see how it fits with the rest of their compensation?"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "If the answer to any of those is \"not really,\" your carry program is working at a fraction of its potential. Not because the economics are wrong, but because the communication layer is missing."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The firms that get this right aren't the ones with the most generous carry plans. They're the ones where every participant can log in, see their position, and understand exactly what they have, what it's worth, and what has to happen for them to see a dollar."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "That clarity is what turns compensation into alignment."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "If your team can't see what they hold, "
+          },
+          {
+            "t": "Navable can help",
+            "href": "/solutions/compensation-management"
+          },
+          {
+            "t": "."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The platform gives every participant a real-time total compensation dashboard with carry, co-invest, salary, and bonus in one view. "
+          },
+          {
+            "t": "Book a demo →",
+            "href": "/demo"
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "FAQs: Carry Transparency and Total Compensation"
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Should employees see estimated carry values?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Yes, with appropriate context. Showing only allocation percentages without dollar values keeps carry abstract. Presenting estimated vested and unvested values, clearly labeled as estimates tied to current fund valuations, makes carry tangible and reinforces its retention effect."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "What should a total compensation dashboard include?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "At minimum: carry allocations by fund with vesting status, estimated carry value (vested and unvested), co-invest commitments and performance, base salary and bonus history, and a consolidated total view pulling from a single governed data source."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "How often should carry information be updated for employees?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Quarterly, aligned with fund valuation updates. What matters most is consistency. Participants should know when to expect updates and trust that the data reflects the latest information."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Does carry transparency create retention risk if values decline?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Opacity is the greater risk. Employees who don't understand their carry make career decisions based on incomplete information. Employees who do understand it, even when values fluctuate, are better equipped to evaluate their total position rationally."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Can you provide carry transparency without a dedicated platform?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Through manually produced statements, yes. But at scale, the manual approach creates bottlenecks, inconsistencies, and staleness that undermine the transparency it's trying to provide. A self-serve portal is the only approach that scales."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "how-to-design-carry-plans-that-scale",
+    "title": "Designing Fair and Scalable Carry Plans for Private Capital Firms",
+    "excerpt": "Carry plans built for Fund I rarely survive Fund III. Here's how to design structures that scale with your firm.",
+    "description": "Learn how growing PE, VC, and real estate firms design carry plans that balance fairness and scalability. Avoid common mistakes and build structures that hold up across funds, partners, and audits.",
+    "date": "2026-03-30",
+    "author": "Navable Team",
+    "cover": {
+      "src": "/images/blog/how-to-design-carry-plans-that-scale-cover.webp",
+      "width": 1013,
+      "height": 579,
+      "alt": ""
+    },
+    "blocks": [
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Key Takeaways: Designing Carry Plans That Scale"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Carry plans that work for Fund I almost always break by Fund III, not because of bad design, but because they were never built for the complexity that growth introduces."
+            }
+          ],
+          [
+            {
+              "t": "The core tension is fairness vs. scalability: the more precisely a plan reflects individual contribution, the harder it becomes to operate across multiple funds, vintages, and participants."
+            }
+          ],
+          [
+            {
+              "t": "Most operational pain comes not from carry design but from carry tracking: managing allocations, vesting, forfeitures, and distributions as they change over time across an expanding firm."
+            }
+          ],
+          [
+            {
+              "t": "Firms that get this right separate the strategic decisions (who gets what) from the operational infrastructure (how it's tracked, reconciled, and reported) and invest in systems built for the latter."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "In a firm's early days, carried interest feels straightforward. A small team, one fund, everyone around the table. You know who did what, who earned what, and how the economics should split. Allocations are equal or close to it, documentation is light, and the model lives in a single spreadsheet or sometimes just in someone's head."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "That simplicity works when you have three partners and one fund. It fractures the moment you raise Fund II, bring in a lateral hire, or try to explain the allocation logic to an auditor who wasn't in the room when handshake decisions were made."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Fund I gets built on trust and proximity. By Fund III, you need structure, whether you planned for it or not. The gap between how carry was designed and how it actually needs to be managed is where most operational pain begins."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Core Tension: Fairness vs. Scalability"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Every carry plan tries to answer the same questions. Who sourced the deal? Who led it? Who added value post-close? Who took risk before there was a track record?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "As firms grow, those questions get harder to answer cleanly:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "A founding partner who sourced three of five deals in Fund I may source none in Fund III but still manage the portfolio"
+            }
+          ],
+          [
+            {
+              "t": "A new hire negotiated carry participation in existing funds as part of their offer letter"
+            }
+          ],
+          [
+            {
+              "t": "A principal who left mid-fund triggered a forfeiture clause nobody fully documented"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The instinct is to design structures that capture all of this nuance. Different allocations per deal. Adjustments based on contribution and timing. Exceptions for key hires. Side agreements for specific situations. Individually, each decision makes sense. Collectively, they create a system that becomes genuinely difficult to track, explain, and maintain."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Scalability requires the opposite: consistency, repeatability, clear rules, and minimal exceptions. Most firms don't consciously choose between fairness and scalability. They drift, adding exceptions and carve-outs over time, until the structure becomes unmanageable. By the time someone flags the problem, the complexity is already embedded."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "How Carry Structures Evolve"
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Stage 1: Founding Simplicity."
+          }
+        ]
+      },
+      {
+        "type": "img",
+        "src": "/images/blog/how-to-design-carry-plans-that-scale-1.webp",
+        "alt": "",
+        "width": 648,
+        "height": 425,
+        "caption": [
+          {
+            "t": "Across the industry, the evolution follows a remarkably consistent pattern. Funds are straightforward at first, then devolve into a messy web.",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry splits equally (or close to it) among founding partners. Limited differentiation, minimal documentation, decisions made over lunch. Complexity is low and so is the need for infrastructure."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Stage 2: Growth and Differentiation."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The team expands, roles specialize, and contribution varies more meaningfully. Carry starts reflecting that through role-based allocations, tiered participation, and early experiments with deal-level carry. Complexity begins here, not because anything is broken, but because the structure is becoming more tailored to a broader set of participants."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Stage 3: Institutionalization."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Three or four funds across overlapping vintages. Team composition changes mid-fund. Allocations differ across funds, deals, and participants. Documentation becomes formal out of necessity. LP scrutiny intensifies. What used to be a compensation model has quietly become an operational system, often resting on infrastructure (spreadsheets and tribal knowledge) that was never designed for this weight."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Complexity Drivers Most Firms Underestimate"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Growth introduces layers of carry complexity that are hard to anticipate until you're living with them."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Overlapping fund vintages."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Allocations run on different timelines. Participants enter at different points. Carry from older funds continues alongside new structures. Tracking who owns what across vintages gets difficult fast, especially when team composition shifts mid-cycle."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "New partners and lateral hires."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "How much carry should they receive? Do they participate in existing funds or only new ones? How do you avoid diluting founding partners while making competitive offers? Most firms layer new allocations on top of existing structures, compounding complexity with every hire."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Deal-level participation."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Jump-ball carry is logical in theory: not every partner works on every deal, so carry should reflect involvement. In practice, it creates fragmentation. Different participants across different deals, different percentages, and an exponentially larger tracking burden."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Phantom carry and synthetic structures."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "These solve a real retention problem by providing economic exposure without formal ownership, but they sit alongside traditional allocations with different vesting, payout mechanics, and tax treatment. Another layer to track, communicate, and reconcile."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Co-invest and hybrid participation."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When participants hold both carry and capital exposure, economic outcomes split across structures, and participation varies deal by deal. The line between ownership and incentive compensation blurs. The model gets harder to explain internally and to LPs asking pointed questions."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Hidden Operational Burden"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Designing a carry plan is one challenge. Managing it across years, funds, and personnel changes is a fundamentally different problem and the one most firms underestimate."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry design is static on paper. The reality underneath it shifts constantly. Finance and operations teams are:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Tracking ownership changes over time"
+            }
+          ],
+          [
+            {
+              "t": "Reconciling allocations across funds, deals, and entities"
+            }
+          ],
+          [
+            {
+              "t": "Maintaining an audit trail that can withstand scrutiny"
+            }
+          ],
+          [
+            {
+              "t": "Answering questions that sound simple but aren't: "
+            },
+            {
+              "t": "Who owned what at the time of this exit? How did this allocation change after Q3 rebalancing? Which participants belong in this distribution, and at what percentages?",
+              "i": 1
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The critical distinction is between carry design (which defines intent) and carry tracking (which reflects reality). Intent gets set once. Reality changes constantly as people leave, allocations shift, vesting schedules adjust, and structures evolve."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "What was agreed six months ago may not reflect the current state, and the spreadsheet that worked in Fund I becomes a genuine operational liability by Fund III. Not because the math is wrong, but because the model can no longer keep pace with the decisions being made around it."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Six Mistakes That Surface Too Late"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "These patterns show up consistently across the industry, almost always visible only in hindsight."
+          }
+        ]
+      },
+      {
+        "type": "ol",
+        "items": [
+          [
+            {
+              "t": "Over-optimizing for fairness in early funds.",
+              "b": 1
+            },
+            {
+              "t": " Perfectly reflecting individual contribution from day one creates bespoke structures that become fiendishly difficult to manage at scale."
+            }
+          ],
+          [
+            {
+              "t": "Designing for the current fund, not the next three.",
+              "b": 1
+            },
+            {
+              "t": " Plans built for Fund I without considering Fund II and beyond often require painful restructuring later."
+            }
+          ],
+          [
+            {
+              "t": "Mixing fund-level and deal-level carry without a framework.",
+              "b": 1
+            },
+            {
+              "t": " Combining approaches ad hoc leads to fragmentation and confusion about which logic applies where."
+            }
+          ],
+          [
+            {
+              "t": "Weak documentation of allocation decisions.",
+              "b": 1
+            },
+            {
+              "t": " What made sense at the time becomes impossible to reconstruct two years later, especially during audits or departures."
+            }
+          ],
+          [
+            {
+              "t": "Relying on spreadsheets past their useful life.",
+              "b": 1
+            },
+            {
+              "t": " By the time you're managing carry across three funds, two co-invest vehicles, and a continuation fund, version control and auditability become serious risks."
+            }
+          ],
+          [
+            {
+              "t": "Disconnecting allocation tracking from distributions.",
+              "b": 1
+            },
+            {
+              "t": " When ownership data and distribution models live in separate systems (or separate tabs), errors become almost inevitable and they surface at the worst moments."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most carry plans don't fail because of bad design. They fail because they were never built to be operated at scale."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "What Well-Managed Carry Plans Have in Common"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "There's no perfect carry plan. But firms that manage this well share recognizable patterns:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "They define clear allocation frameworks upfront rather than accumulating one-off decisions into an unmanageable patchwork"
+            }
+          ],
+          [
+            {
+              "t": "They separate carry design (the strategic \"who gets what\") from carry tracking (the operational \"what actually happened, and can we prove it\")"
+            }
+          ],
+          [
+            {
+              "t": "They maintain time-aware ownership records reflecting the full history of changes, not just the current snapshot"
+            }
+          ],
+          [
+            {
+              "t": "They build systems, not just models, recognizing that carry management is an ongoing discipline"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "They also accept tradeoffs. Not every edge case needs a perfect solution. Not every allocation needs to be hyper-optimized. What matters is that the overall system can be understood, maintained, and trusted over time by partners, employees, auditors, and LPs."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Shift That Growing Firms Eventually Make"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "At some point, complexity forces a change. Not because firms want to overhaul their approach, but because they have to."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The shift moves from:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Ad hoc decisions to structured frameworks"
+            }
+          ],
+          [
+            {
+              "t": "Static allocations to dynamic ownership tracking"
+            }
+          ],
+          [
+            {
+              "t": "Spreadsheets to purpose-built systems covering the full carry lifecycle: allocations, vesting, forfeitures, reallocations, distributions, and reporting"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "This is less about adopting technology for its own sake and more about operational necessity. As fund structures evolve and participant counts grow, the need for a centralized, audit-ready system of record becomes unavoidable."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Platforms like "
+          },
+          {
+            "t": "Navable",
+            "href": "/platform"
+          },
+          {
+            "t": " are purpose-built for this layer."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "They helping firms manage carry plans, allocations, vesting rules, co-invest programs, and compensation across funds and participants as they change over time. The platform replaces fragmented spreadsheets with a single source of truth, complete with audit trails and stakeholder visibility."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Because eventually, the question shifts from \"How should we design this?\" to \"Can we actually manage what we've already built?\""
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Design for the Firm You're Becoming"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry plans tend to be designed for the firm as it exists today. They should be designed for the firm you're becoming, because growth introduces complexity whether you plan for it or not. More funds, more people, more edge cases, more scrutiny."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The goal isn't to eliminate that complexity. That's not realistic. The goal is to design structures, and the operational systems that support them, capable of absorbing it."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The firms that get this right aren't the ones with the most elegant carry models. They're the ones that can explain, defend, and operate those models years later, across multiple funds, with complete confidence and a clean audit trail."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "That's what separates a carry plan from a carry system."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "FAQs: Carry Plan Design for Growing Private Capital Firms"
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "What is a carry plan in private equity?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "A carry plan defines how carried interest (the GP's share of fund profits) is allocated among partners, employees, and other participants. It includes allocation percentages, vesting schedules, forfeiture rules, and the terms governing how carry is earned and distributed across funds and deals."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "When should a firm move from a simple carry split to a structured carry plan?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most firms hit the trigger point when raising Fund II or III, bringing in lateral partners, or expanding carry participation beyond founding members. Any time allocations become differentiated across participants or funds, a structured framework reduces the risk of errors, disputes, and audit exposure."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "What is the difference between fund-level and deal-level carry?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Fund-level carry (European waterfall) calculates carried interest across the entire fund. LPs receive all capital and preferred returns before the GP earns carry. Deal-level carry (American waterfall) calculates on each investment individually, which can accelerate GP payouts but introduces clawback risk and additional tracking complexity."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Why do carry plans break down as firms scale?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Accumulated complexity: overlapping fund vintages, mid-fund personnel changes, deal-level participation, phantom carry, co-invest programs, and side letters that create one-off exceptions. Each addition is logical in isolation. Collectively they create a system that's difficult to track, reconcile, and audit."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "How does carry management software help?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Purpose-built platforms like Navable centralize carry plans, allocations, vesting rules, and participant data into a single system of record with full audit trails. This replaces fragmented spreadsheets, reduces reconciliation time, improves accuracy, and gives partners and employees transparent visibility into their carry and compensation."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "centralized-carry-engine-fund-operations",
+    "title": "From Chaos to Clarity: How a Centralized Carry Engine Transforms Fund Operations",
+    "excerpt": "Why spreadsheet-driven carry breaks as firms scale, and what replaces it.",
+    "description": "A centralized carry engine replaces spreadsheet chaos with governed carry management — faster distributions, audit-ready outputs, and visibility across funds.",
+    "date": "2026-02-02",
+    "author": "Navable Team",
+    "cover": {
+      "src": "/images/blog/centralized-carry-engine-fund-operations-cover.webp",
+      "width": 1536,
+      "height": 1024,
+      "alt": ""
+    },
+    "blocks": [
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "What a Centralized Carry Engine Actually Is"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "A lot of tools claim to \"do carry.\" A centralized carry engine is more specific: a system that applies consistent carry allocation rules across all funds and deals, using a single dataset and a traceable calculation history."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Think of it as "
+          },
+          {
+            "t": "Rules + Data + Audit Trail.",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "At its core, a carry engine:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Encodes fund terms, allocation rules, and vesting schedules in one governed environment"
+            }
+          ],
+          [
+            {
+              "t": "Produces repeatable outputs (allocations, statements, summaries) without rebuilding logic each quarter"
+            }
+          ],
+          [
+            {
+              "t": "Maintains a complete audit trail so when someone asks \"who changed what, when, and why?\" the answer takes seconds"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "What it's "
+          },
+          {
+            "t": "not",
+            "i": 1
+          },
+          {
+            "t": ": a one-off calculator for a single distribution, a static workbook only one person understands, or a black box with no transparency into assumptions. If your firm can't explain the numbers without pulling a specific employee into the room, you don't have a carry system. You have a carry dependency."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Key Takeaways"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "A centralized carry engine replaces fragmented spreadsheets with a governed system of record: one dataset, consistent logic, repeatable outputs, and a full audit trail across every fund and participant."
+            }
+          ],
+          [
+            {
+              "t": "It eliminates quarter-end fire drills by automating distribution runs, partner review cycles, and the \"what changed?\" reconciliation work that consumes finance teams."
+            }
+          ],
+          [
+            {
+              "t": "It scales with real-world complexity (multi-fund participation, deal-by-deal vs. fund-level carry, leavers, co-invest, side letters) without breaking or requiring heroic manual effort."
+            }
+          ],
+          [
+            {
+              "t": "For CFOs and GPs, the payoff goes beyond operational efficiency. It's confidence: the ability to explain, defend, and distribute carry with numbers you trust."
+            }
+          ],
+          [
+            {
+              "t": "Most private equity firms don't have \"one\" carry model; but a web of spreadsheets, email approvals, fund administrator exports, and a handful of people who know how to navigate"
+            }
+          ],
+          [
+            {
+              "t": "That patchwork holds until a distribution event lands, an auditor asks for change history, or a departing partner questions their forfeiture terms, and the fragility of the whole setup becomes impossible to ignore."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Acentralized carry engine solves this by turning carry from a quarterly spreadsheet exercise into a governed system of record. Not a calculator, but infrastructure: rules, data, and audit trail in one place, producing repeatable outputs without rebuilding logic every cycle."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The \"Before\" State: Carry Without a System"
+          }
+        ]
+      },
+      {
+        "type": "img",
+        "src": "/images/blog/centralized-carry-engine-fund-operations-1.webp",
+        "alt": "",
+        "width": 1043,
+        "height": 694
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Here's the reality most CFOs recognize around quarter-end and distribution events."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry processes evolve into an accidental patchwork:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Fund admin exports in PDF and Excel"
+            }
+          ],
+          [
+            {
+              "t": "Internal carry spreadsheets organized by fund, vintage, or deal"
+            }
+          ],
+          [
+            {
+              "t": "Cap table and co-invest trackers in separate files"
+            }
+          ],
+          [
+            {
+              "t": "Email threads handling approvals, exceptions, and \"can you rerun that?\" requests"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Over time, you don't just have spreadsheets. You have spreadsheet ecosystems. And the ecosystem quietly becomes the operating model."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The symptoms are predictable:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Version control breakdown.",
+              "b": 1
+            },
+            {
+              "t": " \"final_final_v9\" is somehow different from \"final_final_v9_REVISED\""
+            }
+          ],
+          [
+            {
+              "t": "Key-person dependency.",
+              "b": 1
+            },
+            {
+              "t": " Only the model builder can run the model"
+            }
+          ],
+          [
+            {
+              "t": "Slow distribution cycles.",
+              "b": 1
+            },
+            {
+              "t": " Every run requires manual cross-checks"
+            }
+          ],
+          [
+            {
+              "t": "Conflicting numbers across teams.",
+              "b": 1
+            },
+            {
+              "t": " Finance, deal teams, and IR each look at a different \"truth\""
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Even when the math is technically correct, the process is brittle. Every cycle depends on manual steps, institutional memory, and the assumption that nothing unexpected will surface."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The cost goes beyond hours spent reconciling. It's the risk of misallocation when a broken formula distributes real dollars. It's the audit pain of reconstructing allocation changes from email threads. And it's the erosion of trust when partners or LPs can't reconcile numbers quickly, even if the final answer turns out right."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Why Carry Breaks First When Firms Scale"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Carry rarely breaks when a firm is small and simple. It breaks when reality becomes multi-dimensional, and that happens faster than most firms expect."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Multiple funds with different economics.",
+            "b": 1
+          },
+          {
+            "t": " Fund I and Fund II have different carry pools, hurdles, and vesting start dates. Partners get promoted, new hires join between fund closes, and Excel ends up with parallel models and manual \"bridges\" between them. That's exactly where errors hide."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Deal-by-deal vs. fund-level carry.",
+            "b": 1
+          },
+          {
+            "t": " Hybrid structures create timing mismatches that are difficult to reconcile. Who has \"earned\" carry vs. \"vested\" vs. \"received\" it? The definitions change by structure, and spreadsheets struggle to maintain consistent narratives across multiple approaches running simultaneously."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Leavers and transfers.",
+            "b": 1
+          },
+          {
+            "t": " Forfeitures, vesting acceleration, transfers across entities, eligibility changes over time. When employee movement intersects with multiple funds and different vesting policies, mismatches emerge between what the partnership intended, what the documents say, and what the spreadsheet calculates."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Co-invest alongside carry.",
+            "b": 1
+          },
+          {
+            "t": " When participants hold both carry and capital exposure with different cashflow timing, the firm needs to present a combined picture. But when these are tracked separately, even basic questions get hard to answer: "
+          },
+          {
+            "t": "What's my total exposure? When does it vest?",
+            "i": 1
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Each complexity is manageable alone. Combined, they create an environment where spreadsheets cannot keep pace."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "The Turning Point"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Firms typically hit the inflection when they:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Launch Fund II or III"
+            }
+          ],
+          [
+            {
+              "t": "Add new strategies (credit, growth, real assets)"
+            }
+          ],
+          [
+            {
+              "t": "Face institutional LP due diligence and heightened audit scrutiny"
+            }
+          ],
+          [
+            {
+              "t": "Broaden carry participation beyond founding partners"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "After the turning point, stakeholder expectations shift in ways spreadsheets can't accommodate. Partners expect repeatable, explainable calculations. Finance teams need self-serve reporting, not ad-hoc reconciliation. Auditors require documented change history as standard operating procedure, not a year-end scramble."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When expectations change, spreadsheets don't improve. They just become riskier."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Life After Centralization"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "A centralized carry engine changes how fund operations runs day to day."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "One dataset, consistent logic, repeatable outputs.",
+            "b": 1
+          },
+          {
+            "t": " Fund terms and allocation rules live centrally. Calculations are generated, not rebuilt. Definitions (vested, realized, allocated, distributed) are standardized across funds. This is the difference between modeling carry and operating carry."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Faster close and distribution cycles.",
+            "b": 1
+          },
+          {
+            "t": " Teams shorten distribution preparation and review loops into predictable processes. Fewer \"we can't answer that yet\" moments during the weeks you can least afford them."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Audit-ready by default.",
+            "b": 1
+          },
+          {
+            "t": " Clear change history, documented assumptions, consistent outputs tied to defined rules. That reduces audit cost, stress, and reputational risk simultaneously."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Transparency as a retention tool.",
+            "b": 1
+          },
+          {
+            "t": " Partners understand allocations without decoding a model. Employees see vesting, carry value, and total comp in one place. Finance and HR answer questions with confidence. For firms investing in retention, that clarity is a genuine competitive advantage."
+          }
+        ]
+      },
+      {
+        "type": "img",
+        "src": "/images/blog/centralized-carry-engine-fund-operations-2.webp",
+        "alt": "",
+        "width": 1062,
+        "height": 572
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "What Changes on Monday Morning"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Distribution run readiness.",
+            "b": 1
+          },
+          {
+            "t": " Generate allocations with consistent logic, produce review packs for partner sign-off, reduce rework from late-breaking spreadsheet changes."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Promotion and new-hire planning.",
+            "b": 1
+          },
+          {
+            "t": " Model carry grants and vesting schedules across funds, understand pool impact, avoid accidental dilution or inconsistent treatment across cohorts."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Leaver management.",
+            "b": 1
+          },
+          {
+            "t": " Standardize forfeitures, reallocations, and vesting outcomes under leaver provisions. Reduce disputes and friction when emotions are already high."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Scenario planning.",
+            "b": 1
+          },
+          {
+            "t": " Answer \"what if\" quickly: test fund term changes, model allocation updates, expand participation to new cohorts, compare deal-level vs. fund-level outcomes. All from the same governed dataset, without cloning workbooks."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "How to Centralize Without Disrupting the Firm"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The best implementations are structured and incremental."
+          }
+        ]
+      },
+      {
+        "type": "ol",
+        "items": [
+          [
+            {
+              "t": "Inventory your carry system components.",
+              "b": 1
+            },
+            {
+              "t": " Fund terms, allocation schedules, vesting policies, historical distributions. Most firms discover more \"carry logic\" scattered across more places than anyone wants to admit."
+            }
+          ],
+          [
+            {
+              "t": "Standardize definitions.",
+              "b": 1
+            },
+            {
+              "t": " Who counts as eligible? What does \"vested\" mean under different leaver scenarios? What's the difference between \"realized\" and \"distributed\"? A centralized engine works best when it doesn't translate ambiguous terminology every quarter."
+            }
+          ],
+          [
+            {
+              "t": "Pilot with one fund.",
+              "b": 1
+            },
+            {
+              "t": " Pick something complex enough to prove value but manageable enough to migrate quickly. A single-fund pilot builds confidence and surfaces edge cases without a big-bang transition."
+            }
+          ],
+          [
+            {
+              "t": "Establish governance.",
+              "b": 1
+            },
+            {
+              "t": " Who can change rules and allocations? What's the approval workflow? How are exceptions documented? Centralization without governance just recreates chaos in a new location."
+            }
+          ],
+          [
+            {
+              "t": "Roll out stakeholder views.",
+              "b": 1
+            },
+            {
+              "t": " Partner reporting first, finance and ops workflows next, broader team transparency where retention matters. Role-based access is key."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Evaluating a Carry Engine"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "A checklist that reflects real operating needs:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Handle complex carry structures and LPA terms across funds"
+            }
+          ],
+          [
+            {
+              "t": "Support multi-fund structures with cross-fund participants"
+            }
+          ],
+          [
+            {
+              "t": "Provide role-based access (partners vs. finance vs. employees)"
+            }
+          ],
+          [
+            {
+              "t": "Built-in audit trails and approval workflows"
+            }
+          ],
+          [
+            {
+              "t": "Carry award letter and document management (generation, signatures, storage)"
+            }
+          ],
+          [
+            {
+              "t": "On-demand reporting: review packs, participant statements, management summaries"
+            }
+          ],
+          [
+            {
+              "t": "Scenario modeling and forecasting from governed data"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Navable",
+            "href": "/platform"
+          },
+          {
+            "t": " is designed around these realities. The platform handles carry plans, allocations, vesting, co-invest, and compensation management across funds and participants, with full audit trails and a dedicated stakeholder portal. "
+          },
+          {
+            "t": "Book a demo →",
+            "href": "/demo"
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "From Fire Drills to Control"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "A centralized carry engine is a fundamentally different way of operating. Carry becomes a governed process: consistent, explainable, and scalable. Fund operations moves faster with fewer errors and less key-person risk."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "For the CFO and GP, the emotional outcome matters just as much as the operational one. Fewer late nights. Fewer \"where did that number come from?\" conversations. More confidence going into distribution events, audits, and comp discussions."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When carry is centralized, you stop treating it like a quarterly spreadsheet project and start treating it like what it actually is: a core system of record."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "If your carry process still depends on fragmented spreadsheets, ",
+            "b": 1
+          },
+          {
+            "t": "Navable can help",
+            "b": 1,
+            "href": "/demo"
+          },
+          {
+            "t": ".",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "FAQs About Centralized Carry Engines"
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "What is a centralized carry engine?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "A system of record that applies consistent carry allocation rules across all funds and deals using a single dataset, producing repeatable calculations with a complete audit trail. It replaces fragmented spreadsheets with governed infrastructure."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Why is Excel risky for managing carried interest across multiple funds?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Version control breaks down, logic becomes inconsistent across funds, audit trails are nearly impossible to maintain, and scenario analysis requires duplicating entire workbooks. Each copy introduces new opportunities for error."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "When should a firm move from spreadsheets to a carry engine?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Common triggers include launching a second or third fund, expanding carry participation beyond founding partners, managing increasingly complex LPA terms, or facing heightened audit expectations. If reconciliation consumes more time than analysis, you've likely passed the trigger point."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Can a carry engine handle both deal-by-deal and fund-level carry?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Yes. A well-built system supports fund-level (European waterfall), deal-by-deal (American waterfall), and hybrid structures by encoding the appropriate logic and tracking allocation rules, vesting, and distributions within each structure."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "How long does it take to centralize carry data?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "It depends on the number of funds and cleanliness of historical records. Most firms start with a single-fund pilot that can be operational within weeks. Navable's implementation typically gets firms set up in under three weeks with white-glove onboarding support."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "2026-compensation-planning-and-checklist",
+    "title": "2026 Compensation Planning for PE Firms: A Year-End Checklist for Managing Partners",
+    "excerpt": "The decisions you make this December will shape your firm's retention, performance, and culture for the next twelve months.",
+    "description": "Complete guide to PE compensation planning for 2026. Review performance, set budgets, allocate carry, and communicate decisions with our step-by-step checklist.",
+    "date": "2025-12-18",
+    "author": "Navable Team",
+    "cover": {
+      "src": "/images/blog/2026-compensation-planning-and-checklist-cover.webp",
+      "width": 1024,
+      "height": 843,
+      "alt": ""
+    },
+    "blocks": [
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Key Takeaways: Year-End Compensation Planning for PE"
+          }
+        ]
+      },
+      {
+        "type": "ol",
+        "items": [
+          [
+            {
+              "t": "Effective compensation planning starts with an honest review of 2025: who stayed, who left, what your comp structure actually drove, and where budget execution drifted from intent."
+            }
+          ],
+          [
+            {
+              "t": "The four strategic decisions that define your 2026 approach are total budget, compensation philosophy and mix, performance metrics, and retention priorities."
+            }
+          ],
+          [
+            {
+              "t": "A structured timeline (6 weeks before year-end through early January) prevents the rushed, error-prone process that leads to Q1 departures and broken trust."
+            }
+          ],
+          [
+            {
+              "t": "Simpler compensation structures outperform complex ones because they're easier for your team to understand, value, and explain to their spouse. Keep complexity in your systems, not in your team's understanding."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Every December, managing partners face the same high-stakes window: a few weeks to make compensation decisions that will determine whether their best people stay engaged, start entertaining recruiter calls, or quietly begin planning their exit."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most firms treat this as an administrative sprint. Review numbers, set bonuses, update carry, schedule conversations, move on. The firms that retain and recruit consistently treat it as a strategic process that starts weeks earlier and extends well into Q1."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "This is the guide to doing it right."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Step 1: Review 2025 Before Planning 2026"
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Before setting any numbers for next year, understand what happened this year."
+          }
+        ]
+      },
+      {
+        "type": "ol",
+        "items": [
+          [
+            {
+              "t": "Retention and departures.",
+              "b": 1
+            },
+            {
+              "t": " Who stayed and who left? How did compensation factor into departure decisions? Were exits actually about money, or about poor communication of the value people already held?"
+            }
+          ],
+          [
+            {
+              "t": "Performance outcomes.",
+              "b": 1
+            },
+            {
+              "t": " Did your comp structure drive the behaviors you wanted? If you emphasized deal origination through bonuses, did sourcing increase? If you allocated carry based on value creation, did portfolio performance improve?"
+            }
+          ],
+          [
+            {
+              "t": "Budget execution.",
+              "b": 1
+            },
+            {
+              "t": " Where did you overspend or underspend, and why? Are you consistently exceeding budget on discretionary bonuses? Did you underspend on carry allocations, creating future retention problems you haven't felt yet?"
+            }
+          ],
+          [
+            {
+              "t": "Competitive positioning.",
+              "b": 1
+            },
+            {
+              "t": " When recruiting in 2025, how did your offers compare? Did you lose candidates to compensation? Did you win talent too easily, suggesting room to optimize?"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Red flags to address now:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "High performers expressing dissatisfaction or fielding outside offers"
+            }
+          ],
+          [
+            {
+              "t": "Compensation gaps that don't reflect legitimate performance differences"
+            }
+          ],
+          [
+            {
+              "t": "Structures so complex that your team can't explain their own comp"
+            }
+          ],
+          [
+            {
+              "t": "Commitments made in 2025 that haven't been honored"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Step 2: Make the Four Strategic Decisions"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "With your 2025 assessment complete, four decisions will define your 2026 approach."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Decision 1: Total Compensation Budget"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most PE firms fund compensation primarily through management fees, though structures vary. Some charge portfolio operations teams back to portfolio companies; others use hybrid models. Understand your firm's approach and the constraints it creates."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Build contingency for mid-year adjustments, new hires, and retention situations. Rigid budgets create problems the moment circumstances change."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Decision 2: Compensation Philosophy and Mix"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Define the balance across your compensation components:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Cash vs. carry ratio.",
+              "b": 1
+            },
+            {
+              "t": " Early-stage firms with less realized carry may emphasize cash. Established firms with strong fund performance can lean more heavily on carry."
+            }
+          ],
+          [
+            {
+              "t": "Base vs. bonus weighting.",
+              "b": 1
+            },
+            {
+              "t": " Higher base provides stability; larger bonuses create performance leverage."
+            }
+          ],
+          [
+            {
+              "t": "Carried interest strategy.",
+              "b": 1
+            },
+            {
+              "t": " Who receives carry, at what levels, and based on what criteria? This is your most powerful long-term retention tool."
+            }
+          ],
+          [
+            {
+              "t": "Co-investment opportunities.",
+              "b": 1
+            },
+            {
+              "t": " Allowing team members to invest personally alongside the fund builds wealth and deepens alignment. Consider offering leverage on co-invest terms to strengthen the incentive."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Decision 3: Performance Metrics"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Balance quantitative results (IRR, MOIC, deals closed, value created) with qualitative contributions (leadership, mentorship, culture building, fundraising support). The best firms reward both results and behaviors."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Weight different roles appropriately. Investment professionals, operational partners, and fundraising leaders contribute differently, and your criteria should reflect those differences while maintaining fairness."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Decision 4: Retention Priorities"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Identify the people you absolutely cannot lose. Not just top performers, but those with unique skills, relationships, or institutional knowledge that would be difficult to replace."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Create meaningful retention incentives:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Vesting schedules and cliff structures in carry allocations"
+            }
+          ],
+          [
+            {
+              "t": "Favorable co-investment terms with extended vesting"
+            }
+          ],
+          [
+            {
+              "t": "Expanded responsibilities and career development commitments"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Be proactive. Address flight risk before it becomes a resignation. Counteroffers rarely work. Proactive retention does."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Year-End Execution Checklist"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Strategy matters, but execution determines outcomes."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "4-6 Weeks Before Year-End"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Strategic planning:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Review 2025 fund performance and distribution projections"
+            }
+          ],
+          [
+            {
+              "t": "Gather market compensation data (Heidrick & Struggles, Glocap benchmarks)"
+            }
+          ],
+          [
+            {
+              "t": "Conduct Managing Partner / Compensation Committee planning session"
+            }
+          ],
+          [
+            {
+              "t": "Set total 2026 budget and allocation framework"
+            }
+          ],
+          [
+            {
+              "t": "Identify retention risks and critical roles"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Operational preparation:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Audit current carry allocations and vesting schedules"
+            }
+          ],
+          [
+            {
+              "t": "Review employment agreements for contractual obligations"
+            }
+          ],
+          [
+            {
+              "t": "Validate carried interest calculations are accurate and ready to share"
+            }
+          ],
+          [
+            {
+              "t": "Prepare scenario models for different compensation structures"
+            }
+          ],
+          [
+            {
+              "t": "Coordinate with tax advisors on distribution timing"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h4",
+        "runs": [
+          {
+            "t": "2-4 Weeks Before Year-End"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Individual decisions:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Finalize performance assessments"
+            }
+          ],
+          [
+            {
+              "t": "Determine 2025 bonus amounts by team member"
+            }
+          ],
+          [
+            {
+              "t": "Set 2026 base salary adjustments"
+            }
+          ],
+          [
+            {
+              "t": "Allocate new carry grants or adjust existing allocations"
+            }
+          ],
+          [
+            {
+              "t": "Structure any special retention packages"
+            }
+          ],
+          [
+            {
+              "t": "Prepare offer letters for promotions or role changes"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Communication planning:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Draft compensation talking points"
+            }
+          ],
+          [
+            {
+              "t": "Schedule one-on-one meetings with each team member"
+            }
+          ],
+          [
+            {
+              "t": "Prepare documentation: salary letters, bonus letters, carry agreements"
+            }
+          ],
+          [
+            {
+              "t": "Align the partnership on messaging and rationale"
+            }
+          ],
+          [
+            {
+              "t": "Plan for difficult conversations"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Systems and documentation:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Update compensation tracking systems with 2026 decisions"
+            }
+          ],
+          [
+            {
+              "t": "Generate carry projections to show team members during conversations"
+            }
+          ],
+          [
+            {
+              "t": "Ensure all documentation is legally reviewed"
+            }
+          ],
+          [
+            {
+              "t": "Prepare employee portal with updated compensation data and statements"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h4",
+        "runs": [
+          {
+            "t": "Final Week / Early January"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Execution:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Conduct compensation conversations with all team members"
+            }
+          ],
+          [
+            {
+              "t": "Deliver compensation statements"
+            }
+          ],
+          [
+            {
+              "t": "Process year-end bonuses or distributions"
+            }
+          ],
+          [
+            {
+              "t": "Execute new carry allocation agreements with signatures"
+            }
+          ],
+          [
+            {
+              "t": "Update HR systems and payroll"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Follow-up:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Address questions and concerns"
+            }
+          ],
+          [
+            {
+              "t": "Document any verbal commitments or future considerations"
+            }
+          ],
+          [
+            {
+              "t": "Schedule Q1 check-ins for new performance expectations"
+            }
+          ],
+          [
+            {
+              "t": "Begin tracking retention and satisfaction post-communication"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Why Simpler Compensation Structures Win"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "One of the most common and damaging planning mistakes is overcomplicating structures. A carry allocation with multiple tiers, complex vesting, performance hurdles, and conditional provisions might be intellectually elegant. But if your VP can't explain their compensation to their spouse, the structure has failed its purpose."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "What complexity actually creates:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Team members don't feel appropriately rewarded when they can't understand what they have, even when the economic value is substantial"
+            }
+          ],
+          [
+            {
+              "t": "Administrative burden multiplies with every additional provision, and spreadsheets buckle under the weight"
+            }
+          ],
+          [
+            {
+              "t": "Retention conversations become nearly impossible when you can't quickly articulate what someone would forfeit by leaving"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "The clarity test:",
+            "b": 1
+          },
+          {
+            "t": " The best compensation structures are simple enough for a team member to internalize and explain. \"My base is X, my bonus was Y, and I have Z% carry that vests over four years. Based on fund performance, that carry is projected to be worth W.\""
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "You can have performance-based components, vesting schedules, and retention incentives while maintaining that level of clarity. The key is making sure each component has a clear purpose and can be communicated in plain language."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Communicating Decisions Effectively"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Even the right compensation decisions fail if delivered poorly."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Structure your conversations:",
+            "b": 1
+          }
+        ]
+      },
+      {
+        "type": "ol",
+        "items": [
+          [
+            {
+              "t": "Lead with appreciation and context before discussing numbers"
+            }
+          ],
+          [
+            {
+              "t": "Connect compensation to specific performance and contributions"
+            }
+          ],
+          [
+            {
+              "t": "Explain carry value with projections, not just percentages. \"You're receiving 2% carry\" is less meaningful than \"Based on current fund performance, that's projected to generate $400K in distributions over the next four years\""
+            }
+          ],
+          [
+            {
+              "t": "Listen and respond with empathy. Compensation conversations are emotional, even when the outcome is good"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When compensation is below expectations:",
+            "b": 1
+          },
+          {
+            "t": " Be honest about the reasons. Vague explanations breed resentment. Clear feedback, even when it's hard to hear, builds respect."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Retention conversations with flight risks:",
+            "b": 1
+          },
+          {
+            "t": " Transparency about unvested carry can be your most powerful tool. Show the concrete numbers: vested vs. unvested points, projected value, what they'd forfeit by leaving. Have the conversation with data, not platitudes."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "Post-Communication: The Work Continues"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Compensation planning doesn't end with year-end conversations."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Immediate feedback loop.",
+            "b": 1
+          },
+          {
+            "t": " Pay attention to morale in the days and weeks after communication. Are people energized or deflated? Address lingering dissatisfaction before it festers. If you made a mistake, fixing it quickly demonstrates integrity."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Q1 check-ins.",
+            "b": 1
+          },
+          {
+            "t": " Schedule follow-ups that connect compensation to 2026 performance expectations. Monitor retention risk: sudden disengagement, recruiter conversations, reduced initiative. Early warning signs let you act before resignation."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Mid-year flexibility.",
+            "b": 1
+          },
+          {
+            "t": " Build in the ability to respond to changing circumstances. If fund performance exceeds expectations, if market compensation shifts, or if someone's contribution changes dramatically, mid-year adjustments may be appropriate."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Document for next year.",
+            "b": 1
+          },
+          {
+            "t": " Capture what worked and what didn't in your planning process. Did you start too late? Was communication unclear? Did your tools create bottlenecks? Fix these issues now so 2027 planning is smoother."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "The Role of Purpose-Built Tools"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most firms start with Excel for compensation planning and carry tracking. It's familiar and flexible, but it breaks down quickly at scale."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "During the high-pressure year-end window, spreadsheet limitations become acute:"
+          }
+        ]
+      },
+      {
+        "type": "ul",
+        "items": [
+          [
+            {
+              "t": "Complex carry allocations across multiple team members, funds, and vesting schedules create sprawling workbooks"
+            }
+          ],
+          [
+            {
+              "t": "Multiple people modeling scenarios simultaneously creates version control problems"
+            }
+          ],
+          [
+            {
+              "t": "Generating clean compensation statements means copying data into Word documents, introducing more error opportunities"
+            }
+          ],
+          [
+            {
+              "t": "One missed formula update invalidates projections across dozens of cells"
+            }
+          ]
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Navable",
+            "href": "/solutions/compensation-management"
+          },
+          {
+            "t": " is built for this."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "During year-end planning, the platform lets you model unlimited scenarios without errors, generate individual carry and compensation statements directly from governed data, track vesting automatically with a complete historical record, and show team members their carry value clearly so they understand and appreciate the full picture."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "When your team can see their carry value, vesting schedule, and total compensation in one place, retention conversations become data-driven rather than abstract. "
+          },
+          {
+            "t": "Book a demo →",
+            "href": "/demo"
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "runs": [
+          {
+            "t": "FAQs: Year-End Compensation Planning for PE Firms"
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "When should compensation planning start?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "At least six weeks before year-end. Firms that start in mid-December are already behind. The strategic decisions (budget, philosophy, retention priorities) need to be made before individual compensation conversations can be structured effectively."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "How do you balance cash compensation with carry?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "It depends on firm stage and fund performance. Early-stage firms with less realized carry typically emphasize cash. Established firms with strong performance can lean into carry as a larger share of total compensation. The key is that participants understand the value of their carry, which requires visibility tools, not just allocation percentages."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Should you use discretionary or formulaic bonuses?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Most firms benefit from a hybrid approach. Formulaic elements create clarity and reduce perceived favoritism. Discretionary components provide flexibility to reward contributions that formulas miss. The balance depends on your firm's culture and the behaviors you want to incentivize."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "What are the biggest compensation planning mistakes?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Starting too late, overcomplicating structures, communicating poorly, and failing to show team members the projected value of their carry. The last one is particularly costly because it means your most powerful retention tool (carry) operates at a fraction of its potential."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "How does carry management software help with year-end planning?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "It eliminates the spreadsheet bottleneck. Instead of manually building compensation models and statements, you generate them from a single governed data source. Scenario modeling, carry projections, vesting tracking, and participant statements are all produced from the same system, ensuring consistency and accuracy during the highest-pressure period of the year."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "carried-interest-after-the-waterfall",
+    "title": "Carried Interest: After the Waterfall",
+    "excerpt": "Explore the exponential growth of private equity, from its inception in 1946 to the explosive rise of over 19,000 funds by 2022",
+    "description": "Learn how PE firms manage carried interest complexity including GP leverage, vesting schedules, joiners and leavers, and why software streamlines compensation tracking.",
+    "date": "2024-05-06",
+    "author": "Navable Team",
+    "cover": {
+      "src": "/images/blog/carried-interest-after-the-waterfall-cover.webp",
+      "width": 1600,
+      "height": 1002,
+      "alt": ""
+    },
+    "blocks": [
+      {
+        "type": "img",
+        "src": "/images/blog/carried-interest-after-the-waterfall-1.webp",
+        "alt": "graphic showing workers like little cartoons",
+        "width": 1400,
+        "height": 489
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Private equity has grown significantly since its inception in "
+          },
+          {
+            "t": "1946",
+            "href": "https://www.wsj.com/articles/SB10001424052970204468004577166850222785654"
+          },
+          {
+            "t": ", with explosive exponential growth as the industry continues to produce outsized returns. The boom in growth didn't truly accelerate until the LBO craze of the 1980s drove wild amounts of attention toward the industry. From 1980 to 2022, PE saw the number of funds increase from 24 to a staggering 19,000."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Assets in the space also ballooned from under $600 Billion in 2000 to over $7.5 Trillion by 2022. And lastly, the number of employees working in PE increased from under 50k in 2013 to almost 90k in 2023. While this relentless growth has created significant opportunities for the industry, it hasn't come without its challenges."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Growing Human Resources Needs"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Throughout the industry, firms have faced challenges managing their internal teams. Many firms will acknowledge that there has been so much growth and so much opportunity by way of dealmaking, that the administrative and operations functions often have trouble keeping up. This has led to administrative employees needing to embrace technology, tools, and processes to allow their firms to scale with the growth. The tipping point to embracing technology is clearly happening right now.   CFOs and Human Resource leads specifically deal with a number of challenges related to managing internal functions within their firms. Not only are they responsible for maintaining key metrics for limited partners and portfolio companies, they're also on the front lines handling employee compensation matters."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Given the focus in recent years on talent recruitment, and more importantly retention, providing fair and transparent compensation has become a key concern industry-wide. A key aspect of this is the biggest factor in investment professional compensation: carried interest. Ask any CFO or head of HR what they get asked about the most frequently from employees and they'll respond: \"participant carry\"."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "To put the magnitude of carry into perspective, according to "
+          },
+          {
+            "t": "Heidrick & Struggles",
+            "href": "https://www.efinancialcareers.com/news/finance/heres-how-much-youll-be-paid-in-private-equity"
+          },
+          {
+            "t": ", a Principal at a PE fund with $1B-$2B of assets under management earned an average of $550,000 across salary and bonus in 2023. Meanwhile, carried interest for a Principal in 2023 at a fund with $1B-$2B of assets averaged between $5.4M-$6.3M. In short, carried interest reporting is incredibly important for both the fund to report to its employees, and for the employees to understand. But the structuring of different carry plans has made monitoring carry in Excel a cumbersome and time-consuming process."
+          }
+        ]
+      },
+      {
+        "type": "img",
+        "src": "/images/blog/carried-interest-after-the-waterfall-2.webp",
+        "alt": "Employee benefits screen",
+        "width": 1400,
+        "height": 788
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Why Has Carried Interest Gotten So Complicated?"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Until recently, top performers were comfortable staying with their firm for the majority of their career. Because of this, carried interest plans were relatively straightforward with standard vesting schemes, top-down approaches to allocating carry and few unvested points to contend with. In recent years, however, employee shuffling has become more common as top performers get recruited away or leave to start their own firms. To remain competitive, firms have also started offering more creative comp plans, with manipulating different levers including GP commit & leverage, unique vesting schedules, phantom carry and performance incentives."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "GP Commit and Leverage"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "GP commit, and offering leverage to more employees as part of their GP commit, has become more and more commonplace. By implementing the use of leverage, sometimes through even more complicated processes like management fee waivers, employees are able to borrow the entire amount of capital they need to \"pay-in\" in order to receive a carry allocation. While a valuable tool for employees, this is also very difficult for a firm to track. Because the loan that the employee received to fund their GP commit needs to be reimbursed, all distributions from carry and the investment will need to be used in order to pay off the loan and any interest accrued. Things can get even more complicated in cases with variable rate loans, when it becomes harder to track the employee's loan balance."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Multiple Vesting Schedules"
+          }
+        ]
+      },
+      {
+        "type": "img",
+        "src": "/images/blog/carried-interest-after-the-waterfall-3.webp",
+        "alt": "Pen pointing to a screen",
+        "width": 1400,
+        "height": 934
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Vesting schedules also play into the complications of maintaining a carry plan. While the typical time-based vesting schedule is alive and well, we've also started seeing fund managers embrace more flexible schedules, including deal level, vintage carry, and performance based vesting. Different schedules can be implemented at the individual employee level, with different incentives designed specifically for accomplishing certain tasks related to a deal or a fund. With multiple variables to track and monitor, it can lead to a cumbersome process with the potential for human error if handled solely in excel."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Influx of Joiners and Leavers"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Unique vesting schedules are also a factor that have to be considered when managing joiners and leavers for a firm. If an employee has negotiated a vesting schedule that has specific milestones and decides to leave the firm before the fund has been liquidated, it can lead to a lot of work for the company to accurately reflect which of those milestones has been achieved.On the other hand, when people join a firm with a fund is already in-flight, complications can arise when assigning points to new hires and tracking appropriately."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Tax Implications"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "With anything in finance comes the burden of accurately recording and reporting different taxable events. With a growing employee base with regular and estimated taxes to pay, K1 distributions and transactional activity reporting is another function driving overhead across the finance team."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Document Management"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "As fund managers launch additional vehicles and expand carry plans to more participants, building, managing and chasing signatures on associated legal documentation become cumbersome. In certain cases, employees will also need to complete LPAs related to their GP commitment in order to receive carry. Most firms handle documentation in different, yet outdated ways. Some firms choose to hand fill the information specific to each individual, some use mail-merge to pull information from Excel spreadsheets, and others simply outsource the document process to their counsel or external law firm."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "How Software Can Help"
+          }
+        ]
+      },
+      {
+        "type": "img",
+        "src": "/images/blog/carried-interest-after-the-waterfall-4.webp",
+        "alt": "Navablelogo large",
+        "width": 1400,
+        "height": 338
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "In the top of this post, we mentioned the need to embrace technology, tools, and processes in order to effectively scale a private equity firm. Since carry has implications across all aspects of a firm, streamlining carry and employee compensation has been front of mind for CFOs and HR leaders throughout the industry."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "By transitioning different components of Excel to software, firms can keep their administrative headcount low and allow individuals in those functions to focus on higher-priority projects. Software also drastically decreases the probability of human error, especially when employees are tasked with managing multiple initiatives at a time."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Industry Dedicated Software"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "At "
+          },
+          {
+            "t": "Navable",
+            "href": "/"
+          },
+          {
+            "t": ", we've heard the challenges from numerous departments when it comes to compensation, carry, and GP commit. Whether you're a CFO trying to scale your systems out of Excel so you can focus on other projects, the Head of HR looking for a better way to manage total comp, or a member of the Investment Team looking for better reporting across vehicles, funds and deals; Navable's configurable software is built to streamline inefficiencies across all aspects of the firm."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Finance Teams ",
+            "b": 1
+          },
+          {
+            "t": "are in need of software to make their lives easier. Instead of creating time-consuming reports for GP participants that aggregates their carry and commit metrics, Navable's software applies accurate data to each participant's account automatically. Vesting schedules can be created and tracked within the platform.. GP commit and leverage can also be tracked, giving CFOs and their teams the ability to monitor and report on additional value-add metrics."
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "HR and Administrative Teams",
+            "b": 1
+          },
+          {
+            "t": " can simplify their annual and quarterly compensation reviews by giving employees a customized total compensation dashboard that acts as a unified place for displaying payroll, benefits, carry awards and any other types of compensation.Tax documents, transaction notices and subscription agreements can all be stored and signed (if need be) via the platform, reducing questions around documents and the need to chase for signatures."
+          }
+        ]
+      },
+      {
+        "type": "h3",
+        "runs": [
+          {
+            "t": "Conclusion"
+          }
+        ]
+      },
+      {
+        "type": "p",
+        "runs": [
+          {
+            "t": "Improving back-office operations with the use of technology is top priority for any growing firm as it looks to reduce as much operational burden and expense as possible. "
+          },
+          {
+            "t": "Navable",
+            "href": "/"
+          },
+          {
+            "t": "'s software, built by FinTech veterans specifically for alternative asset managers, enables multiple teams across an organization to operate more efficiently."
+          }
+        ]
+      }
+    ]
+  }
+]

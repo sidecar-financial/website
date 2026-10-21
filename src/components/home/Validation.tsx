@@ -1,4 +1,4 @@
-"use client";
+import { Section } from "@/components/ui/Frame";
 
 const steps = [
   {
@@ -20,47 +20,51 @@ const steps = [
 
 export default function Validation() {
   return (
-    <section className="py-24 bg-[#f8f7ff]" aria-labelledby="validation-heading">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 id="validation-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight">
-            <span className="text-gray-900">Validate Navable With Your </span>
-            <span className="text-[#5046e5]">Own Fund Before You Commit</span>
-          </h2>
-          <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            You don&apos;t need to decide whether Navable works for your carry structure 
-            based on a generic demo. Typical setup takes under three weeks, with 
-            support for legacy plan setup.
-          </p>
-        </div>
-
-        {/* Steps with connecting line */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Connecting line - visible on md and up */}
-          <div className="hidden md:block absolute top-7 left-[calc(16.67%+28px)] right-[calc(16.67%+28px)] h-0.5 bg-gradient-to-r from-[#5046e5]/30 via-[#5046e5]/50 to-[#5046e5]/30" aria-hidden="true" />
-          
-          <ol className="grid md:grid-cols-3 gap-8" role="list">
-            {steps.map((step) => (
-              <li key={step.number} className="relative">
-                <div className="text-center relative z-10">
-                  {/* Step number circle */}
-                  <div 
-                    className="w-14 h-14 rounded-full bg-[#5046e5] text-white text-xl font-bold flex items-center justify-center mx-auto mb-5 shadow-lg shadow-[#5046e5]/25 border-4 border-[#f8f7ff]"
-                    aria-hidden="true"
-                  >
-                    {step.number}
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    <span className="sr-only">Step {step.number}: </span>
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-600 leading-relaxed text-[15px]">{step.description}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
+    <Section labelledBy="validation-heading">
+      <div className="px-6 pb-14 pt-14 text-center lg:pb-[82px] lg:pt-[115px]">
+        <h2
+          id="validation-heading"
+          className="mx-auto max-w-[620px] text-[32px] font-semibold leading-[1.25] text-ink lg:text-[40px] lg:leading-[50px]"
+        >
+          Validate Navable With Your Own Fund Before You Commit
+        </h2>
+        <p className="mx-auto mt-5 max-w-[680px] text-[15px] leading-[25px] text-muted">
+          You don&apos;t need to decide whether Navable works for your carry structure based on a
+          generic demo. Typical setup takes under three weeks, with support for legacy plan setup.
+        </p>
       </div>
-    </section>
+
+      <div className="relative pb-[47px]">
+        {/* Dashed connector behind the step circles */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-x-0 top-7 hidden h-px bg-[repeating-linear-gradient(to_right,#8e8d9a_0_5px,transparent_5px_9px)] md:block"
+        />
+        <ol className="relative grid gap-12 md:grid-cols-3 md:gap-0">
+          {steps.map((step) => {
+            const isLast = step.number === "3";
+            return (
+              <li key={step.number} className="flex flex-col items-center px-6 text-center">
+                <span
+                  aria-hidden="true"
+                  className={`flex size-14 items-center justify-center rounded-full border border-ink text-sm ${
+                    isLast ? "bg-orange text-ink" : "bg-white text-ink"
+                  }`}
+                >
+                  {step.number}
+                </span>
+                <h3 className="mt-7 text-lg font-medium leading-6 text-ink">
+                  <span className="sr-only">Step {step.number}: </span>
+                  {step.title}
+                </h3>
+                <p className="mt-3 max-w-[230px] text-[15px] leading-6 text-muted">
+                  {step.description}
+                </p>
+              </li>
+            );
+          })}
+        </ol>
+      </div>
+    </Section>
   );
 }

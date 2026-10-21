@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useId, useState } from "react";
 import Button from "@/components/ui/Button";
+import { Section } from "@/components/ui/Frame";
+import { PageHero } from "@/components/ui/PageBlocks";
 
 const faqs = [
   {
@@ -57,34 +59,37 @@ function FAQItem({
   isOpen: boolean;
   onToggle: () => void;
 }) {
+  const baseId = useId();
+  const buttonId = `${baseId}-button`;
+  const panelId = `${baseId}-panel`;
+
   return (
-    <div className="border-b border-gray-200">
-      <button
-        className="w-full py-6 flex items-center justify-between text-left"
-        onClick={onToggle}
-      >
-        <span className="text-lg font-medium text-gray-900">{question}</span>
-        <svg
-          className={`w-5 h-5 text-[#5046e5] transition-transform ${
-            isOpen ? "rotate-180" : ""
+    <div className="border-b border-line">
+      <h3>
+        <button
+          id={buttonId}
+          className={`flex w-full items-center justify-between gap-6 pt-[25px] text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2 ${
+            isOpen ? "pb-0" : "pb-[25px]"
           }`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+          onClick={onToggle}
+          aria-expanded={isOpen}
+          aria-controls={panelId}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </button>
-      {isOpen && (
-        <div className="pb-6">
-          <p className="text-gray-600">{answer}</p>
-        </div>
-      )}
+          <span className="text-lg font-medium leading-6 text-ink">{question}</span>
+          <span
+            className="flex size-[26px] shrink-0 items-center justify-center rounded-full border border-line-strong text-ink"
+            aria-hidden="true"
+          >
+            <svg className="size-2.5" viewBox="0 0 10 10" fill="none">
+              <path d="M2 5h6" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
+              {!isOpen && <path d="M5 2v6" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />}
+            </svg>
+          </span>
+        </button>
+      </h3>
+      <div id={panelId} role="region" aria-labelledby={buttonId} hidden={!isOpen}>
+        <p className="max-w-[620px] pb-[33px] pt-5 text-[15px] leading-[25px] text-body">{answer}</p>
+      </div>
     </div>
   );
 }
@@ -93,65 +98,60 @@ export default function FAQPage() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-[#f8f7ff] to-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-[#5046e5] font-semibold text-sm uppercase tracking-wide mb-4">
-              FAQ
-            </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-              Frequently Asked{" "}
-              <span className="text-[#5046e5]">Questions</span>
-            </h1>
-            <p className="mt-6 text-xl text-gray-600">
-              Find answers to common questions about Navable, our platform, and
-              how we can help your firm.
-            </p>
-          </div>
-        </div>
-      </section>
+    <>
+      <PageHero
+        eyebrow="FAQ"
+        title={
+          <>
+            Frequently Asked <span className="text-orange">Questions</span>
+          </>
+        }
+        description="Find answers to common questions about Navable, our platform, and how we can help your firm."
+      />
 
       {/* FAQ List */}
-      <section className="py-20 bg-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="divide-y divide-gray-200 border-t border-gray-200">
+      <Section label="FAQ" labelledBy="faq-list-heading">
+        <h2 id="faq-list-heading" className="sr-only">
+          Common questions
+        </h2>
+        <div className="px-6 pb-16 pt-8 lg:px-[62px] lg:pb-24 lg:pt-12">
+          <div className="mx-auto max-w-[820px] border-t border-line">
             {faqs.map((faq, index) => (
               <FAQItem
                 key={index}
                 question={faq.question}
                 answer={faq.answer}
                 isOpen={openIndex === index}
-                onToggle={() =>
-                  setOpenIndex(openIndex === index ? null : index)
-                }
+                onToggle={() => setOpenIndex(openIndex === index ? null : index)}
               />
             ))}
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Still have questions */}
-      <section className="py-20 bg-[#f8f7ff]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">
+      <Section labelledBy="questions-heading">
+        <div className="px-6 py-14 text-center lg:py-[82px]">
+          <h2
+            id="questions-heading"
+            className="text-[32px] font-semibold leading-[1.25] text-ink lg:text-[40px] lg:leading-[50px]"
+          >
             Still have questions?
           </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Our team is happy to walk you through the platform and answer any
-            questions specific to your situation.
+          <p className="mx-auto mt-5 max-w-[620px] text-[15px] leading-[25px] text-body">
+            Our team is happy to walk you through the platform and answer any questions specific to your
+            situation.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
             <Button href="/demo" size="lg">
               Book a Demo
             </Button>
-            <Button href="mailto:hello@navable.com" variant="outline" size="lg">
+            <Button href="mailto:hello@navable.com" variant="secondary" size="lg">
               Contact Us
             </Button>
           </div>
         </div>
-      </section>
-    </div>
+      </Section>
+    </>
   );
 }

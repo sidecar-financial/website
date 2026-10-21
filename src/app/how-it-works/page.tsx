@@ -1,5 +1,6 @@
 import { Metadata } from "next";
-import Button from "@/components/ui/Button";
+import { Section } from "@/components/ui/Frame";
+import { CheckBadge, CtaBand, PageHero, SectionIntro } from "@/components/ui/PageBlocks";
 
 export const metadata: Metadata = {
   title: "How It Works | Navable",
@@ -54,129 +55,108 @@ const timeline = [
 
 export default function HowItWorksPage() {
   return (
-    <div className="min-h-screen">
-      {/* Hero */}
-      <section className="bg-gradient-to-b from-[#f8f7ff] to-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl">
-            <p className="text-[#5046e5] font-semibold text-sm uppercase tracking-wide mb-4">
-              How It Works
-            </p>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-              Simple Setup.{" "}
-              <span className="text-[#5046e5]">Powerful Results.</span>
-            </h1>
-            <p className="mt-6 text-xl text-gray-600">
-              Getting started with Navable is straightforward. Our expert team
-              guides you through every step, ensuring a smooth transition from
-              spreadsheets to a purpose-built platform.
-            </p>
-          </div>
-        </div>
-      </section>
+    <>
+      <PageHero
+        eyebrow="How It Works"
+        title={
+          <>
+            Simple Setup. <span className="text-orange">Powerful Results.</span>
+          </>
+        }
+        description="Getting started with Navable is straightforward. Our expert team guides you through every step, ensuring a smooth transition from spreadsheets to a purpose-built platform."
+      />
 
       {/* Steps */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="space-y-20">
-            {steps.map((step, index) => (
+      <Section label="Steps" labelledBy="steps-heading">
+        <h2 id="steps-heading" className="sr-only">
+          Three steps to get started
+        </h2>
+        <ol>
+          {steps.map((step, index) => (
+            <li
+              key={step.number}
+              className="grid items-center border-b border-line last:border-b-0 lg:grid-cols-2"
+            >
               <div
-                key={step.number}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? "lg:flex-row-reverse" : ""
+                className={`px-6 py-12 lg:px-12 lg:py-[72px] ${
+                  index % 2 === 1 ? "lg:order-2" : "lg:border-r lg:border-line"
                 }`}
               >
-                <div className={index % 2 === 1 ? "lg:order-2" : ""}>
-                  <div className="text-6xl font-bold text-[#e8e4ff] mb-4">
-                    {step.number}
-                  </div>
-                  <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                    {step.title}
-                  </h2>
-                  <p className="text-lg text-gray-600 mb-6">{step.description}</p>
-                  <ul className="space-y-3">
-                    {step.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-3">
-                        <div className="w-5 h-5 rounded-full bg-[#e8e4ff] flex items-center justify-center">
-                          <svg
-                            className="w-3 h-3 text-[#5046e5]"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={3}
-                              d="M5 13l4 4L19 7"
-                            />
-                          </svg>
-                        </div>
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div
-                  className={`bg-[#f8f7ff] rounded-2xl p-8 ${
-                    index % 2 === 1 ? "lg:order-1" : ""
-                  }`}
-                >
-                  <div className="aspect-video bg-white rounded-lg flex items-center justify-center border border-[#e8e4ff]">
-                    <span className="text-gray-400">Step {step.number} Illustration</span>
-                  </div>
+                <p className="flex items-center gap-2.5 font-mono text-[10px] uppercase leading-none tracking-[0.16em] text-subtle">
+                  <span aria-hidden="true" className="block size-2 bg-orange" />
+                  Step {step.number}
+                </p>
+                <h3 className="mt-6 text-[28px] font-semibold leading-[1.25] text-ink lg:text-[32px]">
+                  {step.title}
+                </h3>
+                <p className="mt-4 text-[15px] leading-[25px] text-body">{step.description}</p>
+                <ul className="mt-6 space-y-3">
+                  {step.features.map((feature) => (
+                    <li key={feature} className="flex items-center gap-3">
+                      <CheckBadge className="size-5" />
+                      <span className="text-[15px] text-body">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div
+                className={`dot-grid self-stretch p-6 lg:p-12 ${
+                  index % 2 === 1 ? "lg:order-1 lg:border-r lg:border-line" : ""
+                }`}
+              >
+                <div className="flex aspect-video items-center justify-center border border-line bg-white">
+                  <span className="font-mono text-[11px] uppercase tracking-[0.12em] text-subtle">
+                    Step {step.number} Illustration
+                  </span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </li>
+          ))}
+        </ol>
+      </Section>
 
       {/* Timeline */}
-      <section className="py-20 bg-[#f8f7ff]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
-              Go Live in Under Three Weeks
-            </h2>
-            <p className="mt-4 text-xl text-gray-600 max-w-2xl mx-auto">
-              Our streamlined onboarding process gets you up and running fast.
-            </p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+      <Section label="Timeline" labelledBy="timeline-heading">
+        <SectionIntro
+          id="timeline-heading"
+          title="Go Live in Under Three Weeks"
+          description="Our streamlined onboarding process gets you up and running fast."
+          ruled
+        />
+        <div className="relative pb-[47px] pt-12">
+          {/* Dashed connector behind the step circles */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-x-0 top-[76px] hidden h-px bg-[repeating-linear-gradient(to_right,#8e8d9a_0_5px,transparent_5px_9px)] md:block"
+          />
+          <ol className="relative grid gap-12 md:grid-cols-3 md:gap-0">
             {timeline.map((item, index) => (
-              <div key={item.week} className="relative">
-                <div className="bg-white rounded-2xl p-6 text-center border border-gray-100">
-                  <div className="w-12 h-12 rounded-full bg-[#5046e5] text-white flex items-center justify-center font-bold mx-auto mb-4">
-                    {index + 1}
-                  </div>
-                  <h3 className="font-bold text-gray-900 mb-2">{item.week}</h3>
-                  <p className="text-gray-600 text-sm">{item.activity}</p>
-                </div>
-                {index < timeline.length - 1 && (
-                  <div className="hidden md:block absolute top-1/2 -right-4 w-8 h-0.5 bg-[#e8e4ff]" />
-                )}
-              </div>
+              <li key={item.week} className="flex flex-col items-center px-6 text-center">
+                <span
+                  aria-hidden="true"
+                  className={`flex size-14 items-center justify-center rounded-full border border-ink text-sm text-ink ${
+                    index === timeline.length - 1 ? "bg-orange" : "bg-white"
+                  }`}
+                >
+                  {index + 1}
+                </span>
+                <h3 className="mt-7 text-lg font-medium leading-6 text-ink">{item.week}</h3>
+                <p className="mt-3 max-w-[230px] text-[15px] leading-6 text-body">{item.activity}</p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
-      </section>
+      </Section>
 
-      {/* CTA */}
-      <section className="py-20 bg-[#5046e5]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
-            Ready to Get Started?
-          </h2>
-          <p className="text-xl text-white/80 mb-8">
-            Book a demo to see how Navable can transform your carry and
-            compensation management.
-          </p>
-          <Button href="/demo" variant="secondary" size="lg">
-            Book a Free Demo
-          </Button>
-        </div>
-      </section>
-    </div>
+      <CtaBand
+        title={
+          <>
+            Ready to <span className="text-orange">Get Started?</span>
+          </>
+        }
+        description="Book a demo to see how Navable can transform your carry and compensation management."
+        cta="Book a Free Demo"
+      />
+    </>
   );
 }
