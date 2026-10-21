@@ -1,0 +1,62 @@
+"use client";
+
+import Button from "../ui/Button";
+
+const steps = [
+  {
+    number: "1",
+    title: "Share a Workbook",
+    description: "We review your current plans, structure, and legacy data.",
+  },
+  {
+    number: "2",
+    title: "See a Working Fund",
+    description: "We set up a working fund to test your specific use cases.",
+  },
+  {
+    number: "3",
+    title: "Validate the Fit",
+    description: "Use your working fund in a 14-day guided trial to decide.",
+  },
+];
+
+export default function Validation() {
+  return (
+    <section className="py-20 bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+            Validate Navable With Your
+            <br />
+            <span className="text-[#5046e5]">Own Fund</span> Before You Commit
+          </h2>
+          <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+            You don&apos;t need to decide whether Navable works for your carry structure 
+            based on a generic demo. Typical setup takes under three weeks, with 
+            support for legacy plan setup.
+          </p>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          {steps.map((step) => (
+            <div key={step.number} className="text-center">
+              <div className="w-16 h-16 rounded-full bg-[#5046e5] text-white text-2xl font-bold flex items-center justify-center mx-auto mb-6">
+                {step.number}
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">
+                {step.title}
+              </h3>
+              <p className="text-gray-600">{step.description}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <Button href="/demo" size="lg">
+            Book a Free Demo
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
