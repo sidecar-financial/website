@@ -7,7 +7,7 @@ import { SITE_URL } from "@/lib/site";
 const staticRoutes = [
   "/",
   "/solutions/carried-interest-software",
-  "/solutions/waterfall",
+  "/waterfall",
   "/solutions/compensation-management",
   "/solutions/employee-co-invest",
   "/who-we-serve/private-equity",

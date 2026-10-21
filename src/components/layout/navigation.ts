@@ -54,11 +54,11 @@ export type NavGroup = {
 };
 
 const products: NavItem[] = [
-  // Waterfall is announced but not launched: /solutions/waterfall is its
+  // Waterfall is announced but not launched: /waterfall is its
   // "coming soon" waitlist page.
   {
     label: "Waterfall",
-    href: "/solutions/waterfall",
+    href: "/waterfall",
     description: "Distribution waterfalls in the same system",
     icon: "waterfall",
   },

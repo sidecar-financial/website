@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
       { source: "/policies/privacy-policy", destination: "/privacy", permanent: true },
       { source: "/policies/cookie-policy", destination: "/cookies", permanent: true },
       { source: "/policies/terms-of-service", destination: "/terms", permanent: true },
+      // Waterfall is a standalone product page, not a sub-section of /solutions.
+      { source: "/solutions/waterfall", destination: "/waterfall", permanent: true },
       // TODO: /fund-admins and /webinar exist on navable.com but have no local pages yet.
 
       // The app lives on its own host; /sign-in is kept as a stable, bookmarkable entry point.

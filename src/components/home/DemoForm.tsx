@@ -16,6 +16,12 @@ type DemoFormProps = {
   label?: string;
   title?: ReactNode;
   description?: ReactNode;
+  /** Extra content under the description (e.g. a secondary link). */
+  children?: ReactNode;
+  /** Submit button text (the arrow is added). */
+  submitLabel?: string;
+  /** Show the "Trusted by firms managing..." line under the form. */
+  showTrust?: boolean;
 };
 
 const defaultTitle = (
@@ -38,6 +44,9 @@ export default function DemoForm({
   label = "Book a Demo",
   title = defaultTitle,
   description = defaultDescription,
+  children,
+  submitLabel = "Book a Free Demo",
+  showTrust = true,
 }: DemoFormProps = {}) {
   const { formData, setField, errors, isSubmitting, status, firstName, fieldId, handleSubmit } =
     useDemoRequest();
@@ -60,6 +69,7 @@ export default function DemoForm({
           <p className="mt-6 max-w-[430px] text-[15px] leading-[25px] text-navy-text">
             {description}
           </p>
+          {children}
         </div>
 
         {/* Right form */}
@@ -180,7 +190,7 @@ export default function DemoForm({
                   </>
                 ) : (
                   <>
-                    Book a Free Demo&nbsp;
+                    {submitLabel}&nbsp;
                     <span
                       aria-hidden="true"
                       className="inline-block transition-transform duration-200 group-hover:translate-x-1 group-focus-visible:translate-x-1"
@@ -193,9 +203,11 @@ export default function DemoForm({
             </form>
           )}
 
-          <p className="mt-6 text-center text-[13px] leading-5 text-navy-text">
-            Trusted by firms managing over $150B+ in AUM.
-          </p>
+          {showTrust && (
+            <p className="mt-6 text-center text-[13px] leading-5 text-navy-text">
+              Trusted by firms managing over $150B+ in AUM.
+            </p>
+          )}
         </div>
       </div>
     </DarkSection>

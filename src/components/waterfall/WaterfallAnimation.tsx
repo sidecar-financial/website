@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { CSSProperties } from "react";
 
 /**
- * Animated illustration of a distribution waterfall for the /solutions/waterfall
+ * Animated illustration of a distribution waterfall for the /waterfall
  * page (ported from the design build's WaterfallAnimation). A fixed 960×420
  * stage is scaled to the container width; an 11s loop fills the proceeds bar,
  * then each tier in turn.
