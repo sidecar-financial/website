@@ -39,39 +39,49 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-24 bg-white">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <p className="text-[#5046e5] text-sm font-semibold tracking-wide uppercase mb-3">
+        <div className="text-center mb-12">
+          <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
             FAQ
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Frequently Asked Questions
-          </h2>
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-[#f8f7ff] rounded-xl overflow-hidden"
+              className={`bg-[#f8f7ff] rounded-xl overflow-hidden transition-all ${
+                openIndex === index ? 'ring-2 ring-[#5046e5]/20' : ''
+              }`}
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-[#f0eeff] transition-colors"
+                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-[#f0eeff] transition-colors"
               >
-                <span className="font-medium text-gray-900 pr-4">
+                <span className="font-semibold text-gray-900 pr-4 text-[15px]">
                   {faq.question}
                 </span>
-                <span className="text-[#5046e5] text-xl flex-shrink-0">
-                  {openIndex === index ? "−" : "+"}
+                <span className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 transition-colors ${
+                  openIndex === index ? 'bg-[#5046e5] text-white' : 'bg-white text-[#5046e5]'
+                }`}>
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${openIndex === index ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
                 </span>
               </button>
-              {openIndex === index && (
-                <div className="px-6 pb-4">
-                  <p className="text-gray-600 text-sm leading-relaxed">{faq.answer}</p>
+              <div className={`overflow-hidden transition-all duration-200 ${
+                openIndex === index ? 'max-h-48' : 'max-h-0'
+              }`}>
+                <div className="px-6 pb-5">
+                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
                 </div>
-              )}
+              </div>
             </div>
           ))}
         </div>

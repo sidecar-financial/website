@@ -32,51 +32,77 @@ export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="py-20 bg-[#5046e5]">
+    <section className="py-24 bg-[#1a1a2e]">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-10">
-          <p className="text-white/60 text-sm font-semibold tracking-wide uppercase mb-3">
+        <div className="text-center mb-14">
+          <p className="text-[#a5b4fc] text-xs font-bold tracking-[0.2em] uppercase mb-4">
             Testimonials
           </p>
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
+          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-white leading-tight">
             Built for Finance.
           </h2>
-          <h2 className="text-3xl md:text-4xl font-bold text-white">
+          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#fbbf24] leading-tight">
             Proven in Practice.
           </h2>
         </div>
 
-        <div className="max-w-3xl mx-auto text-center">
-          <svg
-            className="w-10 h-10 text-white/20 mx-auto mb-6"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
-          </svg>
+        <div className="max-w-4xl mx-auto">
+          {/* Featured quote */}
+          <div className="bg-[#23233a] rounded-2xl p-10 md:p-12 mb-8 border border-[#2d2d4a]">
+            <div className="text-[#fbbf24] mb-6">
+              <svg
+                className="w-12 h-12 opacity-80"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+              </svg>
+            </div>
 
-          <blockquote className="text-xl md:text-2xl font-medium text-white leading-relaxed mb-6">
-            &ldquo;{testimonials[activeIndex].quote}&rdquo;
-          </blockquote>
+            <blockquote className="text-xl md:text-2xl font-medium text-white leading-relaxed mb-8">
+              {testimonials[activeIndex].quote}
+            </blockquote>
 
-          <div className="text-white/80">
-            <p className="font-medium">– {testimonials[activeIndex].author}</p>
-            <p className="text-sm text-white/60 mt-1">{testimonials[activeIndex].company}</p>
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-semibold text-white">– {testimonials[activeIndex].author}</p>
+                <p className="text-sm text-gray-400 mt-1">{testimonials[activeIndex].company}</p>
+              </div>
+              
+              {/* Navigation dots */}
+              <div className="flex gap-2">
+                {testimonials.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveIndex(index)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all ${
+                      index === activeIndex
+                        ? "bg-[#fbbf24]"
+                        : "bg-white/20 hover:bg-white/40"
+                    }`}
+                    aria-label={`Go to testimonial ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* Navigation dots */}
-          <div className="flex justify-center gap-2 mt-8">
-            {testimonials.map((_, index) => (
-              <button
+          {/* Secondary testimonials grid */}
+          <div className="grid md:grid-cols-3 gap-4">
+            {testimonials.slice(1).map((testimonial, index) => (
+              <div
                 key={index}
-                onClick={() => setActiveIndex(index)}
-                className={`w-2.5 h-2.5 rounded-full transition-all ${
-                  index === activeIndex
-                    ? "bg-white"
-                    : "bg-white/30 hover:bg-white/50"
-                }`}
-                aria-label={`Go to testimonial ${index + 1}`}
-              />
+                className="bg-[#23233a] rounded-xl p-6 border border-[#2d2d4a] hover:border-[#3d3d5a] transition-colors cursor-pointer"
+                onClick={() => setActiveIndex(index + 1)}
+              >
+                <p className="text-gray-300 text-sm leading-relaxed mb-4 line-clamp-3">
+                  &ldquo;{testimonial.quote}&rdquo;
+                </p>
+                <div>
+                  <p className="font-medium text-white text-sm">– {testimonial.author}</p>
+                  <p className="text-xs text-gray-500 mt-0.5">{testimonial.company}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
