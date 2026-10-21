@@ -17,7 +17,7 @@ const tiles: Tile[] = [
     title: "Carry Management",
     description:
       "Manage carry plans, allocations, vesting, distributions, and participant changes in one system, keeping data and documents linked across funds with full audit trail history.",
-    image: "/images/carry-plan-team.png",
+    image: "/images/carry-plan-team.svg",
     alt: "Carry plan builder showing fund selection and team members with total compensation, carry values and vesting details",
     width: 688,
     height: 260,
@@ -27,7 +27,7 @@ const tiles: Tile[] = [
     title: "Compensation & Reporting",
     description:
       "Bring compensation, carry, GP commit, and investment data into one clear view.",
-    image: "/images/employee-portal.png",
+    image: "/images/employee-portal.svg",
     alt: "Participant compensation report with a salary, bonus and carry breakdown chart, benefits and forecasted carry value",
     width: 312,
     height: 722,
@@ -37,7 +37,7 @@ const tiles: Tile[] = [
     title: "Employee & GP Portal",
     description:
       "Give participants direct access to carry, vesting, values, and documents.",
-    image: "/images/total-compensation.png",
+    image: "/images/total-compensation.svg",
     alt: "Participant portal showing total compensation and carry by fund with vesting progress",
     width: 312,
     height: 260,
@@ -45,7 +45,7 @@ const tiles: Tile[] = [
   {
     title: "Scenario & Firm-Wide Planning",
     description: "Model allocations, vesting, and compensation with shared data.",
-    image: "/images/vesting-timeline.png",
+    image: "/images/vesting-timeline.svg",
     alt: "Vesting timeline chart comparing the current plan with a scenario",
     width: 312,
     height: 260,

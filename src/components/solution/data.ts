@@ -18,12 +18,12 @@ export type SolutionImage = { src: string; width: number; height: number };
 
 /** The build's asset names mapped onto the (byte-identical) files already in /public/images. */
 export const solutionImages: Record<SolutionImageKey, SolutionImage> = {
-  "carry-management": { src: "/images/carry-plan-team.png", width: 688, height: 260 },
-  "vesting-timeline": { src: "/images/vesting-timeline.png", width: 312, height: 260 },
-  "gp-portal": { src: "/images/total-compensation.png", width: 312, height: 260 },
+  "carry-management": { src: "/images/carry-plan-team.svg", width: 688, height: 260 },
+  "vesting-timeline": { src: "/images/vesting-timeline.svg", width: 312, height: 260 },
+  "gp-portal": { src: "/images/total-compensation.svg", width: 312, height: 260 },
   "award-document": { src: "/images/award-document.png", width: 312, height: 260 },
   "co-invest": { src: "/images/co-invest-card.png", width: 312, height: 260 },
-  "comp-reporting": { src: "/images/employee-portal.png", width: 312, height: 722 },
+  "comp-reporting": { src: "/images/employee-portal.svg", width: 312, height: 722 },
 };
 
 export type SolutionFeature = {
