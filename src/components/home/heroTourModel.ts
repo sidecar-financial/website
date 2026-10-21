@@ -18,6 +18,9 @@ const SCENES: ReadonlyArray<readonly [number, number]> = [
   [16000, 24600],
 ];
 
+/** Time after a scene fades out before its internal state is reset (opacity/transform transitions are <= 0.6s). */
+const SCENE_EXIT_MS = 600;
+
 export const ease = (p: number) => 1 - Math.pow(1 - Math.min(1, Math.max(0, p)), 3);
 const money = (v: number) => "$" + Math.round(v).toLocaleString("en-US");
 
@@ -94,15 +97,25 @@ const DONUT_SEGS: ReadonlyArray<readonly [string, number, number]> = [
 
 export function tourFrame(t: number): TourFrame {
   const on = (c: number) => t >= c;
-  const fade = (c: number, dy = 14): Fade => ({
-    o: on(c) ? 1 : 0,
-    tf: on(c) ? "none" : `translateY(${dy}px)`,
+  // Scene 1 (Carry Plans) is the first scene on screen when the loop restarts, so its
+  // internal state must already be blank by then. Reset it as soon as the scene has
+  // faded out (rather than at the loop wrap) so the restart plays forward from empty
+  // instead of visibly un-animating.
+  const on1 = (c: number) => t >= c && t < SCENES[0][1] + SCENE_EXIT_MS;
+  const fadeBy = (isOn: (c: number) => boolean) => (c: number, dy = 14): Fade => ({
+    o: isOn(c) ? 1 : 0,
+    tf: isOn(c) ? "none" : `translateY(${dy}px)`,
   });
+  const fade = fadeBy(on);
+  const fade1 = fadeBy(on1);
   const count = (c: number, dur: number, v: number) => money(v * ease((t - c) / dur));
   const scene = (i: number): Fade => {
     const [a, b] = SCENES[i];
     const visible = t >= a && t < b;
-    return { o: visible ? 1 : 0, tf: visible ? "none" : t < a ? "translateY(10px)" : "translateY(-10px)" };
+    // Slide up while exiting, then park at the entry position so the scene always
+    // (re)enters from below, including when the loop restarts.
+    const exiting = t >= b && t < b + SCENE_EXIT_MS;
+    return { o: visible ? 1 : 0, tf: visible ? "none" : exiting ? "translateY(-10px)" : "translateY(10px)" };
   };
   const clip = (c: number) => (on(c) ? "inset(0 0 0 0)" : "inset(0 100% 0 0)");
 
@@ -113,9 +126,9 @@ export function tourFrame(t: number): TourFrame {
     line: label === active ? "#4C46A3" : "transparent",
   }));
 
-  const hl = on(3600);
+  const hl = on1(3600);
   const people: Person[] = PEOPLE.map(([initials, name, dept, hire, comp, carry, vested], i) => {
-    const f = fade(1900 + i * 300, 18);
+    const f = fade1(1900 + i * 300, 18);
     const isTarget = i === 1 && hl;
     return {
       initials,
@@ -132,14 +145,14 @@ export function tourFrame(t: number): TourFrame {
       shadow: isTarget
         ? "0 0 0 6px rgba(245,166,29,.22), 0 18px 36px -16px rgba(245,166,29,.55)"
         : "0 10px 30px -16px rgba(31,28,58,.2)",
-      badgeO: i === 1 && on(3900) ? 1 : 0,
-      badgeS: i === 1 && on(3900) ? 1 : 0.6,
+      badgeO: i === 1 && on1(3900) ? 1 : 0,
+      badgeS: i === 1 && on1(3900) ? 1 : 0.6,
     };
   });
 
   const links = CENTERS.map((cy, i) => ({
     d: `M360 364C440 364 440 ${cy} 520 ${cy}`,
-    off: on(1700) ? 0 : 1,
+    off: on1(1700) ? 0 : 1,
     color: i === 1 && hl ? "#F5A61D" : "#BDBBD0",
   }));
 
@@ -161,11 +174,11 @@ export function tourFrame(t: number): TourFrame {
     tabs,
     scenes: [scene(0), scene(1), scene(2)],
     a: {
-      panel: fade(200),
-      rowBg: on(1200) ? "#F1F0FA" : "#FFFFFF",
-      radioBorder: on(1200) ? "#2E2A6B" : "#BDBBD0",
-      radioDot: on(1200) ? 1 : 0,
-      lineDot: on(1700) ? 1 : 0,
+      panel: fade1(200),
+      rowBg: on1(1200) ? "#F1F0FA" : "#FFFFFF",
+      radioBorder: on1(1200) ? "#2E2A6B" : "#BDBBD0",
+      radioDot: on1(1200) ? 1 : 0,
+      lineDot: on1(1700) ? 1 : 0,
     },
     people,
     links,

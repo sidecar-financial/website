@@ -171,16 +171,17 @@ export default function HeroTour() {
             <span style={{ fontSize: 13, fontWeight: 500, color: INK }}>Fund Management</span>
             <span
               style={{
+                position: "relative",
                 height: 56,
                 display: "flex",
                 alignItems: "center",
                 fontSize: 13,
                 fontWeight: 500,
                 color: PURPLE,
-                boxShadow: `inset 0 -2px 0 ${PURPLE}`,
               }}
             >
               Carry Management
+              <TabUnderline color={PURPLE} />
             </span>
             <span style={{ marginLeft: "auto", fontSize: 12, fontWeight: 600, color: INK }}>My Tasks</span>
             <span style={{ width: 4, height: 4, borderRadius: "50%", background: INK }} />
@@ -215,17 +216,18 @@ export default function HeroTour() {
               <span
                 key={tab.label}
                 style={{
+                  position: "relative",
                   height: 56,
                   display: "flex",
                   alignItems: "center",
                   fontSize: 13,
                   fontWeight: 500,
                   color: tab.color,
-                  boxShadow: `inset 0 -2px 0 ${tab.line}`,
-                  transition: tr("color .3s, box-shadow .3s"),
+                  transition: tr("color .3s"),
                 }}
               >
                 {tab.label}
+                <TabUnderline color={tab.line} transition={tr("background-color .3s")} />
               </span>
             ))}
           </div>
@@ -652,14 +654,15 @@ export default function HeroTour() {
                 >
                   <span
                     style={{
+                      position: "relative",
                       height: 50,
                       display: "flex",
                       alignItems: "center",
                       color: "#3B82C4",
-                      boxShadow: "inset 0 -2px 0 #3B82C4",
                     }}
                   >
                     Total Compensation
+                    <TabUnderline color="#3B82C4" />
                   </span>
                   <span>Co-Invest</span>
                   <span>Carry Plan</span>
@@ -811,6 +814,20 @@ export default function HeroTour() {
         </button>
       )}
     </div>
+  );
+}
+
+/**
+ * Active-tab underline. A real element rather than `box-shadow: inset 0 -2px`,
+ * which leaves faint vertical hairlines at the tab's left/right edges when the
+ * stage is scaled by a fractional factor.
+ */
+function TabUnderline({ color, transition }: { color: string; transition?: string }) {
+  return (
+    <span
+      aria-hidden="true"
+      style={{ position: "absolute", left: 0, right: 0, bottom: 0, height: 2, background: color, transition }}
+    />
   );
 }
 
