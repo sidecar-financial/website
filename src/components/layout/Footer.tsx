@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const footerLinks = {
   solutions: [
@@ -30,12 +31,14 @@ export default function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
           {/* Logo and contact */}
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="flex items-center gap-2">
-              <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
-                <circle cx="16" cy="16" r="14" stroke="#5046e5" strokeWidth="3" />
-                <circle cx="16" cy="16" r="5" fill="#5046e5" />
-              </svg>
-              <span className="text-lg font-bold text-gray-900">NAVABLE</span>
+            <Link href="/" className="inline-block">
+              <Image
+                src="/images/navable-logo.png"
+                alt="Navable"
+                width={140}
+                height={32}
+                className="h-8 w-auto"
+              />
             </Link>
             <div className="mt-4 space-y-2">
               <a

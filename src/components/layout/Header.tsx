@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -11,12 +12,15 @@ export default function Header() {
       <nav className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="16" r="14" stroke="#5046e5" strokeWidth="3" />
-              <circle cx="16" cy="16" r="5" fill="#5046e5" />
-            </svg>
-            <span className="text-lg font-bold text-gray-900 tracking-tight">NAVABLE</span>
+          <Link href="/" className="flex items-center">
+            <Image
+              src="/images/navable-logo.png"
+              alt="Navable"
+              width={140}
+              height={32}
+              className="h-8 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
