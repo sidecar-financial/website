@@ -1,7 +1,5 @@
 "use client";
 
-import Button from "../ui/Button";
-
 const steps = [
   {
     number: "1",
@@ -22,13 +20,14 @@ const steps = [
 
 export default function Validation() {
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+    <section className="py-20 bg-[#f8f7ff]">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
             Validate Navable With Your
-            <br />
-            <span className="text-[#5046e5]">Own Fund</span> Before You Commit
+          </h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-[#5046e5]">
+            Own Fund Before You Commit
           </h2>
           <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
             You don&apos;t need to decide whether Navable works for your carry structure 
@@ -37,24 +36,18 @@ export default function Validation() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
+        <div className="grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           {steps.map((step) => (
             <div key={step.number} className="text-center">
-              <div className="w-16 h-16 rounded-full bg-[#5046e5] text-white text-2xl font-bold flex items-center justify-center mx-auto mb-6">
+              <div className="w-14 h-14 rounded-full bg-[#5046e5] text-white text-xl font-bold flex items-center justify-center mx-auto mb-4">
                 {step.number}
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
+              <h3 className="text-lg font-bold text-gray-900 mb-2">
                 {step.title}
               </h3>
-              <p className="text-gray-600">{step.description}</p>
+              <p className="text-gray-600 text-sm">{step.description}</p>
             </div>
           ))}
-        </div>
-
-        <div className="text-center">
-          <Button href="/demo" size="lg">
-            Book a Free Demo
-          </Button>
         </div>
       </div>
     </section>

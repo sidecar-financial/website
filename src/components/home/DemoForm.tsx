@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Button from "../ui/Button";
+import Link from "next/link";
 
 export default function DemoForm() {
   const [formData, setFormData] = useState({
@@ -13,44 +13,41 @@ export default function DemoForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
     console.log("Form submitted:", formData);
   };
 
   return (
-    <section className="py-20 bg-white" id="demo">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section className="py-20 bg-[#f8f7ff]" id="demo">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="grid lg:grid-cols-2 gap-12 items-start max-w-5xl mx-auto">
           {/* Left content */}
           <div>
-            <p className="text-[#5046e5] font-semibold text-sm uppercase tracking-wide mb-4">
+            <p className="text-[#5046e5] text-sm font-semibold tracking-wide uppercase mb-3">
               Book a Demo
             </p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
               Ready to Move Carry
-              <br />
-              <span className="text-[#5046e5]">Beyond Spreadsheets?</span>
             </h2>
-            <p className="text-lg text-gray-600 mb-8">
+            <h2 className="text-3xl md:text-4xl font-bold text-[#5046e5] leading-tight mb-6">
+              Beyond Spreadsheets?
+            </h2>
+            <p className="text-gray-600 leading-relaxed mb-6">
               Discover how Navable can help your finance team manage complex 
               carry structures, reduce manual work, and maintain control as 
               your firm grows.
             </p>
-            <div className="flex items-center text-sm text-gray-500">
-              <svg className="w-5 h-5 text-[#5046e5] mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
+            <p className="text-sm text-gray-500">
               Trusted by firms managing over $150B+ in AUM.
-            </div>
+            </p>
           </div>
 
           {/* Right form */}
-          <div className="bg-[#f8f7ff] rounded-2xl p-8">
-            <form onSubmit={handleSubmit} className="space-y-5">
+          <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+            <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label
                   htmlFor="fullName"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-gray-700 mb-1.5"
                 >
                   Full Name*
                 </label>
@@ -58,7 +55,7 @@ export default function DemoForm() {
                   type="text"
                   id="fullName"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all text-sm"
                   placeholder="Your full name"
                   value={formData.fullName}
                   onChange={(e) =>
@@ -70,7 +67,7 @@ export default function DemoForm() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-gray-700 mb-1.5"
                 >
                   Work Email*
                 </label>
@@ -78,7 +75,7 @@ export default function DemoForm() {
                   type="email"
                   id="email"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all text-sm"
                   placeholder="you@company.com"
                   value={formData.email}
                   onChange={(e) =>
@@ -90,7 +87,7 @@ export default function DemoForm() {
               <div>
                 <label
                   htmlFor="company"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-gray-700 mb-1.5"
                 >
                   Company Name*
                 </label>
@@ -98,7 +95,7 @@ export default function DemoForm() {
                   type="text"
                   id="company"
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all text-sm"
                   placeholder="Your company"
                   value={formData.company}
                   onChange={(e) =>
@@ -110,13 +107,13 @@ export default function DemoForm() {
               <div>
                 <label
                   htmlFor="interest"
-                  className="block text-sm font-medium text-gray-700 mb-2"
+                  className="block text-sm font-medium text-gray-700 mb-1.5"
                 >
-                  What would you like to explore?
+                  What would you like to explore
                 </label>
                 <select
                   id="interest"
-                  className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all bg-white"
+                  className="w-full px-4 py-2.5 rounded-lg border border-gray-200 focus:border-[#5046e5] focus:ring-2 focus:ring-[#5046e5]/20 outline-none transition-all text-sm bg-white"
                   value={formData.interest}
                   onChange={(e) =>
                     setFormData({ ...formData, interest: e.target.value })
@@ -131,9 +128,15 @@ export default function DemoForm() {
                 </select>
               </div>
 
-              <Button type="submit" className="w-full" size="lg">
+              <button
+                type="submit"
+                className="w-full inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-[#5046e5] rounded-full hover:bg-[#4038c7] transition-colors mt-2"
+              >
                 Book a Free Demo
-              </Button>
+                <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </button>
             </form>
           </div>
         </div>

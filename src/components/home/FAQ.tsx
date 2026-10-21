@@ -39,49 +39,37 @@ export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="py-20 bg-[#f8f7ff]">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <p className="text-[#5046e5] font-semibold text-sm uppercase tracking-wide mb-4">
+    <section className="py-20 bg-white">
+      <div className="max-w-3xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-10">
+          <p className="text-[#5046e5] text-sm font-semibold tracking-wide uppercase mb-3">
             FAQ
           </p>
-          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
             Frequently Asked Questions
           </h2>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl border border-gray-100 overflow-hidden"
+              className="bg-[#f8f7ff] rounded-xl overflow-hidden"
             >
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full px-6 py-5 text-left flex items-center justify-between hover:bg-gray-50 transition-colors"
+                className="w-full px-6 py-4 text-left flex items-center justify-between hover:bg-[#f0eeff] transition-colors"
               >
-                <span className="font-semibold text-gray-900 pr-8">
+                <span className="font-medium text-gray-900 pr-4">
                   {faq.question}
                 </span>
-                <svg
-                  className={`w-5 h-5 text-[#5046e5] flex-shrink-0 transition-transform duration-200 ${
-                    openIndex === index ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
+                <span className="text-[#5046e5] text-xl flex-shrink-0">
+                  {openIndex === index ? "−" : "+"}
+                </span>
               </button>
               {openIndex === index && (
-                <div className="px-6 pb-5">
-                  <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                <div className="px-6 pb-4">
+                  <p className="text-gray-600 text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               )}
             </div>

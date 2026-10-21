@@ -2,170 +2,61 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import Button from "../ui/Button";
-
-const navigation = {
-  solutions: [
-    {
-      name: "Carried Interest Software",
-      href: "/platform",
-      description: "Manage carry plans, allocations, and vesting",
-    },
-    {
-      name: "Employee Co-Invest",
-      href: "/solutions/employee-co-invest",
-      description: "Turnkey co-investment programs",
-    },
-    {
-      name: "Compensation Management",
-      href: "/solutions/compensation-management",
-      description: "Unified total compensation visibility",
-    },
-  ],
-  whoWeServe: [
-    {
-      name: "Private Equity & Private Credit",
-      href: "/who-we-serve/private-equity",
-    },
-    { name: "Venture Capital", href: "/who-we-serve/venture-capital" },
-    { name: "Real Estate", href: "/who-we-serve/real-estate" },
-  ],
-  company: [
-    { name: "About Us", href: "/about" },
-    { name: "Blog", href: "/blog" },
-    { name: "Resource Hub", href: "/resources" },
-  ],
-};
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-100">
-      <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
+      <nav className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
-            <div className="flex items-center">
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                className="text-[#5046e5]"
-              >
-                <circle cx="16" cy="16" r="14" stroke="currentColor" strokeWidth="2.5" />
-                <circle cx="16" cy="16" r="6" fill="currentColor" />
-              </svg>
-              <span className="ml-2 text-xl font-bold text-gray-900">NAVABLE</span>
-            </div>
+          <Link href="/" className="flex items-center gap-2">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="14" stroke="#5046e5" strokeWidth="3" />
+              <circle cx="16" cy="16" r="5" fill="#5046e5" />
+            </svg>
+            <span className="text-lg font-bold text-gray-900 tracking-tight">NAVABLE</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-1">
-            {/* Platform Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setActiveDropdown("platform")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#5046e5] transition-colors">
-                Platform
-                <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {activeDropdown === "platform" && (
-                <div className="absolute top-full left-0 w-72 bg-white rounded-xl shadow-lg border border-gray-100 py-2 mt-1">
-                  {navigation.solutions.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block px-4 py-3 hover:bg-gray-50"
-                    >
-                      <div className="text-sm font-medium text-gray-900">{item.name}</div>
-                      {item.description && (
-                        <div className="text-xs text-gray-500 mt-0.5">{item.description}</div>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* Why Navable */}
-            <Link
-              href="/why-navable"
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#5046e5] transition-colors"
-            >
+          <div className="hidden lg:flex items-center gap-8">
+            <Link href="/platform" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+              Platform
+            </Link>
+            <Link href="/why-navable" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Why Navable
             </Link>
-
-            {/* How it Works */}
-            <Link
-              href="/how-it-works"
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#5046e5] transition-colors"
-            >
+            <Link href="/how-it-works" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               How it works
             </Link>
-
-            {/* FAQ */}
-            <Link
-              href="/faq"
-              className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#5046e5] transition-colors"
-            >
+            <Link href="/faq" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               FAQ
             </Link>
-
-            {/* Company Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setActiveDropdown("company")}
-              onMouseLeave={() => setActiveDropdown(null)}
-            >
-              <button className="flex items-center px-4 py-2 text-sm font-medium text-gray-700 hover:text-[#5046e5] transition-colors">
-                Company
-                <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {activeDropdown === "company" && (
-                <div className="absolute top-full left-0 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 mt-1">
-                  {navigation.company.map((item) => (
-                    <Link
-                      key={item.name}
-                      href={item.href}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-[#5046e5]"
-                    >
-                      {item.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
+            <Link href="/about" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
+              Company
+            </Link>
           </div>
 
-          {/* Right side buttons */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <Link
-              href="/sign-in"
-              className="text-sm font-medium text-gray-700 hover:text-[#5046e5] transition-colors"
-            >
+          {/* Right side */}
+          <div className="hidden lg:flex items-center gap-6">
+            <Link href="/sign-in" className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors">
               Sign in
             </Link>
-            <Button href="/demo" size="sm">
+            <Link
+              href="/demo"
+              className="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-[#5046e5] rounded-full hover:bg-[#4038c7] transition-colors"
+            >
               Book a Free Demo
-            </Button>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
           <button
-            className="lg:hidden p-2"
+            className="lg:hidden p-2 -mr-2"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               {mobileMenuOpen ? (
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
@@ -178,48 +69,33 @@ export default function Header() {
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden py-4 border-t border-gray-100">
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2">
-                  Platform
-                </div>
-                {navigation.solutions.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="block px-2 py-2 text-sm text-gray-700"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-              <div className="space-y-2">
-                <div className="text-xs font-semibold text-gray-500 uppercase tracking-wider px-2">
-                  Company
-                </div>
-                {navigation.company.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="block px-2 py-2 text-sm text-gray-700"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </div>
-              <div className="pt-4 space-y-3">
-                <Link
-                  href="/sign-in"
-                  className="block text-center py-2 text-sm font-medium text-gray-700"
-                >
-                  Sign in
-                </Link>
-                <Button href="/demo" className="w-full">
-                  Book a Free Demo
-                </Button>
-              </div>
+            <div className="flex flex-col gap-4">
+              <Link href="/platform" className="text-sm font-medium text-gray-600" onClick={() => setMobileMenuOpen(false)}>
+                Platform
+              </Link>
+              <Link href="/why-navable" className="text-sm font-medium text-gray-600" onClick={() => setMobileMenuOpen(false)}>
+                Why Navable
+              </Link>
+              <Link href="/how-it-works" className="text-sm font-medium text-gray-600" onClick={() => setMobileMenuOpen(false)}>
+                How it works
+              </Link>
+              <Link href="/faq" className="text-sm font-medium text-gray-600" onClick={() => setMobileMenuOpen(false)}>
+                FAQ
+              </Link>
+              <Link href="/about" className="text-sm font-medium text-gray-600" onClick={() => setMobileMenuOpen(false)}>
+                Company
+              </Link>
+              <hr className="border-gray-100" />
+              <Link href="/sign-in" className="text-sm font-medium text-gray-600" onClick={() => setMobileMenuOpen(false)}>
+                Sign in
+              </Link>
+              <Link
+                href="/demo"
+                className="inline-flex items-center justify-center px-5 py-2.5 text-sm font-semibold text-white bg-[#5046e5] rounded-full"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Book a Free Demo
+              </Link>
             </div>
           </div>
         )}
