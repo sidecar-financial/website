@@ -223,10 +223,16 @@ export default function Header() {
   // Mobile: lock body scroll while open, and focus the first item.
   useEffect(() => {
     if (!mobileOpen) return;
-    document.body.style.overflow = "hidden";
-    mobileMenuRef.current?.querySelector<HTMLElement>("button, a[href]")?.focus();
+    // Lock the root (viewport) scroller. Locking <body> instead would turn it into a scroll container
+    // and detach the sticky header from the viewport.
+    document.documentElement.style.overflow = "hidden";
+    // The sticky header can still be pushed down by the announcement banner (page scrolled < banner
+    // height); subtract that offset so the menu never runs past the bottom of the viewport.
+    const headerTop = Math.max(0, hamburgerRef.current?.closest("header")?.getBoundingClientRect().top ?? 0);
+    mobileMenuRef.current?.style.setProperty("--menu-offset", `${Math.round(headerTop)}px`);
+    mobileMenuRef.current?.querySelector<HTMLElement>("button, a[href]")?.focus({ preventScroll: true });
     return () => {
-      document.body.style.overflow = "";
+      document.documentElement.style.overflow = "";
     };
   }, [mobileOpen]);
 
@@ -251,14 +257,8 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-white">
-      {/* Skip to main content link for keyboard users */}
-      <a
-        href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[60] focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-orange focus:ring-offset-2"
-      >
-        Skip to main content
-      </a>
+    // Sticky (in flow), not fixed: the announcement banner above pushes it down until it scrolls away.
+    <header className="sticky top-0 z-50 border-b border-line bg-white">
       <nav className="mx-auto max-w-[1128px] px-6 lg:px-[30px]" aria-label="Main navigation">
         <div className="flex h-[67px] items-center">
           {/* Logo */}
@@ -412,7 +412,7 @@ export default function Header() {
           ref={mobileMenuRef}
           className={`flex flex-col border-t border-line transition-all duration-200 lg:hidden ${
             mobileOpen
-              ? "max-h-[calc(100dvh-68px)] opacity-100"
+              ? "max-h-[calc(100dvh-68px-var(--menu-offset,0px))] opacity-100"
               : "max-h-0 overflow-hidden border-t-0 opacity-0"
           }`}
           aria-label="Mobile navigation"

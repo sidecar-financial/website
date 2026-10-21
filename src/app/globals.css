@@ -56,10 +56,20 @@
   html,
   body {
     max-width: 100vw;
+  }
+
+  html {
     overflow-x: hidden;
   }
 
-  /* Smooth in-page anchors; offset for the fixed 68px header. */
+  /* `clip`, not `hidden`: hidden would make <body> a scroll container, which breaks the
+     header's `position: sticky` (it would stick to <body> instead of the viewport). */
+  body {
+    overflow-x: clip;
+  }
+
+  /* Smooth in-page anchors; offset for the sticky 68px header
+     (the announcement banner is in flow above it and scrolls away, so it needs no offset). */
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 84px;
@@ -95,6 +105,11 @@
   .on-dark :focus-visible {
     outline-color: var(--orange);
   }
+}
+
+/* Hide the announcement banner pre-paint for visitors who dismissed it (flag set by an inline script). */
+html[data-banner-dismissed] #announcement-banner {
+  display: none;
 }
 
 /* Subtle dot-grid backdrop used by the hero, "Why Navable" and demo sections */
