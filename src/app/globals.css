@@ -70,6 +70,10 @@
 
   /* Smooth in-page anchors; offset for the sticky 68px header
      (the announcement banner is in flow above it and scrolls away, so it needs no offset). */
+  /* Because this is `smooth`, <html data-scroll-behavior="smooth"> (layout.tsx) is REQUIRED: it
+     tells Next.js to make route-change scrolling instant. Without it, navigating to a page
+     (e.g. the banner link to /waterfall) smooth-scrolls mid-transition and lands on a later
+     section instead of the top. */
   html {
     scroll-behavior: smooth;
     scroll-padding-top: 84px;

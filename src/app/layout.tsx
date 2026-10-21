@@ -61,7 +61,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${inter.variable} ${mono.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <body className="min-h-screen flex flex-col antialiased">
         <script dangerouslySetInnerHTML={{ __html: bannerDismissedScript }} />
         {/* Skip link stays the first focusable element, ahead of the announcement banner. */}
