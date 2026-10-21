@@ -6,7 +6,7 @@ import { SITE_URL } from "@/lib/site";
 // Every public, indexable route. (/sign-in is excluded: it redirects to the app.)
 const staticRoutes = [
   "/",
-  "/platform",
+  "/solutions/carried-interest-software",
   "/solutions/waterfall",
   "/solutions/compensation-management",
   "/solutions/employee-co-invest",

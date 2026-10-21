@@ -62,11 +62,9 @@ const products: NavItem[] = [
     description: "Distribution waterfalls in the same system",
     icon: "waterfall",
   },
-  // No standalone page yet: points at the platform overview until one exists.
-  // (/platform stays in the sitemap and is reachable from here.)
   {
     label: "Carried Interest Software",
-    href: "/platform",
+    href: "/solutions/carried-interest-software",
     description: "Plans, allocations and vesting",
     icon: "carry",
   },

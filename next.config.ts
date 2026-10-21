@@ -11,9 +11,8 @@ const nextConfig: NextConfig = {
 
       // --- Legacy navable.com URLs -> current local routes (308) ---
       { source: "/about-us", destination: "/about", permanent: true },
-      // Stopgap: there is no standalone Carried Interest page yet. When one exists
-      // (e.g. /solutions/carried-interest), point this redirect at it instead.
-      { source: "/solutions/carried-interest-software", destination: "/platform", permanent: true },
+      // /platform was retired; the carried-interest page now lives at its legacy navable.com URL.
+      { source: "/platform", destination: "/solutions/carried-interest-software", permanent: true },
       { source: "/features-and-services/employee-solutions", destination: "/solutions/compensation-management", permanent: true },
       { source: "/who-we-serve/real-estate-firms", destination: "/who-we-serve/real-estate", permanent: true },
       { source: "/who-we-serve-legacy/private-equity", destination: "/who-we-serve/private-equity", permanent: true },

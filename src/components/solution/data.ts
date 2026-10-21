@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 /**
- * Typed content for the six solution pages (/platform, /solutions/*, /who-we-serve/*).
+ * Typed content for the six solution pages (/solutions/*, /who-we-serve/*).
  * Copy and ordering come from the design build's Solution component (PAGES / COMPARE);
  * `metaDescription` is kept from the previous pages because the build only defines titles.
  */

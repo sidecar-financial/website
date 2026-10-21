@@ -74,7 +74,7 @@ export default function WhyNavablePage() {
         <Button href="/demo" size="lg">
           Book a Free Demo
         </Button>
-        <Button href="/platform" variant="secondary" size="lg">
+        <Button href="/solutions/carried-interest-software" variant="secondary" size="lg">
           Explore Platform
         </Button>
       </PageHero>

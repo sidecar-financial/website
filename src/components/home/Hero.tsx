@@ -30,7 +30,7 @@ export default function Hero() {
           <Button href="/demo" size="lg">
             Book a Free Demo
           </Button>
-          <Button href="/platform" variant="secondary" size="lg">
+          <Button href="#features" variant="secondary" size="lg">
             Explore the Platform
           </Button>
         </div>

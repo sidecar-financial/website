@@ -39,7 +39,7 @@ export default function WaterfallPage() {
 
         <p className="mt-10 text-[15px] text-body">
           Managing carry today?{" "}
-          <Link href="/platform" className="font-medium text-[#4C46A3] underline-offset-2 hover:text-ink hover:underline">
+          <Link href="/solutions/carried-interest-software" className="font-medium text-[#4C46A3] underline-offset-2 hover:text-ink hover:underline">
             See Carried Interest Software →
           </Link>
         </p>
