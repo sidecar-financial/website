@@ -1,5 +1,8 @@
-import Image from "next/image";
+import type { ReactNode } from "react";
 import { Section, SectionHeader } from "@/components/ui/Frame";
+import NavableIllustration from "@/components/home/problem-illustrations/NavableIllustration";
+import ProblemIllustrations from "@/components/home/problem-illustrations/ProblemIllustrations";
+import SheetsIllustration from "@/components/home/problem-illustrations/SheetsIllustration";
 
 const spreadsheetProblems = [
   "Carry rules depend on spreadsheets and people",
@@ -39,8 +42,7 @@ const GridIcon = () => (
 );
 
 type ComparisonProps = {
-  image: string;
-  imageAlt: string;
+  illustration: ReactNode;
   label: string;
   icon: React.ReactNode;
   items: string[];
@@ -48,17 +50,10 @@ type ComparisonProps = {
   className?: string;
 };
 
-function Comparison({ image, imageAlt, label, icon, items, itemIcon, className = "" }: ComparisonProps) {
+function Comparison({ illustration, label, icon, items, itemIcon, className = "" }: ComparisonProps) {
   return (
     <div className={`px-6 pb-12 pt-8 lg:px-12 lg:pb-[58px] lg:pt-[39px] ${className}`}>
-      <Image
-        src={image}
-        alt={imageAlt}
-        width={468}
-        height={278}
-        className="h-auto w-full max-w-[468px] rounded-lg"
-        unoptimized
-      />
+      <div className="w-full max-w-[468px]">{illustration}</div>
       <h3 className="mt-7 flex items-center gap-2 font-mono text-[11px] font-bold uppercase leading-[14px] tracking-[0.08em] text-ink">
         {icon}
         {label}
@@ -96,25 +91,23 @@ export default function Problem() {
         description="As carry complexity grows, spreadsheets create more risk, more manual work, and less control. Navable brings it into one system built for alternative asset firms."
       />
 
-      <div className="grid lg:grid-cols-2">
+      <ProblemIllustrations className="grid lg:grid-cols-2">
         <Comparison
           className="border-b border-line lg:border-b-0 lg:border-r"
-          image="/images/spreadsheet-illustration.png"
-          imageAlt="Isometric illustration of disconnected spreadsheets"
+          illustration={<SheetsIllustration />}
           label="With Spreadsheets"
           icon={<GridIcon />}
           items={spreadsheetProblems}
           itemIcon={<MinusIcon />}
         />
         <Comparison
-          image="/images/abstract-3d.png"
-          imageAlt="Isometric illustration of a single connected Navable system"
+          illustration={<NavableIllustration />}
           label="With Navable"
           icon={<span aria-hidden="true" className="block size-3.5 bg-orange" />}
           items={navableSolutions}
           itemIcon={<CheckIcon />}
         />
-      </div>
+      </ProblemIllustrations>
     </Section>
   );
 }

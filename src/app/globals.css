@@ -128,67 +128,105 @@
   pointer-events: none;
   background-repeat: no-repeat;
   opacity: 0;
-  filter: drop-shadow(0 0 3px rgba(245, 166, 29, 0.55));
+  filter: drop-shadow(0 0 3px rgba(245, 166, 29, 0.3));
   animation-duration: 8s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
 }
 .trace-line-top {
-  background-image: linear-gradient(90deg, transparent, rgba(245, 166, 29, 0.9));
+  background-image: linear-gradient(90deg, transparent, rgba(245, 166, 29, 0.55));
   background-size: 16% 100%;
   animation-name: trace-top;
 }
 .trace-line-right {
-  background-image: linear-gradient(180deg, transparent, rgba(245, 166, 29, 0.9));
+  background-image: linear-gradient(180deg, transparent, rgba(245, 166, 29, 0.55));
   background-size: 100% 28%;
   animation-name: trace-right;
 }
 .trace-line-bottom {
-  background-image: linear-gradient(270deg, transparent, rgba(245, 166, 29, 0.9));
+  background-image: linear-gradient(270deg, transparent, rgba(245, 166, 29, 0.55));
   background-size: 16% 100%;
   animation-name: trace-bottom;
 }
 .trace-line-left {
-  background-image: linear-gradient(0deg, transparent, rgba(245, 166, 29, 0.9));
+  background-image: linear-gradient(0deg, transparent, rgba(245, 166, 29, 0.55));
   background-size: 100% 28%;
   animation-name: trace-left;
 }
 
+/* Each side owns a quarter (S) of the 8s loop. The comet starts with its head
+   parked on the departure dot (window just outside the line) and wipes along the
+   line, so it leaves the dot instead of popping in beside it. The head reaches the
+   arrival dot at S+19%, the tail dissolves by S+22%, and the dot flare (trace-dot)
+   peaks at that moment and is still glowing when the next side departs at S+26%.
+   Backgrounds: -19.05% / -38.9% park a 16% / 28% window fully before the start. */
 @keyframes trace-top {
-  0% { background-position: 0% 0; opacity: 0; }
-  3% { opacity: 1; }
-  20% { opacity: 1; }
-  23%, 100% { background-position: 100% 0; opacity: 0; }
+  0%, 1% { background-position: -19.05% 0; opacity: 0; }
+  5% { opacity: 1; }
+  16% { opacity: 1; }
+  19% { background-position: 100% 0; }
+  22%, 100% { background-position: 100% 0; opacity: 0; }
 }
 @keyframes trace-right {
-  0%, 25% { background-position: 0 0%; opacity: 0; }
-  28% { opacity: 1; }
-  45% { opacity: 1; }
-  48%, 100% { background-position: 0 100%; opacity: 0; }
+  0%, 26% { background-position: 0 -38.9%; opacity: 0; }
+  30% { opacity: 1; }
+  41% { opacity: 1; }
+  44% { background-position: 0 100%; }
+  47%, 100% { background-position: 0 100%; opacity: 0; }
 }
 @keyframes trace-bottom {
-  0%, 50% { background-position: 100% 0; opacity: 0; }
-  53% { opacity: 1; }
-  70% { opacity: 1; }
-  73%, 100% { background-position: 0% 0; opacity: 0; }
+  0%, 51% { background-position: 119.05% 0; opacity: 0; }
+  55% { opacity: 1; }
+  66% { opacity: 1; }
+  69% { background-position: 0% 0; }
+  72%, 100% { background-position: 0% 0; opacity: 0; }
 }
 @keyframes trace-left {
-  0%, 75% { background-position: 0 100%; opacity: 0; }
-  78% { opacity: 1; }
-  95% { opacity: 1; }
-  98%, 100% { background-position: 0 0%; opacity: 0; }
+  0%, 76% { background-position: 0 138.9%; opacity: 0; }
+  80% { opacity: 1; }
+  91% { opacity: 1; }
+  94% { background-position: 0 0%; }
+  97%, 100% { background-position: 0 0%; opacity: 0; }
 }
 
+/* Left-edge light that detours around the side tab (see TabTrace). pathLength is
+   1, so --tail is a fraction of the path and --end is (--tail - 1), set inline
+   because calc() here doesn't interpolate; the dash head sweeps 0 -> 1 during
+   the left side's quarter of the same 8s loop. */
+.tab-trace-path {
+  fill: none;
+  stroke: rgba(245, 166, 29, 0.2);
+  stroke-width: 1;
+  stroke-dasharray: var(--tail) 2;
+  stroke-dashoffset: var(--tail);
+  opacity: 0;
+  filter: drop-shadow(0 0 3px rgba(245, 166, 29, 0.3));
+  animation: tab-trace 8s ease-in-out infinite;
+}
+@keyframes tab-trace {
+  0%, 76% { stroke-dashoffset: var(--tail); opacity: 0; }
+  80% { opacity: 1; }
+  91% { opacity: 1; }
+  94% { stroke-dashoffset: var(--end); }
+  97%, 100% { stroke-dashoffset: var(--end); opacity: 0; }
+}
+
+/* Flare timed to the light: ramps up just before it arrives, peaks as the head
+   lands, and holds a beat so the dot is still lit when the light departs. The
+   per-dot delay (see CornerDots) is arrival time minus the 4% ramp (0.32s).
+   --dot-base is the dot's resting color, set inline by CornerDots. */
 .trace-dot {
-  animation: trace-dot 8s ease-out infinite;
+  animation: trace-dot 8s ease-in-out infinite;
 }
 @keyframes trace-dot {
-  0% { background-color: #f5a61d; box-shadow: 0 0 0 0 rgba(245, 166, 29, 0.55), 0 0 10px 2px rgba(245, 166, 29, 0.6); }
-  8%, 100% { box-shadow: 0 0 0 6px rgba(245, 166, 29, 0), 0 0 0 0 rgba(245, 166, 29, 0); }
+  0%, 20%, 100% { background-color: var(--dot-base); box-shadow: 0 0 0 0 rgba(245, 166, 29, 0), 0 0 0 0 rgba(245, 166, 29, 0); }
+  4% { background-color: rgba(245, 166, 29, 0.7); box-shadow: 0 0 0 4px rgba(245, 166, 29, 0.2), 0 0 10px 2px rgba(245, 166, 29, 0.35); }
+  11% { background-color: rgba(245, 166, 29, 0.6); box-shadow: 0 0 0 6px rgba(245, 166, 29, 0.05), 0 0 8px 1px rgba(245, 166, 29, 0.25); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .trace-line,
+  .tab-trace-path,
   .trace-dot {
     animation: none !important;
   }
@@ -224,6 +262,57 @@
 }
 @keyframes check-draw {
   to { stroke-dashoffset: 0; }
+}
+
+/* ================================
+   Problem section illustrations
+   ================================ */
+/* Navable — Problem section illustrations
+   Plays once when [data-pi-group] enters the viewport (see problem-illustrations.js).
+   Delays are shared across both SVGs so the spreadsheet art plays first, then Navable. */
+.pi { display: block; width: 100%; height: auto; }
+.pi-part { transform-box: fill-box; transform-origin: center; }
+
+/* Hidden start state — only applied once JS has confirmed motion is allowed */
+[data-pi-group].pi-ready:not(.pi-play) .pi-part { opacity: 0; }
+[data-pi-group].pi-ready:not(.pi-play) .pi--sheets [data-part="sheet-1"] { transform: translate(-14px,-18px) rotate(-4deg); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--sheets [data-part="sheet-2"] { transform: translate(18px,-10px) rotate(5deg); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--sheets [data-part="sheet-3"] { transform: translate(-10px,16px) rotate(3deg); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--sheets [data-part="cube-left"] { transform: scale(.4); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--sheets [data-part="cube-orange"] { transform: scale(.4); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--navable [data-part="base"] { transform: translateY(10px); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--navable [data-part="layer-1"] { transform: translateY(-26px); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--navable [data-part="layer-2"] { transform: translateY(-30px); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--navable [data-part="layer-top"] { transform: translateY(-36px); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--navable [data-part="cube-1"] { transform: translate(14px,10px) scale(.6); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--navable [data-part="cube-2"] { transform: translate(-14px,10px) scale(.6); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--navable [data-part="cube-3"] { transform: translate(-14px,-10px) scale(.6); }
+[data-pi-group].pi-ready:not(.pi-play) .pi--navable [data-part="cube-4"] { transform: translate(14px,-10px) scale(.6); }
+
+/* Play */
+[data-pi-group].pi-play .pi-part { opacity: 1; transform: none; }
+.pi-play .pi--sheets [data-part="sheet-1"] { transition: opacity .35s ease 0s, transform 0.9s cubic-bezier(.2,.8,.2,1.1) 0s; }
+.pi-play .pi--sheets [data-part="sheet-2"] { transition: opacity .35s ease 0.12s, transform 0.9s cubic-bezier(.2,.8,.2,1.1) 0.12s; }
+.pi-play .pi--sheets [data-part="sheet-3"] { transition: opacity .35s ease 0.24s, transform 0.9s cubic-bezier(.2,.8,.2,1.1) 0.24s; }
+.pi-play .pi--sheets [data-part="cube-left"] { transition: opacity .35s ease 0.5s, transform 0.5s cubic-bezier(.2,.8,.2,1.5) 0.5s; }
+.pi-play .pi--sheets [data-part="cube-orange"] { transition: opacity .35s ease 0.6s, transform 0.5s cubic-bezier(.2,.8,.2,1.5) 0.6s; }
+.pi-play .pi--sheets [data-part="link-gray"] { transition: opacity .35s ease 0.75s, transform 0.4s ease 0.75s; }
+.pi-play .pi--sheets [data-part="link-orange"] { transition: opacity .35s ease 0.9s, transform 0.4s ease 0.9s; }
+.pi-play .pi--navable [data-part="base"] { transition: opacity .35s ease 0.9s, transform 0.6s cubic-bezier(.2,.8,.2,1.1) 0.9s; }
+.pi-play .pi--navable [data-part="layer-1"] { transition: opacity .35s ease 1.05s, transform 0.55s cubic-bezier(.2,.8,.2,1.1) 1.05s; }
+.pi-play .pi--navable [data-part="layer-2"] { transition: opacity .35s ease 1.18s, transform 0.55s cubic-bezier(.2,.8,.2,1.1) 1.18s; }
+.pi-play .pi--navable [data-part="layer-top"] { transition: opacity .35s ease 1.31s, transform 0.6s cubic-bezier(.2,.8,.2,1.1) 1.31s; }
+.pi-play .pi--navable [data-part="cube-1"] { transition: opacity .35s ease 1.65s, transform 0.7s cubic-bezier(.2,.8,.2,1.1) 1.65s; }
+.pi-play .pi--navable [data-part="cube-2"] { transition: opacity .35s ease 1.72s, transform 0.7s cubic-bezier(.2,.8,.2,1.1) 1.72s; }
+.pi-play .pi--navable [data-part="cube-3"] { transition: opacity .35s ease 1.79s, transform 0.7s cubic-bezier(.2,.8,.2,1.1) 1.79s; }
+.pi-play .pi--navable [data-part="cube-4"] { transition: opacity .35s ease 1.86s, transform 0.7s cubic-bezier(.2,.8,.2,1.1) 1.86s; }
+.pi-play .pi--navable [data-part="link-1"] { transition: opacity .35s ease 2s, transform 0.4s ease 2s; }
+.pi-play .pi--navable [data-part="link-2"] { transition: opacity .35s ease 2.08s, transform 0.4s ease 2.08s; }
+.pi-play .pi--navable [data-part="link-3"] { transition: opacity .35s ease 2.16s, transform 0.4s ease 2.16s; }
+.pi-play .pi--navable [data-part="link-4"] { transition: opacity .35s ease 2.24s, transform 0.4s ease 2.24s; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-pi-group] .pi-part { opacity: 1 !important; transform: none !important; transition: none !important; }
 }
 
 /* Reduced motion preference */

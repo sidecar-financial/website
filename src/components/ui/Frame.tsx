@@ -1,4 +1,5 @@
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
+import TabTrace from "@/components/ui/TabTrace";
 
 /**
  * Building blocks for the "framed grid" look of the landing page design:
@@ -18,6 +19,7 @@ export function SideLabel({ children, dark = false }: SideLabelProps) {
   return (
     <div
       aria-hidden="true"
+      data-side-tab
       className={`absolute right-full top-6 z-10 hidden min-[1200px]:flex flex-col-reverse items-center gap-[10px] border border-r-0 px-[9px] py-3 ${
         dark ? "border-navy-line bg-navy" : "border-line bg-white"
       }`}
@@ -116,7 +118,10 @@ export function Gap({ ruled = false }: { ruled?: boolean }) {
 type CornerDotsProps = {
   dark?: boolean;
   position?: "top" | "bottom";
-  /** When set, the dot glows once per 8s loop, `leftDelay`/`rightDelay` seconds into it (see `.trace-dot`). */
+  /**
+   * When set, the dot flares once per 8s loop as the traced light arrives: 0.32s
+   * before the light lands, so `delay = arrival time - 0.32` (see `.trace-dot`).
+   */
   leftDelay?: number;
   rightDelay?: number;
 };
@@ -129,7 +134,11 @@ export function CornerDots({ dark = false, position = "bottom", leftDelay, right
     <span
       aria-hidden="true"
       className={`absolute ${y} ${side} z-10 block size-[5px] rounded-full ${color} ${delay === undefined ? "" : "trace-dot"}`}
-      style={delay === undefined ? undefined : { animationDelay: `${delay}s` }}
+      style={
+        delay === undefined
+          ? undefined
+          : ({ animationDelay: `${delay}s`, "--dot-base": dark ? "#4b40b8" : "#dcdcf0" } as CSSProperties)
+      }
     />
   );
   return (
@@ -159,19 +168,24 @@ export function DarkSection({ children, label, id, labelledBy, traceLines = fals
       <div className={`relative mx-auto ${FRAME_WIDTH} border-x border-navy-line`}>
         <div aria-hidden="true" className="relative h-16 border-b border-navy-line">
           {traceLines && <span className="trace-line trace-line-top -bottom-px left-0 right-0 h-px" />}
-          <CornerDots dark position="bottom" leftDelay={traceLines ? 7.84 : undefined} rightDelay={traceLines ? 1.84 : undefined} />
+          <CornerDots dark position="bottom" leftDelay={traceLines ? 7.2 : undefined} rightDelay={traceLines ? 1.2 : undefined} />
         </div>
         <div className="relative">
           {label && <SideLabel dark>{label}</SideLabel>}
+          {traceLines && label && <TabTrace />}
           {children}
         </div>
         <div aria-hidden="true" className="relative h-16 border-t border-navy-line">
           {traceLines && <span className="trace-line trace-line-bottom -top-px left-0 right-0 h-px" />}
-          <CornerDots dark position="top" leftDelay={traceLines ? 5.84 : undefined} rightDelay={traceLines ? 3.84 : undefined} />
+          <CornerDots dark position="top" leftDelay={traceLines ? 5.2 : undefined} rightDelay={traceLines ? 3.2 : undefined} />
         </div>
         {traceLines && (
           <>
-            <span aria-hidden="true" className="trace-line trace-line-left -left-px bottom-16 top-16 w-px" />
+            {/* With a side tab the left light is TabTrace on wide screens, so it can follow the tab outline. */}
+            <span
+              aria-hidden="true"
+              className={`trace-line trace-line-left -left-px bottom-16 top-16 w-px ${label ? "min-[1200px]:hidden" : ""}`}
+            />
             <span aria-hidden="true" className="trace-line trace-line-right -right-px bottom-16 top-16 w-px" />
           </>
         )}

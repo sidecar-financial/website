@@ -3,7 +3,8 @@
 import type { ReactNode } from "react";
 import { DarkSection } from "@/components/ui/Frame";
 import DemoSuccess from "@/components/demo/DemoSuccess";
-import { useDemoRequest } from "@/components/demo/useDemoRequest";
+import Select from "@/components/ui/Select";
+import { INTEREST_OPTIONS, useDemoRequest } from "@/components/demo/useDemoRequest";
 
 const fieldBase =
   "w-full h-[68px] rounded-[3px] border bg-transparent px-[26px] text-[15px] text-white placeholder:text-navy-text outline-none transition-[border-color,box-shadow] duration-200 focus:border-orange focus:shadow-[0_0_24px_-8px_rgba(245,166,29,0.55)] focus-visible:ring-1 focus-visible:ring-orange";
@@ -46,7 +47,7 @@ export default function DemoForm({
     errors[field] ? "border-error-dark" : "border-navy-border";
 
   return (
-    <DarkSection id={id} label={label} labelledBy={headingId}>
+    <DarkSection id={id} label={label} labelledBy={headingId} traceLines>
       <div className="grid lg:grid-cols-[611px_1fr]">
         {/* Left content */}
         <div className="dot-grid-dark px-6 pb-10 pt-12 lg:px-12 lg:pb-12 lg:pt-[65px]">
@@ -142,36 +143,20 @@ export default function DemoForm({
                 )}
               </div>
 
-              <div className="relative">
-                <label htmlFor={`${fieldId("interest")}`} className="sr-only">
+              <div>
+                <span id={`${fieldId("interest")}-label`} className="sr-only">
                   What would you like to explore
-                </label>
-                <select
-                  id={`${fieldId("interest")}`}
+                </span>
+                <Select
+                  id={fieldId("interest")}
                   name="interest"
-                  className={`${fieldBase} cursor-pointer appearance-none border-navy-border pr-14 ${
-                    formData.interest ? "text-white" : "text-navy-text"
-                  }`}
+                  labelledBy={`${fieldId("interest")}-label`}
+                  placeholder="What would you like to explore"
+                  options={INTEREST_OPTIONS}
                   value={formData.interest}
-                  onChange={(e) => setField("interest", e.target.value)}
-                >
-                  <option value="" className="bg-navy text-navy-text">
-                    What would you like to explore
-                  </option>
-                  <option value="carry" className="bg-navy text-white">Carry Management</option>
-                  <option value="compensation" className="bg-navy text-white">Compensation Management</option>
-                  <option value="coinvest" className="bg-navy text-white">Employee Co-Invest</option>
-                  <option value="gpcommit" className="bg-navy text-white">GP Commit</option>
-                  <option value="all" className="bg-navy text-white">All of the above</option>
-                </select>
-                <svg
-                  className="pointer-events-none absolute right-[26px] top-1/2 size-4 -translate-y-1/2 text-navy-text"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path d="M3 6l5 5 5-5" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
+                  onChange={(value) => setField("interest", value)}
+                  triggerClassName={`${fieldBase} border-navy-border`}
+                />
               </div>
 
               {status === "error" && (

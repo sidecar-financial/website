@@ -4,7 +4,8 @@ import Button from "../ui/Button";
 import { Section } from "../ui/Frame";
 import { CheckBadge } from "../ui/PageBlocks";
 import DemoSuccess from "./DemoSuccess";
-import { useDemoRequest } from "./useDemoRequest";
+import Select from "../ui/Select";
+import { INTEREST_OPTIONS, useDemoRequest } from "./useDemoRequest";
 
 const fieldBase =
   "w-full h-14 rounded-[3px] border bg-transparent px-5 text-[15px] text-white placeholder:text-navy-text outline-none transition-[border-color,box-shadow] duration-200 focus:border-orange focus:shadow-[0_0_24px_-8px_rgba(245,166,29,0.55)] focus-visible:ring-1 focus-visible:ring-orange";
@@ -156,25 +157,19 @@ export default function DemoPageContent() {
                 </div>
 
                 <div>
-                  <label htmlFor={`${fieldId("interest")}`} className={labelClass}>
+                  <span id={`${fieldId("interest")}-label`} className={labelClass}>
                     What would you like to explore?
-                  </label>
-                  <select
-                    id={`${fieldId("interest")}`}
+                  </span>
+                  <Select
+                    id={fieldId("interest")}
                     name="interest"
-                    className={`${fieldBase} cursor-pointer border-navy-border ${
-                      formData.interest ? "text-white" : "text-navy-text"
-                    }`}
+                    labelledBy={`${fieldId("interest")}-label`}
+                    placeholder="Select an option"
+                    options={INTEREST_OPTIONS}
                     value={formData.interest}
-                    onChange={(e) => setField("interest", e.target.value)}
-                  >
-                    <option value="" className="bg-navy text-navy-text">Select an option</option>
-                    <option value="carry" className="bg-navy text-white">Carry Management</option>
-                    <option value="compensation" className="bg-navy text-white">Compensation Management</option>
-                    <option value="coinvest" className="bg-navy text-white">Employee Co-Invest</option>
-                    <option value="gpcommit" className="bg-navy text-white">GP Commit</option>
-                    <option value="all" className="bg-navy text-white">All of the above</option>
-                  </select>
+                    onChange={(value) => setField("interest", value)}
+                    triggerClassName={`${fieldBase} border-navy-border`}
+                  />
                 </div>
 
                 {status === "error" && (

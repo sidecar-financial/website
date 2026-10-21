@@ -11,6 +11,16 @@ export type DemoFormData = {
 
 export type DemoFormField = keyof DemoFormData;
 
+/** "What would you like to explore" choices, shared so every demo form stays in sync. */
+export const INTEREST_OPTIONS = [
+  { value: "carry", label: "Carry Management" },
+  { value: "waterfall", label: "Waterfall (coming soon)" },
+  { value: "compensation", label: "Compensation Management" },
+  { value: "coinvest", label: "Employee Co-Invest" },
+  { value: "gpcommit", label: "GP Commit" },
+  { value: "all", label: "All of the above" },
+] as const;
+
 const EMPTY_FORM: DemoFormData = { fullName: "", email: "", company: "", interest: "" };
 
 /** Quick horizontal nudge on a field that failed validation (skipped for reduced motion). */
