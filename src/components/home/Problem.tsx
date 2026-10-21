@@ -20,7 +20,7 @@ export default function Problem() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-white to-[#f8f7ff]">
+    <section className="py-24 bg-gradient-to-b from-white to-[#f8f7ff]" aria-labelledby="problem-heading">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left side - Header */}
@@ -28,16 +28,9 @@ export default function Problem() {
             <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
               The Problem
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-gray-900 leading-[1.15]">
-              When Growth Outpaces
-            </h2>
-            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.15]">
-              <span className="text-[#5046e5]">Excel</span>
-              <span className="text-gray-900">, </span>
-              <span className="text-[#5046e5]">Change Gets</span>
-            </h2>
-            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#5046e5] leading-[1.15] mb-6">
-              Harder to Control
+            <h2 id="problem-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.15] mb-6">
+              <span className="text-gray-900">When Growth Outpaces </span>
+              <span className="text-[#5046e5]">Excel, Change Gets Harder to Control</span>
             </h2>
             <p className="text-gray-600 leading-relaxed max-w-lg">
               As carry complexity grows, spreadsheets create more risk, more manual work, 
@@ -57,8 +50,8 @@ export default function Problem() {
               />
             </div>
             {/* Decorative shadow depth layers */}
-            <div className="absolute -bottom-2 -right-2 left-2 h-full bg-[#e8e4ff] rounded-xl -z-10" />
-            <div className="absolute -bottom-4 -right-4 left-4 h-full bg-[#d4ccff] rounded-xl -z-20" />
+            <div className="absolute -bottom-2 -right-2 left-2 h-full bg-[#e8e4ff] rounded-xl -z-10" aria-hidden="true" />
+            <div className="absolute -bottom-4 -right-4 left-4 h-full bg-[#d4ccff] rounded-xl -z-20" aria-hidden="true" />
           </div>
         </div>
 
@@ -67,17 +60,17 @@ export default function Problem() {
           {/* With Spreadsheets */}
           <div className="bg-white rounded-2xl p-8 shadow-lg shadow-gray-900/5 border border-gray-100">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center" aria-hidden="true">
                 <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900">With Spreadsheets</h3>
             </div>
-            <ul className="space-y-5">
+            <ul className="space-y-5" role="list">
               {spreadsheetProblems.map((problem, index) => (
                 <li key={index} className="flex items-start gap-4">
-                  <div className="w-5 h-5 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-5 h-5 rounded-full bg-red-50 flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">
                     <svg className="w-3 h-3 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
                     </svg>
@@ -91,17 +84,17 @@ export default function Problem() {
           {/* With Navable */}
           <div className="bg-white rounded-2xl p-8 shadow-lg shadow-[#5046e5]/10 border-2 border-[#5046e5]">
             <div className="flex items-center gap-3 mb-8">
-              <div className="w-10 h-10 rounded-full bg-[#ede9fe] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-[#ede9fe] flex items-center justify-center" aria-hidden="true">
                 <svg className="w-5 h-5 text-[#5046e5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-gray-900">With Navable</h3>
             </div>
-            <ul className="space-y-5">
+            <ul className="space-y-5" role="list">
               {navableSolutions.map((solution, index) => (
                 <li key={index} className="flex items-start gap-4">
-                  <div className="w-5 h-5 rounded-full bg-[#ede9fe] flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <div className="w-5 h-5 rounded-full bg-[#ede9fe] flex items-center justify-center flex-shrink-0 mt-0.5" aria-hidden="true">
                     <svg className="w-3 h-3 text-[#5046e5]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
                     </svg>

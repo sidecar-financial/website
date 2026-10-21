@@ -29,7 +29,7 @@ const reasons = [
 
 export default function WhyNavable() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-white" aria-labelledby="why-navable-heading">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-start">
           {/* Left side - Header */}
@@ -37,27 +37,25 @@ export default function WhyNavable() {
             <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
               Why Navable
             </p>
-            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-gray-900 leading-[1.15]">
-              Why Teams
+            <h2 id="why-navable-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-[1.15]">
+              <span className="text-gray-900">Why Teams </span>
+              <span className="text-[#5046e5]">Choose Navable</span>
             </h2>
-            <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#5046e5] leading-[1.15] mb-6">
-              Choose Navable
-            </h2>
-            <p className="text-gray-600 leading-relaxed max-w-md text-[15px]">
+            <p className="text-gray-600 leading-relaxed max-w-md text-[15px] mt-6">
               Moving carry off Excel only works if the replacement preserves the flexibility 
               and control Finance already has, without creating another operational burden.
             </p>
           </div>
 
           {/* Right side - Reasons with /01, /02, /03, /04 numbering */}
-          <div className="space-y-5">
+          <ol className="space-y-5" role="list">
             {reasons.map((reason) => (
-              <div
+              <li
                 key={reason.number}
                 className="group"
               >
                 <div className="flex items-start gap-5">
-                  <span className="text-[#5046e5] font-bold text-lg tracking-tight shrink-0 pt-0.5">
+                  <span className="text-[#5046e5] font-bold text-lg tracking-tight shrink-0 pt-0.5" aria-hidden="true">
                     /{reason.number}
                   </span>
                   <div className="flex-1 pb-5 border-b border-gray-100 group-last:border-0 group-last:pb-0">
@@ -69,9 +67,9 @@ export default function WhyNavable() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </div>
     </section>

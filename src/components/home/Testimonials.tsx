@@ -29,26 +29,24 @@ const sideTestimonials = [
 
 export default function Testimonials() {
   return (
-    <section className="py-24 bg-[#1a1a2e]">
+    <section className="py-24 bg-[#1a1a2e]" aria-labelledby="testimonials-heading">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-14">
           <p className="text-[#a5b4fc] text-xs font-bold tracking-[0.2em] uppercase mb-4">
             Testimonials
           </p>
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-white leading-tight">
-            Built for Finance.
-          </h2>
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#fbbf24] leading-tight">
-            Proven in Practice.
+          <h2 id="testimonials-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight">
+            <span className="text-white">Built for Finance. </span>
+            <span className="text-[#fbbf24]">Proven in Practice.</span>
           </h2>
         </div>
 
         {/* Two-column layout: Featured quote on left, grid on right */}
         <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 max-w-6xl mx-auto">
           {/* Featured large quote - Left side */}
-          <div className="bg-[#23233a] rounded-2xl p-8 lg:p-10 border border-[#2d2d4a] flex flex-col justify-between h-full">
+          <figure className="bg-[#23233a] rounded-2xl p-8 lg:p-10 border border-[#2d2d4a] flex flex-col justify-between h-full">
             <div>
-              <div className="text-[#fbbf24] mb-6">
+              <div className="text-[#fbbf24] mb-6" aria-hidden="true">
                 <svg
                   className="w-10 h-10"
                   fill="currentColor"
@@ -59,25 +57,26 @@ export default function Testimonials() {
               </div>
 
               <blockquote className="text-xl lg:text-2xl font-medium text-white leading-relaxed mb-8">
-                {featuredTestimonial.quote}
+                <p>{featuredTestimonial.quote}</p>
               </blockquote>
             </div>
 
-            <div>
+            <figcaption>
               <p className="font-semibold text-white">– {featuredTestimonial.author}</p>
               <p className="text-sm text-gray-400 mt-1">{featuredTestimonial.company}</p>
-            </div>
-          </div>
+            </figcaption>
+          </figure>
 
           {/* Three smaller quote cards - Right side in vertical stack */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4" role="list" aria-label="Additional testimonials">
             {sideTestimonials.map((testimonial, index) => (
-              <div
+              <figure
                 key={index}
+                role="listitem"
                 className="bg-[#23233a] rounded-xl p-6 border border-[#2d2d4a] hover:border-[#3d3d5a] transition-colors flex-1"
               >
                 <div className="flex gap-3">
-                  <div className="text-[#fbbf24] flex-shrink-0">
+                  <div className="text-[#fbbf24] flex-shrink-0" aria-hidden="true">
                     <svg
                       className="w-5 h-5"
                       fill="currentColor"
@@ -87,16 +86,16 @@ export default function Testimonials() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-gray-300 text-sm leading-relaxed mb-3">
-                      {testimonial.quote}
-                    </p>
-                    <div>
+                    <blockquote className="text-gray-300 text-sm leading-relaxed mb-3">
+                      <p>{testimonial.quote}</p>
+                    </blockquote>
+                    <figcaption>
                       <p className="font-medium text-white text-sm">– {testimonial.author}</p>
                       <p className="text-xs text-gray-500 mt-0.5">{testimonial.company}</p>
-                    </div>
+                    </figcaption>
                   </div>
                 </div>
-              </div>
+              </figure>
             ))}
           </div>
         </div>

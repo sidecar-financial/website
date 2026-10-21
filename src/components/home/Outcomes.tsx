@@ -5,7 +5,7 @@ const outcomes = [
     title: "More Senior Capacity",
     description: "Spend less time checking, reconciling, and maintaining carry.",
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
     ),
@@ -14,7 +14,7 @@ const outcomes = [
     title: "Easier Reviews & Year-End",
     description: "Keep history and documents easy to trace for year-end review.",
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
       </svg>
     ),
@@ -23,7 +23,7 @@ const outcomes = [
     title: "More Capacity as You Grow",
     description: "Manage more funds and participants without adding admin work.",
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
       </svg>
     ),
@@ -32,21 +32,15 @@ const outcomes = [
 
 export default function Outcomes() {
   return (
-    <section className="py-24 bg-gradient-to-b from-[#f8f7ff] to-white">
+    <section className="py-24 bg-gradient-to-b from-[#f8f7ff] to-white" aria-labelledby="outcomes-heading">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="text-[#5046e5] text-xs font-bold tracking-[0.2em] uppercase mb-4">
             Outcomes
           </p>
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight">
-            <span className="text-gray-900">What Changes for</span>
-          </h2>
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight">
-            <span className="text-gray-900">Your </span>
-            <span className="text-[#5046e5]">Finance, HR and</span>
-          </h2>
-          <h2 className="text-3xl md:text-4xl lg:text-[42px] font-bold text-[#5046e5] leading-tight">
-            Operations Teams
+          <h2 id="outcomes-heading" className="text-3xl md:text-4xl lg:text-[42px] font-bold leading-tight">
+            <span className="text-gray-900">What Changes for Your </span>
+            <span className="text-[#5046e5]">Finance, HR and Operations Teams</span>
           </h2>
           <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
             The value of better carry infrastructure isn&apos;t more software. It&apos;s less 
@@ -54,9 +48,9 @@ export default function Outcomes() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+        <ul className="grid md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto" role="list">
           {outcomes.map((outcome, index) => (
-            <div 
+            <li 
               key={index} 
               className="bg-white rounded-2xl p-8 shadow-lg shadow-gray-900/5 border border-gray-100 hover:shadow-xl hover:shadow-[#5046e5]/10 hover:border-[#5046e5]/20 transition-all"
             >
@@ -67,9 +61,9 @@ export default function Outcomes() {
                 {outcome.title}
               </h3>
               <p className="text-gray-600 leading-relaxed text-[15px]">{outcome.description}</p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );

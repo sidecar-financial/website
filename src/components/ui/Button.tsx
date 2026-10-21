@@ -11,6 +11,8 @@ interface ButtonProps {
   onClick?: () => void;
   className?: string;
   type?: "button" | "submit";
+  disabled?: boolean;
+  ariaLabel?: string;
 }
 
 export default function Button({
@@ -21,9 +23,11 @@ export default function Button({
   onClick,
   className = "",
   type = "button",
+  disabled = false,
+  ariaLabel,
 }: ButtonProps) {
   const baseStyles =
-    "inline-flex items-center justify-center font-semibold rounded-full transition-all duration-200 cursor-pointer";
+    "inline-flex items-center justify-center font-semibold rounded-full transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#5046e5] focus:ring-offset-2";
 
   const variants = {
     primary: "bg-[#5046e5] text-white hover:bg-[#3d36b8] shadow-sm",
@@ -32,17 +36,20 @@ export default function Button({
       "bg-transparent border-2 border-[#5046e5] text-[#5046e5] hover:bg-[#5046e5] hover:text-white",
   };
 
+  // Ensure minimum 44x44 touch targets
   const sizes = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base",
-    lg: "px-8 py-4 text-lg",
+    sm: "px-4 py-2 text-sm min-h-[44px]",
+    md: "px-6 py-3 text-base min-h-[44px]",
+    lg: "px-8 py-4 text-lg min-h-[48px]",
   };
 
-  const styles = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
+  const disabledStyles = disabled ? "opacity-50 cursor-not-allowed" : "";
+
+  const styles = `${baseStyles} ${variants[variant]} ${sizes[size]} ${disabledStyles} ${className}`;
 
   if (href) {
     return (
-      <Link href={href} className={styles}>
+      <Link href={href} className={styles} aria-label={ariaLabel}>
         {children}
         {variant === "primary" && (
           <svg
@@ -50,6 +57,7 @@ export default function Button({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
@@ -64,7 +72,13 @@ export default function Button({
   }
 
   return (
-    <button type={type} onClick={onClick} className={styles}>
+    <button 
+      type={type} 
+      onClick={onClick} 
+      className={styles} 
+      disabled={disabled}
+      aria-label={ariaLabel}
+    >
       {children}
       {variant === "primary" && (
         <svg
@@ -72,6 +86,7 @@ export default function Button({
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"

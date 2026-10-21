@@ -10,6 +10,7 @@
   --accent: #e8e4ff;
   --muted: #64748b;
   --border: #e2e8f0;
+  --focus-ring: #5046e5;
 }
 
 @theme inline {
@@ -50,6 +51,84 @@ a {
   text-decoration: none;
 }
 
+/* ================================
+   Accessibility Enhancements
+   ================================ */
+
+/* Enhanced focus indicators for all interactive elements */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* Remove default focus styles when not using keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Screen reader only utility class */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Allow sr-only content to become visible when focused */
+.sr-only-focusable:focus,
+.sr-only-focusable:active {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: #1a1a2e;
+  }
+  
+  a:hover,
+  button:hover {
+    text-decoration: underline;
+  }
+}
+
+/* Ensure minimum touch target size on mobile */
+@media (pointer: coarse) {
+  button,
+  a,
+  input,
+  select,
+  textarea,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
@@ -66,4 +145,16 @@ a {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+/* Ensure good color contrast for placeholder text */
+::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+/* Selection styling for better visibility */
+::selection {
+  background-color: var(--accent);
+  color: var(--foreground);
 }
