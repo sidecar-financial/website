@@ -67,7 +67,7 @@ export default function AnnouncementBanner() {
     >
       <div className="mx-auto flex min-h-10 max-w-[1128px] flex-wrap items-center justify-center gap-x-4 gap-y-2 py-2 pl-6 pr-14 text-center text-[13px] leading-5 lg:px-[62px]">
         <p className="min-w-0">
-          <span className="text-navy-text">Still modeling waterfalls in spreadsheets? </span>
+          <span className="text-navy-text">Still modeling distribution waterfalls in spreadsheets? </span>
           <span className="font-semibold">Navable Waterfall is coming soon.</span>
         </p>
         <Link

@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { TrackingHead, TrackingNoscript } from "@/components/analytics/TrackingScripts";
 import AnnouncementBanner, {
   BANNER_HTML_ATTR,
   BANNER_STORAGE_KEY,
@@ -68,6 +69,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-screen flex flex-col antialiased">
+        <TrackingNoscript />
         <script dangerouslySetInnerHTML={{ __html: bannerDismissedScript }} />
         {/* Skip link stays the first focusable element, ahead of the announcement banner. */}
         <a
@@ -81,6 +83,7 @@ export default function RootLayout({
         <Header />
         <main id="main-content" className="flex-1" tabIndex={-1}>{children}</main>
         <Footer />
+        <TrackingHead />
       </body>
     </html>
   );

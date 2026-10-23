@@ -1,5 +1,6 @@
 "use client";
 
+import HoneypotField from "@/components/ui/HoneypotField";
 import type { ReactNode } from "react";
 import { DarkSection } from "@/components/ui/Frame";
 import DemoSuccess from "@/components/demo/DemoSuccess";
@@ -48,8 +49,17 @@ export default function DemoForm({
   submitLabel = "Book a Free Demo",
   showTrust = true,
 }: DemoFormProps = {}) {
-  const { formData, setField, errors, isSubmitting, status, firstName, fieldId, handleSubmit } =
-    useDemoRequest();
+  const {
+    formData,
+    setField,
+    errors,
+    isSubmitting,
+    status,
+    firstName,
+    fieldId,
+    handleSubmit,
+    honeypot,
+  } = useDemoRequest();
   const headingId = `${id}-heading`;
 
   const borderFor = (field: "fullName" | "email" | "company") =>
@@ -78,6 +88,7 @@ export default function DemoForm({
             <DemoSuccess firstName={firstName} headingLevel="h3" />
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-3">
+              <HoneypotField inputRef={honeypot} />
               <div>
                 <label htmlFor={`${fieldId("fullName")}`} className="sr-only">
                   Full Name (required)

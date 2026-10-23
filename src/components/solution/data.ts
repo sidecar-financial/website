@@ -57,7 +57,8 @@ export type SolutionPageKey =
   | "compensation"
   | "private-equity"
   | "venture-capital"
-  | "real-estate";
+  | "real-estate"
+  | "fund-admins";
 
 export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
   "carried-interest": {
@@ -258,6 +259,56 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       "Project-level promotes",
       "Multi-asset platforms",
       "Long-duration investments with evolving economics",
+    ],
+  },
+  "fund-admins": {
+    slug: "fund-admins",
+    metaTitle: "Waterfall and Carry Software for Fund Administrators | Navable",
+    metaDescription:
+      "Run distribution waterfalls and carry calculations in one auditable system. Built for fund administrators who need every number to be checked, not just trusted.",
+    eyebrow: "For fund administrators",
+    title: "Distribution Waterfalls and Carry, Built to Be Checked",
+    sub: "Run waterfalls for the funds you administer, then carry on the same data, with a trail that lets GPs and auditors recalculate every number.",
+    featuresTitle: "Waterfalls First. Carry on the Same Data.",
+    features: [
+      {
+        title: "Distribution Waterfalls Without the Workbook",
+        body: "Set up each fund's waterfall rules once and run every distribution from the same engine, instead of rebuilding a spreadsheet for every fund.",
+        image: "gp-portal",
+        alt: "Carry by fund with vesting progress",
+      },
+      {
+        title: "Numbers Your Auditors Can Recalculate",
+        body: "Every figure traces back to its inputs and rules, so GPs and auditors can verify a result without taking it on trust.",
+        image: "award-document",
+        alt: "Award documents with signature requirements",
+      },
+      {
+        title: "Carry Calculated From the Same Source",
+        body: "Allocations, vesting and participant changes follow from the waterfall results, so carry never drifts from the distributions behind it.",
+        image: "carry-management",
+        alt: "Carry plan allocating points to participants",
+      },
+      {
+        title: "Review Many Funds Consistently",
+        body: "Apply the same controls, approvals and outputs across the funds you service, without a specialist rebuilding each one.",
+        image: "vesting-timeline",
+        alt: "Vesting timeline with upcoming vest",
+      },
+    ],
+    listTitle: "Built for Administrators Who:",
+    listItems: [
+      "Run distribution waterfalls across many funds and structures",
+      "Calculate carry for GPs alongside fund accounting",
+      "Need results that GPs approve and auditors can recalculate",
+      "Want to replace one-off spreadsheets with a controlled, repeatable process",
+    ],
+    tagsTitle: "Supporting Administrators With:",
+    tags: [
+      "Distribution waterfalls",
+      "Carried interest and promote",
+      "Multi-fund, multi-entity structures",
+      "Audit-ready calculation trails",
     ],
   },
 };

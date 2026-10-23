@@ -13,6 +13,7 @@ const staticRoutes = [
   "/who-we-serve/private-equity",
   "/who-we-serve/venture-capital",
   "/who-we-serve/real-estate",
+  "/fund-admins",
   "/why-navable",
   "/how-it-works",
   "/about",

@@ -1,5 +1,6 @@
 "use client";
 
+import HoneypotField from "@/components/ui/HoneypotField";
 import Button from "../ui/Button";
 import { Section } from "../ui/Frame";
 import { CheckBadge } from "../ui/PageBlocks";
@@ -13,8 +14,17 @@ const labelClass = "mb-2 block text-sm font-medium text-white";
 const errorClass = "field-error mt-1.5 text-sm text-error-dark";
 
 export default function DemoPageContent() {
-  const { formData, setField, errors, isSubmitting, status, firstName, fieldId, handleSubmit } =
-    useDemoRequest();
+  const {
+    formData,
+    setField,
+    errors,
+    isSubmitting,
+    status,
+    firstName,
+    fieldId,
+    handleSubmit,
+    honeypot,
+  } = useDemoRequest();
 
   const demoFeatures = [
     "Manage allocations, vesting, and participant changes.",
@@ -78,6 +88,7 @@ export default function DemoPageContent() {
                 Book a <span className="text-orange">Free Demo</span>
               </h2>
               <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+              <HoneypotField inputRef={honeypot} />
                 <div>
                   <label htmlFor={`${fieldId("fullName")}`} className={labelClass}>
                     Full Name<span aria-hidden="true">*</span>

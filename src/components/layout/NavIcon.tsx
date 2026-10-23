@@ -18,6 +18,8 @@ const paths: Record<NavIconName, string[]> = {
   "venture-capital": ["M3 17l6-6 4 4 8-8", "M15 7h6v6"],
   // building
   "real-estate": ["M4 21V5a1 1 0 011-1h8a1 1 0 011 1v16", "M14 10h5a1 1 0 011 1v10", "M3 21h18", "M8 8h2M8 12h2M8 16h2"],
+  // clipboard with check
+  "fund-admins": ["M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z", "M8 6H6a1 1 0 00-1 1v13a1 1 0 001 1h12a1 1 0 001-1V7a1 1 0 00-1-1h-2", "M9 14l2 2 4-4"],
   // open book
   "resource-hub": ["M12 6.5C10.5 5 8 4.5 4 4.5v13c4 0 6.5.5 8 2 1.5-1.5 4-2 8-2v-13c-4 0-6.5.5-8 2z", "M12 6.5v13"],
   // document with lines

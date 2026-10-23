@@ -1,6 +1,10 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
+import { INTEREST_OPTIONS } from "@/lib/leads";
+import { submitLead, useLeadGuards } from "@/lib/leads-client";
+
+export { INTEREST_OPTIONS };
 
 export type DemoFormData = {
   fullName: string;
@@ -10,16 +14,6 @@ export type DemoFormData = {
 };
 
 export type DemoFormField = keyof DemoFormData;
-
-/** "What would you like to explore" choices, shared so every demo form stays in sync. */
-export const INTEREST_OPTIONS = [
-  { value: "carry", label: "Carry Management" },
-  { value: "waterfall", label: "Waterfall (coming soon)" },
-  { value: "compensation", label: "Compensation Management" },
-  { value: "coinvest", label: "Employee Co-Invest" },
-  { value: "gpcommit", label: "GP Commit" },
-  { value: "all", label: "All of the above" },
-] as const;
 
 const EMPTY_FORM: DemoFormData = { fullName: "", email: "", company: "", interest: "" };
 
@@ -49,6 +43,7 @@ export function useDemoRequest() {
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [firstName, setFirstName] = useState("");
   const formId = useId();
+  const { startedAt, honeypot } = useLeadGuards();
 
   const fieldId = (field: DemoFormField) => `${formId}-${field}`;
 
@@ -87,9 +82,7 @@ export function useDemoRequest() {
     setIsSubmitting(true);
     setStatus("idle");
     try {
-      // TODO: The submitted data is NOT transmitted anywhere yet (no HubSpot or
-      // other API integration exists). Send `formData` to the real endpoint here
-      // and let failures throw so the catch below shows the error state.
+      await submitLead({ source: "demo", ...formData }, { startedAt, honeypot });
       setFirstName(formData.fullName.trim().split(/\s+/)[0]);
       setStatus("success");
       setFormData(EMPTY_FORM);
@@ -100,5 +93,15 @@ export function useDemoRequest() {
     }
   };
 
-  return { formData, setField, errors, isSubmitting, status, firstName, fieldId, handleSubmit };
+  return {
+    formData,
+    setField,
+    errors,
+    isSubmitting,
+    status,
+    firstName,
+    fieldId,
+    handleSubmit,
+    honeypot,
+  };
 }
