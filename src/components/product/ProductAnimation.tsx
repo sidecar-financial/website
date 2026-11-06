@@ -17,8 +17,8 @@ export function ProductAnimation({
   const rootRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [playing, setPlaying] = useState(true);
-  const [inView, setInView] = useState(true);
-  const [tabHidden, setTabHidden] = useState(false);
+  const [inView, setInView] = useState<boolean | null>(null);
+  const [tabHidden, setTabHidden] = useState<boolean | null>(null);
 
   const syncPausedClass = useCallback(() => {
     const animationRoot = iframeRef.current?.contentDocument?.querySelector(

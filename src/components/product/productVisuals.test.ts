@@ -10,6 +10,11 @@ test("pauses unless the user is playing an in-view animation in a visible tab", 
   assert.equal(shouldPauseAnimation(true, true, true), true);
 });
 
+test("pauses while intersection or tab visibility is unknown", () => {
+  assert.equal(shouldPauseAnimation(true, null, false), true);
+  assert.equal(shouldPauseAnimation(true, true, null), true);
+});
+
 test("uses the supplied aspect ratios and reduced-motion fallbacks", () => {
   assert.deepEqual(
     [productVisuals.heroTour.width, productVisuals.heroTour.height],

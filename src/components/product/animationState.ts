@@ -1,7 +1,7 @@
 export function shouldPauseAnimation(
   playing: boolean,
-  inView: boolean,
-  tabHidden: boolean,
+  inView: boolean | null,
+  tabHidden: boolean | null,
 ) {
-  return !playing || !inView || tabHidden;
+  return !playing || inView !== true || tabHidden !== false;
 }
