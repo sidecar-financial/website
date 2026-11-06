@@ -1,6 +1,14 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { shouldPauseAnimation } from "./animationState";
 import { productVisuals } from "./productVisuals";
+
+test("pauses unless the user is playing an in-view animation in a visible tab", () => {
+  assert.equal(shouldPauseAnimation(true, true, false), false);
+  assert.equal(shouldPauseAnimation(false, true, false), true);
+  assert.equal(shouldPauseAnimation(true, false, false), true);
+  assert.equal(shouldPauseAnimation(true, true, true), true);
+});
 
 test("uses the supplied aspect ratios and reduced-motion fallbacks", () => {
   assert.deepEqual(
