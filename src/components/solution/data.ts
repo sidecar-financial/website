@@ -1,4 +1,8 @@
 import type { Metadata } from "next";
+import {
+  productVisuals,
+  type ProductVisual,
+} from "@/components/product/productVisuals";
 
 /**
  * Typed content for the six solution pages (/solutions/*, /who-we-serve/*).
@@ -29,7 +33,8 @@ export const solutionImages: Record<SolutionImageKey, SolutionImage> = {
 export type SolutionFeature = {
   title: string;
   body: string;
-  image: SolutionImageKey;
+  image?: SolutionImageKey;
+  visual?: ProductVisual;
   alt: string;
 };
 
@@ -41,6 +46,7 @@ export type SolutionPageData = {
   eyebrow: string;
   title: string;
   sub: string;
+  heroVisual?: ProductVisual;
   featuresTitle?: string;
   features?: SolutionFeature[];
   listTitle: string;
@@ -75,18 +81,21 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
         title: "Centralized Carry Plans & Allocations",
         body: "Bring all carry plans, waterfall rules, and allocations into one reliable environment.",
         image: "carry-management",
+        visual: productVisuals.createPlan,
         alt: "Carry plan allocating points to participants",
       },
       {
         title: "Structured Rules & Vesting Logic",
         body: "Apply vesting, forfeiture, and reallocation rules consistently across participants and vehicles.",
         image: "vesting-timeline",
+        visual: productVisuals.forfeiture,
         alt: "Vesting timeline with upcoming vest",
       },
       {
         title: "Clear Visibility for Finance & Leadership",
         body: "Move beyond static spreadsheets, and provide real-time insights and trusted results.",
         image: "gp-portal",
+        visual: productVisuals.carryFirmOverview,
         alt: "Carry by fund with vesting progress",
       },
       {
@@ -113,12 +122,14 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
     eyebrow: "Turnkey employee co-invest",
     title: "Employee Co-Invest Programs. Built for Scale.",
     sub: "Provide a consistent, compliant framework that your team and your LPs can trust.",
+    heroVisual: productVisuals.coinvestStoryboard,
     featuresTitle: "One Place to Manage With Confidence",
     features: [
       {
         title: "End-to-End Employee Co-Invest Workflow",
         body: "Digitize elections, capital allocation, distributions, and performance tracking across vehicles.",
         image: "co-invest",
+        visual: productVisuals.coinvestDashboard,
         alt: "Co-invest total value and return",
       },
       {
@@ -162,12 +173,14 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
         title: "Unified Total Compensation View",
         body: "Bring carry, cash, and earnings history together in one branded, secure portal.",
         image: "gp-portal",
+        visual: productVisuals.compTotalCompensation,
         alt: "Total compensation summary with carry by fund",
       },
       {
         title: "Replace Inquiries with Transparency",
         body: "Employees and leadership get trusted visibility, reducing ad-hoc requests to finance.",
         image: "vesting-timeline",
+        visual: productVisuals.compEmployeePortal,
         alt: "Vesting timeline showing upcoming vest",
       },
       {
@@ -275,6 +288,7 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
         title: "Distribution Waterfalls Without the Workbook",
         body: "Set up each fund's waterfall rules once and run every distribution from the same engine, instead of rebuilding a spreadsheet for every fund.",
         image: "gp-portal",
+        visual: productVisuals.fundAdminPortal,
         alt: "Carry by fund with vesting progress",
       },
       {

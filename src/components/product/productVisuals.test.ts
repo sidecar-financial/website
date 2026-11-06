@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { shouldPauseAnimation } from "./animationState";
 import { productVisuals } from "./productVisuals";
+import { solutionPages } from "../solution/data";
 
 test("pauses unless the user is playing an in-view animation in a visible tab", () => {
   assert.equal(shouldPauseAnimation(true, true, false), false);
@@ -61,4 +62,39 @@ test("defines all nine placed visuals", () => {
     "coinvestDashboard",
     "fundAdminPortal",
   ]);
+});
+
+test("maps supplied visuals to their specified pages and feature cards", () => {
+  assert.equal(
+    solutionPages["co-invest"].heroVisual,
+    productVisuals.coinvestStoryboard,
+  );
+  assert.equal(
+    solutionPages["carried-interest"].features?.[0].visual,
+    productVisuals.createPlan,
+  );
+  assert.equal(
+    solutionPages["carried-interest"].features?.[1].visual,
+    productVisuals.forfeiture,
+  );
+  assert.equal(
+    solutionPages["carried-interest"].features?.[2].visual,
+    productVisuals.carryFirmOverview,
+  );
+  assert.equal(
+    solutionPages.compensation.features?.[0].visual,
+    productVisuals.compTotalCompensation,
+  );
+  assert.equal(
+    solutionPages.compensation.features?.[1].visual,
+    productVisuals.compEmployeePortal,
+  );
+  assert.equal(
+    solutionPages["co-invest"].features?.[0].visual,
+    productVisuals.coinvestDashboard,
+  );
+  assert.equal(
+    solutionPages["fund-admins"].features?.[0].visual,
+    productVisuals.fundAdminPortal,
+  );
 });
