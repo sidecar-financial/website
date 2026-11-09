@@ -20,7 +20,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 - [x] Co-invest white paper (for the "Get free white paper" link) (2026-11-09: none exists; dropped)
 - [ ] LinkedIn URLs for Anna, Ronnie and Leonard
 - [ ] Co-invest video or screenshots (for the animation and images)
-- [ ] Real UI screenshots for the carried interest page
+- [x] Real UI screenshots for the carried interest page (2026-11-09: dropped; generated visuals stay)
 
 ## Phase 1: Sign-up and call-to-action flow
 
@@ -60,7 +60,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 
 - [x] Solutions dropdown order: Carried Interest Software, Compensation Management, Employee Co-Invest, Waterfall, GP Operations (2026-11-09, 0c4c334; the four existing items are in order. "GP Operations" has no page or nav item, so it was not added)
 - [x] Carried interest page: fix numbers in all pictures (participants especially) (2026-11-09: the new card visuals use the same Alex, Taylor and Jamie numbers)
-- [ ] Carried interest page: replace shared screenshots with real UI (later)
+- [x] Carried interest page: replace shared screenshots with real UI (2026-11-09: dropped; generated visuals stay)
 - [x] Employee co-invest: value prop = "consistent, scalable, fully digital solution"; remove "LPs can trust" (2026-11-09, 08ac391)
 - [x] Employee co-invest: replace the hero animation (2026-11-09: `coinvestStoryboard` animation from the graphics work)
 - [x] Employee co-invest: replace the "One place to manage with confidence" images (2026-11-09: new co-invest card visuals)
