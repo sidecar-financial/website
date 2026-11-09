@@ -159,4 +159,37 @@ export const productVisuals = {
     height: 720,
     alt: "Kittering Credit Fund I distribution of $60,000,000: return of capital $40,000,000, preferred return $6,400,000, GP catch-up $1,600,000 and an 80/20 split of $12,000,000 ($9,600,000 to LPs, $2,400,000 to the GP). LPs receive $56,000,000 and GP carry is $4,000,000.",
   },
+  fundAdminAuditorRecalculation: {
+    kind: "static",
+    src: "/product-graphics/svg/20-card-auditor-recalculation.svg",
+    width: 960,
+    height: 720,
+    alt: "Kittering Credit Fund I GP carry recalculated from inputs: $60,000,000 distributed less $40,000,000 contributed capital gives $20,000,000 profit; times 20% carry equals $4,000,000, which ties to the waterfall's $1,600,000 catch-up plus $2,400,000 carry split.",
+  },
+  fundAdminSameSource: {
+    kind: "static",
+    src: "/product-graphics/svg/21-card-same-source.svg",
+    width: 960,
+    height: 720,
+    alt: "Kittering Credit Fund I source data (distribution $60,000,000, contributed capital $40,000,000, 20% carry rate) feeds the distribution waterfall, investor statement and audit workpaper, each showing the same $4,000,000 GP carry.",
+  },
+  fundAdminReviewFunds: {
+    kind: "static",
+    src: "/product-graphics/svg/22-card-review-many-funds.svg",
+    width: 960,
+    height: 720,
+    alt: "Fund administrator view of 8 funds across 4 fictional clients (Northfield Capital, Aldermoor Partners, Kittering Credit, Bellcourt Real Estate): 4 active, 3 in review, 1 draft.",
+  },
 } as const satisfies Record<string, ProductVisual>;
+
+/**
+ * Portrait firm-level panel shown beside the "Built for" list on every solution page.
+ * 312x720 viewBox; its smallest text is 11px at a display width of 300-312px.
+ */
+export const builtForPanel: ProductStaticVisual = {
+  kind: "static",
+  src: "/product-graphics/svg/23-panel-built-for.svg",
+  width: 312,
+  height: 720,
+  alt: "Northfield Capital at a glance: total carry value $9,020,000 with $4,046,000 vested; employee co-invest $1,825,000 called of $2,920,000 (62.5%); Alex Morgan's 2026 total compensation $5,000,000 including $3,600,000 carry; participants Alex Morgan, Taylor Smith and Jamie Chen.",
+};

@@ -3,7 +3,12 @@ import { existsSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { shouldPauseAnimation } from "./animationState";
-import { isAnimationVisual, productVisuals, staticFrameOf } from "./productVisuals";
+import {
+  builtForPanel,
+  isAnimationVisual,
+  productVisuals,
+  staticFrameOf,
+} from "./productVisuals";
 import { solutionPages } from "../solution/data";
 
 test("pauses unless the user is playing an in-view animation in a visible tab", () => {
@@ -69,6 +74,9 @@ test("defines all placed visuals", () => {
     "coinvestAlignedTransparency",
     "coinvestParticipantOnboarding",
     "fundAdminWaterfall",
+    "fundAdminAuditorRecalculation",
+    "fundAdminSameSource",
+    "fundAdminReviewFunds",
   ]);
 });
 
@@ -114,9 +122,34 @@ test("maps supplied visuals to their specified pages and feature cards", () => {
       assert.equal(page.features?.[index].visual, visual, `${slug} card ${index}`);
     });
   }
-  assert.equal(
-    solutionPages["fund-admins"].features?.[0].visual,
+  [
     productVisuals.fundAdminWaterfall,
+    productVisuals.fundAdminAuditorRecalculation,
+    productVisuals.fundAdminSameSource,
+    productVisuals.fundAdminReviewFunds,
+  ].forEach((visual, index) => {
+    assert.equal(
+      solutionPages["fund-admins"].features?.[index].visual,
+      visual,
+      `fund-admins card ${index}`,
+    );
+  });
+});
+
+test("every solution-page feature card uses a product visual", () => {
+  for (const page of Object.values(solutionPages)) {
+    for (const feature of page.features ?? []) {
+      assert.ok(feature.visual, `${page.slug}: ${feature.title}`);
+    }
+  }
+});
+
+test("the built-for side panel is the portrait 312x720 graphic", () => {
+  assert.equal(builtForPanel.kind, "static");
+  assert.deepEqual([builtForPanel.width, builtForPanel.height], [312, 720]);
+  assert.ok(
+    existsSync(path.join(process.cwd(), "public", builtForPanel.src)),
+    "missing panel file",
   );
 });
 

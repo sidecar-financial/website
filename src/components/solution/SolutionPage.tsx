@@ -1,6 +1,7 @@
 import Image from "next/image";
 import DemoForm from "@/components/home/DemoForm";
 import { ProductVisual } from "@/components/product/ProductVisual";
+import { builtForPanel } from "@/components/product/productVisuals";
 import Button from "@/components/ui/Button";
 import { Gap, Section } from "@/components/ui/Frame";
 import { CheckBadge, PageHero, SectionIntro } from "@/components/ui/PageBlocks";
@@ -130,14 +131,10 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
             </ul>
           </div>
           <div className="flex items-center justify-center border-t border-line bg-soft px-6 py-12 lg:border-l lg:border-t-0 lg:px-12">
-            <Image
-              src={solutionImages["comp-reporting"].src}
-              alt="Participant total compensation view with salary, bonus, benefits, and forecasted carry value"
-              width={solutionImages["comp-reporting"].width}
-              height={solutionImages["comp-reporting"].height}
-              sizes="300px"
-              className="block h-auto w-full max-w-[300px]"
-              unoptimized
+            <ProductVisual
+              visual={builtForPanel}
+              sizes="312px"
+              className="block w-full max-w-[312px]"
             />
           </div>
         </div>
