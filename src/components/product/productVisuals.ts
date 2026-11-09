@@ -25,6 +25,22 @@ export function isAnimationVisual(
   return visual.kind === "animation";
 }
 
+/**
+ * The static final frame of an animation (the same graphic reduced-motion visitors
+ * see). Use it where several animations would compete for attention on one page.
+ */
+export function staticFrameOf(
+  visual: ProductAnimationVisual,
+): ProductStaticVisual {
+  return {
+    kind: "static",
+    src: visual.fallback,
+    width: visual.width,
+    height: visual.height,
+    alt: visual.alt,
+  };
+}
+
 export const productVisuals = {
   heroTour: {
     kind: "animation",
@@ -49,56 +65,98 @@ export const productVisuals = {
   createPlan: {
     kind: "animation",
     src: "/product-graphics/animations/create-plan.html",
-    fallback: "/product-graphics/svg/04-carry-create-plan.svg",
-    width: 1280,
-    height: 800,
-    alt: "New Fund III carry plan with a straight-line vesting schedule of 10% per year over 10 years, allocating 50.0% of the pool to Alex Morgan, 20.0% to Taylor Smith and 2.0% to Jamie Chen, leaving 28.0% unallocated.",
+    fallback: "/product-graphics/svg/04-card-carry-plan-allocation.svg",
+    width: 960,
+    height: 720,
+    alt: "Fund III carry plan with straight-line vesting of 10% per year from 2023 to 2032, allocating 50.0% of the pool to Alex Morgan, 20.0% to Taylor Smith and 2.0% to Jamie Chen, with 72.0% allocated and 28.0% unallocated.",
     rootClass: "px-root",
     pausedClass: "px-paused",
   },
   forfeiture: {
     kind: "animation",
     src: "/product-graphics/animations/forfeiture.html",
-    fallback: "/product-graphics/svg/05-carry-forfeiture.svg",
-    width: 1280,
-    height: 800,
-    alt: "Forfeiture for Jamie Chen effective 10/30/2026: total carry value $420,000, of which $294,000 unvested forfeits and $126,000 vested is retained, so the new total carry value is $126,000.",
+    fallback: "/product-graphics/svg/05-card-forfeiture-impact.svg",
+    width: 960,
+    height: 720,
+    alt: "Forfeiture for Jamie Chen effective 10/30/2026: total carry value $420,000, of which $294,000 unvested forfeits and $126,000 vested is retained, so the new total carry value is $126,000, fully vested.",
     rootClass: "fx-root",
     pausedClass: "fx-paused",
   },
   carryFirmOverview: {
     kind: "static",
-    src: "/product-graphics/svg/06-carry-firm-overview.svg",
-    width: 1280,
-    height: 800,
-    alt: "Northfield Capital carry across three participants: total carry value $9,020,000, vested $4,046,000, unvested $4,974,000, 2026 carry $4,585,000, with a row each for Alex Morgan, Taylor Smith and Jamie Chen.",
+    src: "/product-graphics/svg/06-card-firm-overview.svg",
+    width: 960,
+    height: 720,
+    alt: "Northfield Capital carry totals: total carry value $9,020,000, 2026 carry $4,585,000, vested $4,046,000 and unvested $4,974,000, with vested and unvested carry for Alex Morgan ($6,200,000), Taylor Smith ($2,400,000) and Jamie Chen ($420,000).",
+  },
+  carryAuditTrail: {
+    kind: "static",
+    src: "/product-graphics/svg/14-card-audit-trail.svg",
+    width: 960,
+    height: 720,
+    alt: "Change log: on 10/30/2026 Taylor Smith recorded a forfeiture for Jamie Chen, total carry value $420,000 to $126,000; on 04/01/2026 a scheduled vest moved Alex Morgan from 30% to 40% vested; on 02/12/2026 Taylor Smith set Jamie Chen's Fund III co-invest commitment from $0 to $120,000.",
   },
   compTotalCompensation: {
     kind: "static",
-    src: "/product-graphics/svg/07-comp-total-compensation-alex.svg",
-    width: 1280,
-    height: 800,
-    alt: "Alex Morgan's 2026 total compensation of $5,000,000 with breakdown (salary $400,000, bonus $500,000, carry $3,600,000, co-invest $500,000), carry by fund totaling $3,600,000, and related documents.",
+    src: "/product-graphics/svg/07-card-total-compensation.svg",
+    width: 960,
+    height: 720,
+    alt: "Alex Morgan's 2026 total compensation of $5,000,000: salary $400,000 (8%), bonus $500,000 (10%), carry $3,600,000 (72%) and co-invest $500,000 (10%).",
   },
   compEmployeePortal: {
     kind: "static",
-    src: "/product-graphics/svg/08-comp-employee-portal-jamie.svg",
-    width: 1280,
-    height: 800,
-    alt: "Employee portal view for Jamie Chen: total carry value $420,000, 30% vested ($126,000), unvested $294,000; 2026 total compensation $300,000; Fund III co-invest $120,000 committed, $75,000 called (62.5%); and her documents.",
+    src: "/product-graphics/svg/08-card-employee-portal.svg",
+    width: 960,
+    height: 720,
+    alt: "Jamie Chen's employee portal summary: total carry value $420,000, 30% vested ($126,000), $294,000 unvested.",
   },
-  coinvestDashboard: {
+  compFirmCarry: {
     kind: "static",
-    src: "/product-graphics/svg/12-coinvest-dashboard.svg",
-    width: 1280,
-    height: 800,
-    alt: "Fund III employee co-invest dashboard: $2,920,000 committed, $1,825,000 called (62.5%), $1,095,000 uncalled, with commitment, called and uncalled amounts for Alex Morgan, Taylor Smith and Jamie Chen.",
+    src: "/product-graphics/svg/18-card-firm-carry-by-participant.svg",
+    width: 960,
+    height: 720,
+    alt: "Northfield Capital 2026 carry of $4,585,000: Alex Morgan $3,600,000 (78.5%), Taylor Smith $900,000 (19.6%), Jamie Chen $85,000 (1.9%); lifetime carry $4,046,000 vested and $4,974,000 unvested.",
   },
-  fundAdminPortal: {
+  compAnnualStatements: {
     kind: "static",
-    src: "/product-graphics/svg/13-fund-admin-portal.svg",
-    width: 1280,
-    height: 800,
-    alt: "Admin portal listing eight funds across four fictional clients with carry status per fund: four active, three in review, one draft.",
+    src: "/product-graphics/svg/19-card-annual-statements.svg",
+    width: 960,
+    height: 720,
+    alt: "2026 total compensation statements ready for Alex Morgan ($5,000,000), Taylor Smith ($1,700,000) and Jamie Chen ($300,000), totaling $7,000,000.",
+  },
+  coinvestProgress: {
+    kind: "static",
+    src: "/product-graphics/svg/12-card-coinvest-progress.svg",
+    width: 960,
+    height: 720,
+    alt: "Fund III employee co-invest: $2,920,000 committed, $1,825,000 called (62.5%), $1,095,000 uncalled. Alex Morgan $1,250,000 of $2,000,000, Taylor Smith $500,000 of $800,000, Jamie Chen $75,000 of $120,000.",
+  },
+  coinvestInvestorPortal: {
+    kind: "static",
+    src: "/product-graphics/svg/15-card-investor-portal.svg",
+    width: 960,
+    height: 720,
+    alt: "Investor portal for Jamie Chen, Fund III co-invest, Q3 2026, with a USD/EUR/GBP currency toggle: commitment $120,000, called $75,000 (62.5%), uncalled $45,000, and documents including the Q3 2026 quarterly statement, 2025 Schedule K-1 and signed subscription agreement.",
+  },
+  coinvestAlignedTransparency: {
+    kind: "static",
+    src: "/product-graphics/svg/16-card-aligned-transparency.svg",
+    width: 960,
+    height: 720,
+    alt: "Side by side: Jamie Chen's participant view of her Fund III co-invest ($120,000 committed, $75,000 called, 62.5%) and the administrator view of the whole program ($1,825,000 of $2,920,000 called) listing Alex Morgan, Taylor Smith and Jamie Chen.",
+  },
+  coinvestParticipantOnboarding: {
+    kind: "static",
+    src: "/product-graphics/svg/17-card-participant-onboarding.svg",
+    width: 960,
+    height: 720,
+    alt: "Fund III co-invest participants Alex Morgan ($2,000,000), Taylor Smith ($800,000) and Jamie Chen ($120,000) have each completed invited, KYC, signed and funded steps.",
+  },
+  fundAdminWaterfall: {
+    kind: "static",
+    src: "/product-graphics/svg/13-card-distribution-waterfall.svg",
+    width: 960,
+    height: 720,
+    alt: "Kittering Credit Fund I distribution of $60,000,000: return of capital $40,000,000, preferred return $6,400,000, GP catch-up $1,600,000 and an 80/20 split of $12,000,000 ($9,600,000 to LPs, $2,400,000 to the GP). LPs receive $56,000,000 and GP carry is $4,000,000.",
   },
 } as const satisfies Record<string, ProductVisual>;

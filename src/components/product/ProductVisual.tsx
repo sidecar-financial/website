@@ -9,15 +9,23 @@ type ProductVisualProps = {
   visual: ProductVisualRecord;
   className?: string;
   sizes?: string;
+  controlPlacement?: "inside" | "below";
 };
 
 export function ProductVisual({
   visual,
   className,
   sizes = "100vw",
+  controlPlacement,
 }: ProductVisualProps) {
   if (isAnimationVisual(visual)) {
-    return <ProductAnimation visual={visual} className={className} />;
+    return (
+      <ProductAnimation
+        visual={visual}
+        className={className}
+        controlPlacement={controlPlacement}
+      />
+    );
   }
 
   return (

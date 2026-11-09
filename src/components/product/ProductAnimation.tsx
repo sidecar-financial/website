@@ -8,11 +8,18 @@ import type { ProductAnimationVisual } from "./productVisuals";
 type ProductAnimationProps = {
   visual: ProductAnimationVisual;
   className?: string;
+  /**
+   * Where the pause button sits. "inside" overlays the bottom-right corner;
+   * "below" hangs it under the graphic, for crops that run edge to edge and
+   * would otherwise have figures covered by the button.
+   */
+  controlPlacement?: "inside" | "below";
 };
 
 export function ProductAnimation({
   visual,
   className,
+  controlPlacement = "inside",
 }: ProductAnimationProps) {
   const rootRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -76,6 +83,7 @@ export function ProductAnimation({
           title={visual.alt}
           aria-hidden="true"
           loading={visual.src.includes("hero-tour") ? "eager" : "lazy"}
+          scrolling="no"
           onLoad={syncPausedClass}
           className="absolute inset-0 size-full border-0 motion-reduce:hidden"
         />
@@ -94,7 +102,11 @@ export function ProductAnimation({
         onClick={() => setPlaying((current) => !current)}
         aria-label={playing ? "Pause animation" : "Play animation"}
         aria-pressed={!playing}
-        className="absolute bottom-3 right-3 flex size-11 cursor-pointer items-center justify-center rounded-full border border-line-strong bg-white text-ink shadow-[0_6px_16px_-8px_rgba(31,28,58,0.3)] transition-colors hover:border-ink motion-reduce:hidden"
+        className={`absolute flex cursor-pointer items-center justify-center rounded-full border border-line-strong bg-white text-ink shadow-[0_6px_16px_-8px_rgba(31,28,58,0.3)] transition-colors hover:border-ink motion-reduce:hidden ${
+          controlPlacement === "below"
+            ? "right-0 top-full mt-0.5 size-8"
+            : "bottom-3 right-3 size-11"
+        }`}
       >
         {playing ? (
           <svg width="12" height="14" viewBox="0 0 12 14" aria-hidden="true">

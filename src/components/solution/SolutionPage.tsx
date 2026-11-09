@@ -22,10 +22,20 @@ import {
  */
 export default function SolutionPage({ page }: { page: SolutionPageData }) {
   const id = (name: string) => `${page.slug}-${name}`;
+  // Every feature card on a page shares the aspect ratio of its graphics so rows line up,
+  // including cards that still use a plain image.
+  const cardVisual = page.features?.find((feature) => feature.visual)?.visual;
+  const slotAspect = cardVisual ? cardVisual.width / cardVisual.height : undefined;
 
   return (
     <>
-      <PageHero id={id("hero")} eyebrow={page.eyebrow} title={page.title} description={page.sub}>
+      <PageHero
+        id={id("hero")}
+        eyebrow={page.eyebrow}
+        title={page.title}
+        description={page.sub}
+        ruled={!page.heroVisual}
+      >
         <Button href="/demo" size="lg">
           Book a Free Demo
         </Button>
@@ -64,16 +74,18 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
                 >
                   <div
                     className={
-                      feature.visual
-                        ? "aspect-[8/5] w-full overflow-hidden rounded bg-soft"
+                      slotAspect
+                        ? "flex w-full items-center justify-center rounded bg-soft"
                         : "flex h-[240px] items-center justify-center overflow-hidden rounded bg-soft sm:h-[280px]"
                     }
+                    style={slotAspect ? { aspectRatio: slotAspect } : undefined}
                   >
                     {feature.visual ? (
                       <ProductVisual
                         visual={feature.visual}
                         sizes="(min-width: 1128px) 524px, (min-width: 768px) 50vw, 100vw"
                         className="w-full"
+                        controlPlacement="below"
                       />
                     ) : (
                       image && (

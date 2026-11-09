@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {
   productVisuals,
+  staticFrameOf,
   type ProductVisual,
 } from "@/components/product/productVisuals";
 
@@ -81,14 +82,15 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
         title: "Centralized Carry Plans & Allocations",
         body: "Bring all carry plans, waterfall rules, and allocations into one reliable environment.",
         image: "carry-management",
-        visual: productVisuals.createPlan,
+        // Static final frame: animating neighbouring cards side by side is distracting.
+        visual: staticFrameOf(productVisuals.createPlan),
         alt: "Carry plan allocating points to participants",
       },
       {
         title: "Structured Rules & Vesting Logic",
         body: "Apply vesting, forfeiture, and reallocation rules consistently across participants and vehicles.",
         image: "vesting-timeline",
-        visual: productVisuals.forfeiture,
+        visual: staticFrameOf(productVisuals.forfeiture),
         alt: "Vesting timeline with upcoming vest",
       },
       {
@@ -101,7 +103,7 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       {
         title: "Audit-Ready Trail & Reporting",
         body: "Every edit and calculation is traceable, producing outputs you can defend with confidence.",
-        image: "award-document",
+        visual: productVisuals.carryAuditTrail,
         alt: "Award documents with signature requirements",
       },
     ],
@@ -128,26 +130,25 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       {
         title: "End-to-End Employee Co-Invest Workflow",
         body: "Digitize elections, capital allocation, distributions, and performance tracking across vehicles.",
-        image: "co-invest",
-        visual: productVisuals.coinvestDashboard,
+        visual: productVisuals.coinvestProgress,
         alt: "Co-invest total value and return",
       },
       {
         title: "Customizable Investor Portal",
         body: "Quarterly metrics, K-1s and subdocs all in one place with built-in multi-currency support.",
-        image: "award-document",
+        visual: productVisuals.coinvestInvestorPortal,
         alt: "Investor documents with signature requirements",
       },
       {
         title: "Aligned Transparency for All Participants",
         body: "Participants see their status; administrators see the whole picture.",
-        image: "gp-portal",
+        visual: productVisuals.coinvestAlignedTransparency,
         alt: "Participant compensation and carry by fund",
       },
       {
         title: "Scalable Participant Management",
         body: "Onboard and manage employees consistently, with secure records and compliance support.",
-        image: "carry-management",
+        visual: productVisuals.coinvestParticipantOnboarding,
         alt: "Participant records within a fund plan",
       },
     ],
@@ -172,27 +173,25 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       {
         title: "Unified Total Compensation View",
         body: "Bring carry, cash, and earnings history together in one branded, secure portal.",
-        image: "gp-portal",
         visual: productVisuals.compTotalCompensation,
         alt: "Total compensation summary with carry by fund",
       },
       {
         title: "Replace Inquiries with Transparency",
         body: "Employees and leadership get trusted visibility, reducing ad-hoc requests to finance.",
-        image: "vesting-timeline",
         visual: productVisuals.compEmployeePortal,
         alt: "Vesting timeline showing upcoming vest",
       },
       {
         title: "Firm-Wide Insights",
         body: "View firm-wide carry exposure by fund, employee level, office, or structure, helping leadership plan future awards with clarity and control.",
-        image: "carry-management",
+        visual: productVisuals.compFirmCarry,
         alt: "Firm-wide participant carry overview",
       },
       {
         title: "Annual Statements",
         body: "Generate comprehensive annual statements in a single click, providing a clear, holistic view of total compensation and easy comparison across prior years.",
-        image: "award-document",
+        visual: productVisuals.compAnnualStatements,
         alt: "Stack of compensation documents",
       },
     ],
@@ -287,8 +286,7 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       {
         title: "Distribution Waterfalls Without the Workbook",
         body: "Set up each fund's waterfall rules once and run every distribution from the same engine, instead of rebuilding a spreadsheet for every fund.",
-        image: "gp-portal",
-        visual: productVisuals.fundAdminPortal,
+        visual: productVisuals.fundAdminWaterfall,
         alt: "Carry by fund with vesting progress",
       },
       {
