@@ -56,6 +56,8 @@ export type SolutionPageData = {
   tags?: string[];
   /** Spreadsheet-vs-Navable table (carried-interest page only). */
   comparison?: boolean;
+  /** Set to false to drop the "Try us out with your actual fund data" steps (default: shown). */
+  trialSteps?: boolean;
 };
 
 export type SolutionPageKey =
@@ -120,10 +122,10 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
     slug: "co-invest",
     metaTitle: "Employee Co-Invest Software | Navable",
     metaDescription:
-      "Employee co-invest programs, built for scale. Provide a consistent, compliant framework that your team and your LPs can trust.",
+      "Employee co-invest programs, built for scale. A consistent, scalable, fully digital solution for GP commit and employee co-investment.",
     eyebrow: "Turnkey employee co-invest",
     title: "Employee Co-Invest Programs. Built for Scale.",
-    sub: "Provide a consistent, compliant framework that your team and your LPs can trust.",
+    sub: "A consistent, scalable, fully digital solution for GP commit and employee co-investment.",
     heroVisual: productVisuals.coinvestStoryboard,
     featuresTitle: "One Place to Manage With Confidence",
     features: [
@@ -152,13 +154,14 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
         alt: "Participant records within a fund plan",
       },
     ],
-    listTitle: "Built for Firms and GPs That:",
+    listTitle: "Built for Firms Scaling Offerings Across Their Organizations and Funds That:",
     listItems: [
-      "Are scaling offerings across their organization and funds",
+      "Manage GP commit and employee co-investment as one program",
       "Balance many participants and multiple election cycles",
       "Need reliable capital tracking and a digital-first process",
       "Have global employees or cross-jurisdiction considerations",
     ],
+    trialSteps: false,
   },
   compensation: {
     slug: "compensation",
@@ -363,7 +366,7 @@ export const TESTIMONIALS: { quote: string; attribution: string[] }[] = [
 export const TRIAL_STEPS = [
   { title: "Share a Workbook", body: "We review your current plans, structure, and legacy data." },
   { title: "See a Working Fund", body: "We set up a working fund to test your specific use cases." },
-  { title: "Validate the Fit", body: "Use your working fund in a 14-day guided trial to decide." },
+  { title: "Validate the Fit", body: "Use your working fund in a guided pilot to decide." },
 ];
 
 export const COMPARE = [

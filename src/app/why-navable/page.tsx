@@ -4,16 +4,16 @@ import { Section } from "@/components/ui/Frame";
 import { CtaBand, PageHero, SectionIntro } from "@/components/ui/PageBlocks";
 
 export const metadata: Metadata = {
-  title: "Why Navable | Modern Carried Interest Management",
+  title: "Why Navable | The Modern Way to Manage Private Fund Compensation",
   description:
-    "Discover why leading alternative asset managers choose Navable for carry, compensation, and GP commit management.",
+    "Discover why leading alternative asset managers choose Navable for carry, compensation, and GP commit / employee co-investment management.",
 };
 
 const benefits = [
   {
     title: "Purpose-Built for Alternative Assets",
     description:
-      "Unlike generic tools, Navable is designed specifically for PE, VC, and real estate fund operations.",
+      "Unlike generic tools, Navable is designed specifically for private equity, private credit, venture capital and real estate fund operations.",
     icon: (
       <svg className="size-6" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
@@ -55,7 +55,7 @@ const benefits = [
 const stats = [
   { value: "$150B+", label: "AUM on Platform" },
   { value: "100+", label: "Fund Vehicles" },
-  { value: "99.9%", label: "Calculation Accuracy" },
+  { value: "100%", label: "Calculation Accuracy" },
   { value: "3 weeks", label: "Average Onboarding" },
 ];
 
@@ -66,16 +66,13 @@ export default function WhyNavablePage() {
         eyebrow="Why Navable"
         title={
           <>
-            The Modern Way to <span className="text-orange">Manage Carry</span>
+            The Modern Way to <span className="text-orange">Manage Private Fund Compensation</span>
           </>
         }
-        description="Leading alternative asset managers choose Navable to eliminate spreadsheet chaos and bring confidence to their carry, compensation, and GP commit operations."
+        description="Leading alternative asset managers choose Navable to eliminate spreadsheet chaos and bring confidence to their carry, compensation, and GP commit / employee co-investment operations."
       >
         <Button href="/demo" size="lg">
           Book a Free Demo
-        </Button>
-        <Button href="/solutions/carried-interest-software" variant="secondary" size="lg">
-          Explore Platform
         </Button>
       </PageHero>
 
