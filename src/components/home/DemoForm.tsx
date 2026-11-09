@@ -56,6 +56,7 @@ export default function DemoForm({
     errors,
     isSubmitting,
     status,
+    saveFailed,
     firstName,
     submittedContact,
     fieldId,
@@ -88,7 +89,7 @@ export default function DemoForm({
         {/* Right form */}
         <div className="px-6 pb-12 lg:px-0 lg:pb-[49px] lg:pr-12 lg:pt-[59px]">
           {status === "success" ? (
-            <DemoSuccess firstName={firstName} contact={submittedContact} headingLevel="h3" />
+            <DemoSuccess firstName={firstName} contact={submittedContact} saveFailed={saveFailed} headingLevel="h3" />
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-3">
               <HoneypotField inputRef={honeypot} />
@@ -185,12 +186,6 @@ export default function DemoForm({
                   triggerClassName={`${fieldBase} border-navy-border`}
                 />
               </div>
-
-              {status === "error" && (
-                <p className="text-sm text-error-dark" role="alert">
-                  There was an error submitting your request. Please try again.
-                </p>
-              )}
 
               <button
                 type="submit"

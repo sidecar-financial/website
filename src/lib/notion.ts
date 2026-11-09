@@ -28,6 +28,12 @@ export function isNotionConfigured() {
   return Boolean(process.env.NOTION_API_KEY && process.env.NOTION_LEADS_DATABASE_ID);
 }
 
+/** Notion is normally fast; this only bounds the worst case so a request can never hang. */
+const NOTION_TIMEOUT_MS = 15_000;
+
+/** A second submit from the same email inside this window (retry, double click) is not a new lead. */
+const DUPLICATE_WINDOW_MS = 10 * 60 * 1000;
+
 const text = (content: string) => ({ rich_text: content ? [{ text: { content: content.slice(0, 1900) } }] : [] });
 
 async function notion<T>(path: string, method: "POST" | "PATCH", body: unknown): Promise<T> {
@@ -39,7 +45,7 @@ async function notion<T>(path: string, method: "POST" | "PATCH", body: unknown):
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
-    signal: AbortSignal.timeout(8000),
+    signal: AbortSignal.timeout(NOTION_TIMEOUT_MS),
   });
   if (!res.ok) throw new Error(`Notion ${method} ${path} -> ${res.status} ${(await res.text()).slice(0, 300)}`);
   return (await res.json()) as T;
@@ -58,33 +64,62 @@ async function findRows(email: string, status?: string): Promise<string[]> {
   return found.results.map((r) => r.id);
 }
 
-export async function createNotionLead(lead: LeadPayload, spam: boolean): Promise<void> {
+/** New rows for this email created in the last few minutes (used to collapse retries and double clicks). */
+async function findRecentNewRows(email: string): Promise<string[]> {
+  const since = new Date(Date.now() - DUPLICATE_WINDOW_MS).toISOString();
+  const found = await notion<QueryResult>(`/databases/${process.env.NOTION_LEADS_DATABASE_ID}/query`, "POST", {
+    filter: {
+      and: [
+        { property: "Email", email: { equals: email } },
+        { property: "Status", select: { equals: "New" } },
+        { timestamp: "created_time", created_time: { on_or_after: since } },
+      ],
+    },
+    page_size: 1,
+  });
+  return found.results.map((r) => r.id);
+}
+
+export async function createNotionLead(
+  lead: LeadPayload,
+  spam: boolean,
+  /** The form was submitted faster than a person usually types; kept as a real lead, flagged for review. */
+  fast = false,
+): Promise<void> {
   const partial = lead.stage === "partial";
 
   // One Partial row per email is enough; do not add another if this email is already recorded.
   if (partial && (await findRows(lead.email)).length > 0) return;
+
+  // The visitor already submitted moments ago (a retry after a slow response, or a double click):
+  // keep the one row, but still clear their earlier Partial row below.
+  const alreadyRecorded = !partial && !spam && (await findRecentNewRows(lead.email)).length > 0;
 
   const interest = interestLabel(lead.interest);
   const properties: Record<string, unknown> = {
     Name: { title: [{ text: { content: (lead.fullName || lead.email).slice(0, 200) } }] },
     Email: { email: lead.email },
     Company: text(lead.company),
-    "Source page": text(`${SOURCE_LABEL[lead.source]} (${lead.pagePath || "unknown page"})`),
+    "Source page": text(
+      `${SOURCE_LABEL[lead.source]} (${lead.pagePath || "unknown page"})${fast ? " [fast submit: worth a quick look]" : ""}`,
+    ),
     Status: { select: { name: partial ? "Partial" : spam ? "Spam" : "New" } },
     Consent: { select: { name: CONSENT_LABEL[lead.stage] } },
   };
   if (interest) properties.Interest = { select: { name: interest.replace(" (coming soon)", "") } };
 
   const parent = { database_id: process.env.NOTION_LEADS_DATABASE_ID };
-  try {
-    await notion("/pages", "POST", { parent, properties });
-  } catch (error) {
-    // Consent column not added yet: still record the lead rather than losing it.
-    if (!String(error).includes("Consent is not a property")) throw error;
-    console.error("[leads] Notion 'Consent' property is missing; run scripts/setup-consent-fields.mjs");
-    const withoutConsent = { ...properties };
-    delete withoutConsent.Consent;
-    await notion("/pages", "POST", { parent, properties: withoutConsent });
+  if (!alreadyRecorded) {
+    try {
+      await notion("/pages", "POST", { parent, properties });
+    } catch (error) {
+      // Consent column not added yet: still record the lead rather than losing it.
+      if (!String(error).includes("Consent is not a property")) throw error;
+      console.error("[leads] Notion 'Consent' property is missing; run scripts/setup-consent-fields.mjs");
+      const withoutConsent = { ...properties };
+      delete withoutConsent.Consent;
+      await notion("/pages", "POST", { parent, properties: withoutConsent });
+    }
   }
 
   if (!partial) {

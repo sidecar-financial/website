@@ -3,6 +3,7 @@
 import { useId, useRef, useState, type FormEvent } from "react";
 import { EMAIL_RE, INTEREST_OPTIONS } from "@/lib/leads";
 import { savePartialLead, submitLead, useLeadGuards } from "@/lib/leads-client";
+import { runLeadSubmit } from "@/lib/submit-flow";
 
 export { INTEREST_OPTIONS };
 
@@ -40,7 +41,9 @@ export function useDemoRequest() {
   const [formData, setFormData] = useState<DemoFormData>(EMPTY_FORM);
   const [errors, setErrors] = useState<Partial<Record<DemoFormField, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "success">("idle");
+  // True when the lead could not be saved (the visitor still gets to book a time).
+  const [saveFailed, setSaveFailed] = useState(false);
   const [firstName, setFirstName] = useState("");
   // Kept after the form resets so the booking link can prefill the scheduler.
   const [submittedContact, setSubmittedContact] = useState({ fullName: "", email: "" });
@@ -102,19 +105,19 @@ export function useDemoRequest() {
 
     setIsSubmitting(true);
     setStatus("idle");
-    try {
-      // Let any in-flight partial save land first so it cannot race the real submit.
-      await pendingDraft.current;
-      await submitLead({ source: "demo", ...formData }, { startedAt, honeypot });
-      setFirstName(formData.fullName.trim().split(/\s+/)[0]);
-      setSubmittedContact({ fullName: formData.fullName.trim(), email: formData.email.trim() });
-      setStatus("success");
-      setFormData(EMPTY_FORM);
-    } catch {
-      setStatus("error");
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Booking a time never depends on saving the lead: the scheduler link is static, so a slow or
+    // failed save must not block the visitor. A failed save is retried once in the background.
+    const submission = { source: "demo" as const, ...formData };
+    const { saved } = await runLeadSubmit({
+      pendingDraft: pendingDraft.current,
+      submit: () => submitLead(submission, { startedAt, honeypot }),
+    });
+    setSaveFailed(!saved);
+    setFirstName(formData.fullName.trim().split(/\s+/)[0]);
+    setSubmittedContact({ fullName: formData.fullName.trim(), email: formData.email.trim() });
+    setStatus("success");
+    setFormData(EMPTY_FORM);
+    setIsSubmitting(false);
   };
 
   return {
@@ -123,6 +126,7 @@ export function useDemoRequest() {
     errors,
     isSubmitting,
     status,
+    saveFailed,
     firstName,
     submittedContact,
     fieldId,

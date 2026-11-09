@@ -21,6 +21,8 @@ type DemoSuccessProps = {
   firstName: string;
   /** Submitted name and email, used to prefill the scheduler. */
   contact?: { fullName: string; email: string };
+  /** True when saving the visitor's details failed; they can still book, and we say so. */
+  saveFailed?: boolean;
   /** Heading level, so the success step fits the surrounding outline. */
   headingLevel?: "h2" | "h3";
 };
@@ -30,7 +32,7 @@ type DemoSuccessProps = {
  * heading (for keyboard and screen-reader users) and links to the meeting
  * scheduler.
  */
-export default function DemoSuccess({ firstName, contact, headingLevel = "h3" }: DemoSuccessProps) {
+export default function DemoSuccess({ firstName, contact, saveFailed = false, headingLevel = "h3" }: DemoSuccessProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const Heading = headingLevel;
 
@@ -67,6 +69,11 @@ export default function DemoSuccess({ firstName, contact, headingLevel = "h3" }:
       <p className="text-base leading-[1.6] text-navy-text">
         Now select a meeting time with our expert team.
       </p>
+      {saveFailed && (
+        <p className="text-sm leading-[1.6] text-navy-text" role="status">
+          We had trouble saving your details just now, but choosing a time below will still reach us.
+        </p>
+      )}
       <a
         href={meetingUrlFor(contact)}
         target="_blank"

@@ -1,4 +1,5 @@
 import "server-only";
+import { fillBlankProperties } from "@/lib/contact-merge";
 import { splitName, type LeadPayload } from "@/lib/leads";
 
 /**
@@ -10,6 +11,9 @@ import { splitName, type LeadPayload } from "@/lib/leads";
  */
 
 const API = "https://api.hubapi.com";
+
+/** HubSpot is normally fast; this only bounds the worst case so a request can never hang. */
+const HUBSPOT_TIMEOUT_MS = 15_000;
 
 /** Personal-mail domains are never a company's website domain. */
 const FREE_MAIL = new Set([
@@ -28,7 +32,7 @@ async function hs<T>(path: string, init: RequestInit): Promise<T> {
       Authorization: `Bearer ${process.env.HUBSPOT_PRIVATE_APP_TOKEN}`,
       "Content-Type": "application/json",
     },
-    signal: AbortSignal.timeout(8000),
+    signal: AbortSignal.timeout(HUBSPOT_TIMEOUT_MS),
   });
   if (!res.ok) {
     throw new Error(`HubSpot ${init.method} ${path} -> ${res.status} ${(await res.text()).slice(0, 300)}`);
@@ -62,15 +66,20 @@ async function findOrCreateCompany(name: string, domain: string | null): Promise
  */
 export const CONSENT_PROPERTY = "website_form_consent";
 
-async function contactExists(email: string): Promise<boolean> {
-  const found = await hs<SearchResult>("/crm/v3/objects/contacts/search", {
+type ExistingContact = { id: string; properties: Record<string, string | null> };
+
+const FILLABLE_PROPERTIES = ["firstname", "lastname", "company", "hs_lead_status"];
+
+async function findContact(email: string): Promise<ExistingContact | null> {
+  const found = await hs<{ results: ExistingContact[] }>("/crm/v3/objects/contacts/search", {
     method: "POST",
     body: JSON.stringify({
       filterGroups: [{ filters: [{ propertyName: "email", operator: "EQ", value: email }] }],
+      properties: FILLABLE_PROPERTIES,
       limit: 1,
     }),
   });
-  return found.results.length > 0;
+  return found.results[0] ?? null;
 }
 
 export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
@@ -78,40 +87,62 @@ export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
   const emailDomain = lead.email.split("@")[1]?.toLowerCase() ?? "";
   const domain = emailDomain && !FREE_MAIL.has(emailDomain) ? emailDomain : null;
   const partial = lead.stage === "partial";
+  const consent = partial ? "not_submitted" : "submitted";
+
+  const existing = await findContact(lead.email);
 
   // A half-finished form only ever creates a brand-new contact: it must never overwrite or
   // downgrade a contact that already exists (e.g. someone who submitted earlier).
-  if (partial && (await contactExists(lead.email))) return;
+  if (partial && existing) return;
 
-  // Upsert by email so a repeat submission updates the contact instead of failing with a 409.
+  const incoming: Record<string, string> = {};
+  if (firstName) incoming.firstname = firstName;
+  if (lastName) incoming.lastname = lastName;
+  if (lead.company) incoming.company = lead.company;
   // Partial leads are not given a lead status, so sales does not treat them as inbound requests.
-  const contactProps: Record<string, string> = { email: lead.email };
-  if (!partial) contactProps.hs_lead_status = "NEW";
-  if (firstName) contactProps.firstname = firstName;
-  if (lastName) contactProps.lastname = lastName;
-  if (lead.company) contactProps.company = lead.company;
+  if (!partial) incoming.hs_lead_status = "NEW";
 
-  const upsert = (props: Record<string, string>) =>
-    hs<{ results: { id: string }[] }>("/crm/v3/objects/contacts/batch/upsert", {
-      method: "POST",
-      body: JSON.stringify({ inputs: [{ idProperty: "email", id: lead.email, properties: props }] }),
-    });
-
-  let contact;
-  try {
-    contact = await upsert({ ...contactProps, [CONSENT_PROPERTY]: partial ? "not_submitted" : "submitted" });
-  } catch (error) {
-    // Property not created yet: still record the lead rather than losing it.
-    if (!String(error).includes(CONSENT_PROPERTY)) throw error;
-    console.error(`[leads] HubSpot '${CONSENT_PROPERTY}' property is missing; run scripts/setup-consent-fields.mjs`);
-    contact = await upsert(contactProps);
+  let contactId: string | undefined;
+  if (existing) {
+    // A repeat submit from someone already in HubSpot: only fill in what is blank. Names, companies
+    // and lead statuses people already have are never replaced by what a form visitor typed.
+    const update = fillBlankProperties(existing.properties, incoming);
+    const patch = (props: Record<string, string>) =>
+      hs(`/crm/v3/objects/contacts/${existing.id}`, { method: "PATCH", body: JSON.stringify({ properties: props }) });
+    try {
+      await patch({ ...update, [CONSENT_PROPERTY]: consent });
+    } catch (error) {
+      // Property not created yet: still record what we can rather than losing it.
+      if (!String(error).includes(CONSENT_PROPERTY)) throw error;
+      console.error(`[leads] HubSpot '${CONSENT_PROPERTY}' property is missing; run scripts/setup-consent-fields.mjs`);
+      if (Object.keys(update).length > 0) await patch(update);
+    }
+    contactId = existing.id;
+  } else {
+    const upsert = (props: Record<string, string>) =>
+      hs<{ results: { id: string }[] }>("/crm/v3/objects/contacts/batch/upsert", {
+        method: "POST",
+        body: JSON.stringify({ inputs: [{ idProperty: "email", id: lead.email, properties: props }] }),
+      });
+    const contactProps = { email: lead.email, ...incoming };
+    let contact;
+    try {
+      contact = await upsert({ ...contactProps, [CONSENT_PROPERTY]: consent });
+    } catch (error) {
+      // Property not created yet: still record the lead rather than losing it.
+      if (!String(error).includes(CONSENT_PROPERTY)) throw error;
+      console.error(`[leads] HubSpot '${CONSENT_PROPERTY}' property is missing; run scripts/setup-consent-fields.mjs`);
+      contact = await upsert(contactProps);
+    }
+    contactId = contact.results[0]?.id;
   }
-  const contactId = contact.results[0]?.id;
-  if (!contactId) throw new Error("HubSpot contact upsert returned no id");
+  if (!contactId) throw new Error("HubSpot contact has no id");
 
   // Waitlist signups have no company name; the contact alone is still a valid lead.
   // Partial leads stay contact-only: no company record until the visitor submits.
   if (!lead.company || partial) return;
+  // A contact that already has a company keeps it; do not attach a second, newly typed one.
+  if ((existing?.properties.company ?? "").trim() !== "") return;
 
   const companyId = await findOrCreateCompany(lead.company, domain);
   await hs(`/crm/v4/objects/contacts/${contactId}/associations/default/companies/${companyId}`, {
