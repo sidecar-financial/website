@@ -1,5 +1,5 @@
 import { createHubSpotLead, isHubSpotConfigured } from "@/lib/hubspot";
-import { parseLead, looksLikeSpam } from "@/lib/leads";
+import { parseLead, looksLikeSpam, partialCaptureAllowed } from "@/lib/leads";
 import { createNotionLead, isNotionConfigured } from "@/lib/notion";
 
 /**
@@ -9,6 +9,9 @@ import { createNotionLead, isNotionConfigured } from "@/lib/notion";
  * database at the same time. The two are independent: if one fails the other still
  * runs, so a lead is only lost when both are down (and then the visitor sees an error).
  * Bots are recorded in Notion as Spam only and never reach HubSpot.
+ *
+ * A request with stage "partial" is a visitor who entered a name and email but has not clicked
+ * submit yet; it is saved with consent "Not submitted" (see lib/leads.ts for the region rule).
  */
 export async function POST(request: Request) {
   // Browsers always send Origin on cross-site POSTs; reject anything not from our own site.
@@ -28,6 +31,15 @@ export async function POST(request: Request) {
   if (!parsed.ok) return Response.json({ error: parsed.error }, { status: 400 });
   const { lead } = parsed;
   const spam = looksLikeSpam(lead);
+
+  // Not-yet-submitted leads: skip bots entirely (nothing is recorded) and skip visitors from
+  // regions where saving before submit needs opt-in consent. The visitor sees the same answer
+  // either way, and the real submit later records them normally.
+  if (lead.stage === "partial") {
+    const country = request.headers.get("x-vercel-ip-country");
+    const allowedHere = process.env.NODE_ENV !== "production" || partialCaptureAllowed(country);
+    if (spam || !allowedHere) return Response.json({ ok: true });
+  }
 
   const hubspotOn = isHubSpotConfigured();
   const notionOn = isNotionConfigured();

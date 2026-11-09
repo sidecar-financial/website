@@ -5,9 +5,37 @@
 
 export type LeadSource = "demo" | "waterfall-waitlist";
 
+/**
+ * "partial": the visitor entered a name and email but has not clicked submit (saved so sales can
+ * follow up; recorded with consent "Not submitted"). "submitted": they clicked submit.
+ */
+export type LeadStage = "partial" | "submitted";
+
+export const CONSENT_LABEL: Record<LeadStage, string> = {
+  partial: "Not submitted",
+  submitted: "Submitted",
+};
+
+/**
+ * Visitors from these countries (EU/EEA, UK, Switzerland) are never saved before they click submit:
+ * that needs opt-in consent, and a notice under the form is not enough.
+ */
+const PARTIAL_CAPTURE_BLOCKED = new Set([
+  "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR", "HU", "IE", "IT", "LV",
+  "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK", "SI", "ES", "SE", "IS", "LI", "NO", "GB", "CH",
+]);
+
+/** True when it is OK to save a not-yet-submitted lead for a visitor in this country (ISO code, may be missing). */
+export function partialCaptureAllowed(country: string | null | undefined): boolean {
+  if (!country) return false; // unknown location: do not capture
+  return !PARTIAL_CAPTURE_BLOCKED.has(country.toUpperCase());
+}
+
 export type LeadPayload = {
   /** Which form produced the lead. */
   source: LeadSource;
+  /** Whether the visitor has clicked submit (see `LeadStage`). */
+  stage: LeadStage;
   fullName: string;
   email: string;
   /** Empty for the email-only Waterfall waitlist form. */
@@ -59,9 +87,14 @@ export function parseLead(body: unknown): ValidationResult {
   const email = str("email", MAX.email);
   if (!EMAIL_RE.test(email)) return { ok: false, error: "Please enter a valid email address" };
 
+  // Only the demo forms save a lead before submit; the email-only waitlist never does.
+  const stage: LeadStage = b.stage === "partial" && source === "demo" ? "partial" : "submitted";
+
   const fullName = str("fullName", MAX.name);
   const company = str("company", MAX.company);
-  if (source === "demo" && (!fullName || !company)) {
+  if (stage === "partial") {
+    if (!fullName) return { ok: false, error: "Invalid request" };
+  } else if (source === "demo" && (!fullName || !company)) {
     return { ok: false, error: "Name and company are required" };
   }
 
@@ -71,6 +104,7 @@ export function parseLead(body: unknown): ValidationResult {
     ok: true,
     lead: {
       source,
+      stage,
       fullName,
       email,
       company,

@@ -1,12 +1,26 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { splitName } from "@/lib/leads";
 
 export const MEETING_URL =
   "https://meetings.hubspot.com/jennifer884?uuid=23927735-1750-4c06-a5c4-af62048836c9";
 
+/** Meeting link with the visitor's name and email prefilled (HubSpot reads these query params). */
+export function meetingUrlFor(contact?: { fullName: string; email: string }): string {
+  if (!contact?.email && !contact?.fullName) return MEETING_URL;
+  const url = new URL(MEETING_URL);
+  const { firstName, lastName } = splitName(contact.fullName);
+  if (firstName) url.searchParams.set("firstName", firstName);
+  if (lastName) url.searchParams.set("lastName", lastName);
+  if (contact.email) url.searchParams.set("email", contact.email);
+  return url.toString();
+}
+
 type DemoSuccessProps = {
   firstName: string;
+  /** Submitted name and email, used to prefill the scheduler. */
+  contact?: { fullName: string; email: string };
   /** Heading level, so the success step fits the surrounding outline. */
   headingLevel?: "h2" | "h3";
 };
@@ -16,7 +30,7 @@ type DemoSuccessProps = {
  * heading (for keyboard and screen-reader users) and links to the meeting
  * scheduler.
  */
-export default function DemoSuccess({ firstName, headingLevel = "h3" }: DemoSuccessProps) {
+export default function DemoSuccess({ firstName, contact, headingLevel = "h3" }: DemoSuccessProps) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const Heading = headingLevel;
 
@@ -54,7 +68,7 @@ export default function DemoSuccess({ firstName, headingLevel = "h3" }: DemoSucc
         Now select a meeting time with our expert team.
       </p>
       <a
-        href={MEETING_URL}
+        href={meetingUrlFor(contact)}
         target="_blank"
         rel="noopener noreferrer"
         className="group inline-flex min-h-[48px] items-center rounded-[6px] bg-orange px-[22px] text-base font-medium text-ink transition-[color,background-color,box-shadow] hover:bg-orange-dark hover:shadow-[0_8px_28px_-4px_rgba(245,166,29,0.6)] focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-navy"

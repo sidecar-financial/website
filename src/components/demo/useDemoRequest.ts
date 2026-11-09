@@ -1,8 +1,8 @@
 "use client";
 
-import { useId, useState, type FormEvent } from "react";
-import { INTEREST_OPTIONS } from "@/lib/leads";
-import { submitLead, useLeadGuards } from "@/lib/leads-client";
+import { useId, useRef, useState, type FormEvent } from "react";
+import { EMAIL_RE, INTEREST_OPTIONS } from "@/lib/leads";
+import { savePartialLead, submitLead, useLeadGuards } from "@/lib/leads-client";
 
 export { INTEREST_OPTIONS };
 
@@ -42,8 +42,13 @@ export function useDemoRequest() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle");
   const [firstName, setFirstName] = useState("");
+  // Kept after the form resets so the booking link can prefill the scheduler.
+  const [submittedContact, setSubmittedContact] = useState({ fullName: "", email: "" });
   const formId = useId();
   const { startedAt, honeypot } = useLeadGuards();
+  // Email last saved as a partial lead, and the in-flight save (so submit can wait for it).
+  const savedDraftEmail = useRef("");
+  const pendingDraft = useRef<Promise<void> | null>(null);
 
   const fieldId = (field: DemoFormField) => `${formId}-${field}`;
 
@@ -69,6 +74,22 @@ export function useDemoRequest() {
     setErrors((prev) => (prev[field] ? { ...prev, [field]: "" } : prev));
   };
 
+  /**
+   * Call when the name or email field loses focus. Once there is a name and a valid email, save
+   * them as a not-yet-submitted lead (once per email address). The form shows a notice about this.
+   */
+  const saveDraft = () => {
+    const email = formData.email.trim();
+    if (status === "success" || isSubmitting) return;
+    if (!formData.fullName.trim() || !EMAIL_RE.test(email)) return;
+    if (savedDraftEmail.current === email.toLowerCase()) return;
+    savedDraftEmail.current = email.toLowerCase();
+    pendingDraft.current = savePartialLead(
+      { source: "demo", ...formData, fullName: formData.fullName.trim(), email },
+      { startedAt, honeypot },
+    );
+  };
+
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     const found = validate();
@@ -82,8 +103,11 @@ export function useDemoRequest() {
     setIsSubmitting(true);
     setStatus("idle");
     try {
+      // Let any in-flight partial save land first so it cannot race the real submit.
+      await pendingDraft.current;
       await submitLead({ source: "demo", ...formData }, { startedAt, honeypot });
       setFirstName(formData.fullName.trim().split(/\s+/)[0]);
+      setSubmittedContact({ fullName: formData.fullName.trim(), email: formData.email.trim() });
       setStatus("success");
       setFormData(EMPTY_FORM);
     } catch {
@@ -100,7 +124,9 @@ export function useDemoRequest() {
     isSubmitting,
     status,
     firstName,
+    submittedContact,
     fieldId,
+    saveDraft,
     handleSubmit,
     honeypot,
   };

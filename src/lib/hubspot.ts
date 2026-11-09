@@ -56,28 +56,62 @@ async function findOrCreateCompany(name: string, domain: string | null): Promise
   return created.id;
 }
 
+/**
+ * Custom contact property recording whether the visitor clicked submit ("not_submitted" for a
+ * lead saved from a half-finished form). Created once by `scripts/setup-consent-fields.mjs`.
+ */
+export const CONSENT_PROPERTY = "website_form_consent";
+
+async function contactExists(email: string): Promise<boolean> {
+  const found = await hs<SearchResult>("/crm/v3/objects/contacts/search", {
+    method: "POST",
+    body: JSON.stringify({
+      filterGroups: [{ filters: [{ propertyName: "email", operator: "EQ", value: email }] }],
+      limit: 1,
+    }),
+  });
+  return found.results.length > 0;
+}
+
 export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
   const { firstName, lastName } = splitName(lead.fullName);
   const emailDomain = lead.email.split("@")[1]?.toLowerCase() ?? "";
   const domain = emailDomain && !FREE_MAIL.has(emailDomain) ? emailDomain : null;
+  const partial = lead.stage === "partial";
+
+  // A half-finished form only ever creates a brand-new contact: it must never overwrite or
+  // downgrade a contact that already exists (e.g. someone who submitted earlier).
+  if (partial && (await contactExists(lead.email))) return;
 
   // Upsert by email so a repeat submission updates the contact instead of failing with a 409.
-  const contactProps: Record<string, string> = { email: lead.email, hs_lead_status: "NEW" };
+  // Partial leads are not given a lead status, so sales does not treat them as inbound requests.
+  const contactProps: Record<string, string> = { email: lead.email };
+  if (!partial) contactProps.hs_lead_status = "NEW";
   if (firstName) contactProps.firstname = firstName;
   if (lastName) contactProps.lastname = lastName;
   if (lead.company) contactProps.company = lead.company;
 
-  const contact = await hs<{ results: { id: string }[] }>("/crm/v3/objects/contacts/batch/upsert", {
-    method: "POST",
-    body: JSON.stringify({
-      inputs: [{ idProperty: "email", id: lead.email, properties: contactProps }],
-    }),
-  });
+  const upsert = (props: Record<string, string>) =>
+    hs<{ results: { id: string }[] }>("/crm/v3/objects/contacts/batch/upsert", {
+      method: "POST",
+      body: JSON.stringify({ inputs: [{ idProperty: "email", id: lead.email, properties: props }] }),
+    });
+
+  let contact;
+  try {
+    contact = await upsert({ ...contactProps, [CONSENT_PROPERTY]: partial ? "not_submitted" : "submitted" });
+  } catch (error) {
+    // Property not created yet: still record the lead rather than losing it.
+    if (!String(error).includes(CONSENT_PROPERTY)) throw error;
+    console.error(`[leads] HubSpot '${CONSENT_PROPERTY}' property is missing; run scripts/setup-consent-fields.mjs`);
+    contact = await upsert(contactProps);
+  }
   const contactId = contact.results[0]?.id;
   if (!contactId) throw new Error("HubSpot contact upsert returned no id");
 
   // Waitlist signups have no company name; the contact alone is still a valid lead.
-  if (!lead.company) return;
+  // Partial leads stay contact-only: no company record until the visitor submits.
+  if (!lead.company || partial) return;
 
   const companyId = await findOrCreateCompany(lead.company, domain);
   await hs(`/crm/v4/objects/contacts/${contactId}/associations/default/companies/${companyId}`, {

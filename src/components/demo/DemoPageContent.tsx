@@ -5,6 +5,7 @@ import Button from "../ui/Button";
 import { Section } from "../ui/Frame";
 import { CheckBadge } from "../ui/PageBlocks";
 import DemoSuccess from "./DemoSuccess";
+import DraftNotice from "./DraftNotice";
 import Select from "../ui/Select";
 import { INTEREST_OPTIONS, useDemoRequest } from "./useDemoRequest";
 
@@ -21,7 +22,9 @@ export default function DemoPageContent() {
     isSubmitting,
     status,
     firstName,
+    submittedContact,
     fieldId,
+    saveDraft,
     handleSubmit,
     honeypot,
   } = useDemoRequest();
@@ -81,7 +84,7 @@ export default function DemoPageContent() {
         {/* Right form (navy panel, same field treatment as the landing page demo form) */}
         <div className="on-dark bg-navy px-6 py-12 text-white lg:px-12 lg:py-[72px]">
           {status === "success" ? (
-            <DemoSuccess firstName={firstName} headingLevel="h2" />
+            <DemoSuccess firstName={firstName} contact={submittedContact} headingLevel="h2" />
           ) : (
             <>
               <h2 className="mb-8 text-[28px] font-semibold leading-9 text-white">
@@ -89,6 +92,7 @@ export default function DemoPageContent() {
               </h2>
               <form onSubmit={handleSubmit} className="space-y-5" noValidate>
               <HoneypotField inputRef={honeypot} />
+                <DraftNotice />
                 <div>
                   <label htmlFor={`${fieldId("fullName")}`} className={labelClass}>
                     Full Name<span aria-hidden="true">*</span>
@@ -106,6 +110,7 @@ export default function DemoPageContent() {
                     placeholder="Your full name"
                     value={formData.fullName}
                     onChange={(e) => setField("fullName", e.target.value)}
+                    onBlur={saveDraft}
                     autoComplete="name"
                   />
                   {errors.fullName && (
@@ -132,6 +137,7 @@ export default function DemoPageContent() {
                     placeholder="you@company.com"
                     value={formData.email}
                     onChange={(e) => setField("email", e.target.value)}
+                    onBlur={saveDraft}
                     autoComplete="email"
                   />
                   {errors.email && (
