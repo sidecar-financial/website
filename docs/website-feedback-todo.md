@@ -30,12 +30,12 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 - [x] `/why-navable` "Explore Platform" button: remove or repoint to `/demo` (2026-11-09, 08ac391; removed, "Book a Free Demo" stays)
 - [x] Employee co-invest page: remove the "14-day free trial" and "share a workbook" block (2026-11-09, 08ac391)
 - [x] Employee co-invest page: point "Get free white paper" at the co-invest white paper (2026-11-09: no white paper, so the button is hidden on the co-invest page only via `whitePaper: false`; other solution pages still link to the Resource Hub)
-- [ ] Verify end to end on production: submit a test lead and confirm it appears in HubSpot and in the Notion Website Leads database (keys and redeploy done 2026-10-29, not yet tested)
+- [x] Verify end to end on production: submit a test lead and confirm it appears in HubSpot and in the Notion Website Leads database (keys and redeploy done 2026-10-29, not yet tested) (2026-11-09: tested against navable-website.vercel.app with a labelled test lead; Notion row created as New / Submitted and HubSpot contact + company created. Slack not checked from here; see the next item)
 - [ ] Rotate the HubSpot and Notion keys that were pasted in chat, then update `.env.local` and Vercel
 - [x] Copy `NOTION_LEADS_DATABASE_ID` into `.env.local` (already set in Vercel)
 - [ ] HubSpot: create the contact property `website_form_consent` (dropdown: Not submitted = `not_submitted`, Submitted = `submitted`). Either add the `crm.schemas.contacts.write` scope to the private app and run `node --env-file=.env.local scripts/setup-consent-fields.mjs`, or create it by hand in Settings > Properties. Until then leads still save, just without the consent value.
 - [ ] Legal/marketing: review the new demo-form notice and the privacy policy paragraph about saving name and email before submit; add a Consent Mode banner (see `TrackingScripts.tsx`)
-- [ ] Verify on production: type a name and email without submitting (expect a Partial row in Notion, no Slack message), then submit (expect a New row, Slack message, Partial row archived)
+- [ ] Verify on production: type a name and email without submitting (expect a Partial row in Notion, no Slack message), then submit (expect a New row, Slack message, Partial row archived) (2026-11-09: Notion side passed: Partial row with consent "Not submitted" on partial, then one New / Submitted row and the Partial row archived. STILL OPEN: someone must confirm in Slack that nothing posted on the partial and exactly one message posted on the submit. Test records to delete: Notion/HubSpot contact `navable-leadtest-1794249932@example.com`, company "TEST Co (delete me)")
 
 ## Phase 2: Homepage
 
