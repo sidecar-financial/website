@@ -58,6 +58,8 @@ export type SolutionPageData = {
   comparison?: boolean;
   /** Set to false to drop the "Try us out with your actual fund data" steps (default: shown). */
   trialSteps?: boolean;
+  /** Set to false to hide the "Get Free White Paper" button (default: shown). */
+  whitePaper?: boolean;
 };
 
 export type SolutionPageKey =
@@ -162,6 +164,7 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       "Have global employees or cross-jurisdiction considerations",
     ],
     trialSteps: false,
+    whitePaper: false,
   },
   compensation: {
     slug: "compensation",

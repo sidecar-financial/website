@@ -40,9 +40,11 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
         <Button href="/demo" size="lg">
           Book a Free Demo
         </Button>
-        <Button href="/resource-hub" variant="secondary" size="lg">
-          Get Free White Paper
-        </Button>
+        {page.whitePaper !== false && (
+          <Button href="/resource-hub" variant="secondary" size="lg">
+            Get Free White Paper
+          </Button>
+        )}
       </PageHero>
 
       {page.heroVisual && (

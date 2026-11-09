@@ -17,7 +17,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 ## Waiting on materials from Ashlyn
 
 - [ ] Value prop doc (for homepage, About and team copy)
-- [ ] Co-invest white paper (for the "Get free white paper" link)
+- [x] Co-invest white paper (for the "Get free white paper" link) (2026-11-09: none exists; dropped)
 - [ ] LinkedIn URLs for Anna, Ronnie and Leonard
 - [ ] Co-invest video or screenshots (for the animation and images)
 - [ ] Real UI screenshots for the carried interest page
@@ -29,7 +29,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 - [x] Header Sign in button (two copies in `Header.tsx`): point to the investor portal or remove (2026-11-09: removed both copies)
 - [x] `/why-navable` "Explore Platform" button: remove or repoint to `/demo` (2026-11-09, 08ac391; removed, "Book a Free Demo" stays)
 - [x] Employee co-invest page: remove the "14-day free trial" and "share a workbook" block (2026-11-09, 08ac391)
-- [ ] Employee co-invest page: point "Get free white paper" at the co-invest white paper
+- [x] Employee co-invest page: point "Get free white paper" at the co-invest white paper (2026-11-09: no white paper, so the button is hidden on the co-invest page only via `whitePaper: false`; other solution pages still link to the Resource Hub)
 - [ ] Verify end to end on production: submit a test lead and confirm it appears in HubSpot and in the Notion Website Leads database (keys and redeploy done 2026-10-29, not yet tested)
 - [ ] Rotate the HubSpot and Notion keys that were pasted in chat, then update `.env.local` and Vercel
 - [x] Copy `NOTION_LEADS_DATABASE_ID` into `.env.local` (already set in Vercel)
