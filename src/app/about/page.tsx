@@ -9,7 +9,7 @@ import { CAREERS_URL } from "@/components/layout/navigation";
 export const metadata: Metadata = {
   title: "About Us | Navable",
   description:
-    "Navable provides cutting-edge technology tools and services for alternative asset managers to keep up with the changing investor landscape.",
+    "Navable provides cutting-edge tools and services for finance, HR and operations teams to keep up with evolving needs.",
 };
 
 type Person = {
@@ -27,13 +27,13 @@ const team: Person[] = [
     photo: "/images/team/jen-anderson.jpg",
     role: "Co-Founder & CEO",
     linkedin: "https://www.linkedin.com/in/anderjen/",
-    bio: "Jen has over 20 years of experience in financial services. She started her career on trading floors at Morgan Stanley & Bank of America Securities and then transitioned to fintechs, leading product teams and business development at Lending Club, Yapstone and Rapyd. She also spent time as a fintech investor at Citi Ventures. She has an MBA from the University of Michigan and a BS from Wake Forest University.",
+    bio: "Jen has over 20 years in financial services, from the trading floors at Morgan Stanley and Bank of America Securities to product and business development roles at Lending Club, Yapstone and Rapyd, and fintech investing at Citi Ventures.",
   },
   {
     name: "Anna Enns",
     photo: "/images/team/anna-enns.jpg",
     role: "COO",
-    bio: "Anna is a fintech executive with experience spanning over a decade in product development, strategy, operations, and compliance. She has exceptional ability to cultivate successful teams and products from the ground up. Specializing in B2B fintech solutions, her strategic product vision and customer-centered approach to product development have driven the successful launch of multiple startups.",
+    bio: "Anna is a fintech executive with more than a decade in product development, strategy, operations and compliance. She specializes in B2B fintech and has launched multiple startups.",
   },
 ];
 
@@ -43,40 +43,40 @@ const advisors: Person[] = [
     photo: "/images/team/ethan-kennedy.jpg",
     role: "Advisor",
     linkedin: "https://www.linkedin.com/in/ethan-kennedy-43587a1/",
-    bio: "Ethan has more than two decades of experience in financial services, most of it focused on private equity co-investment and carried interest plan management. In 2019, following a 15-year tenure at the Carlyle Group, he established FaunceHammond LLC, a boutique financial advisory firm serving UHNWIs and their family offices. He began his career at KPMG LLP as a CPA and worked at AIG Investments (now PineBridge Investments) as a GP Controller.",
+    bio: "Ethan has over two decades in financial services focused on private equity co-investment and carried interest plan management, including 15 years at the Carlyle Group. He founded FaunceHammond LLC in 2019.",
   },
   {
     name: "Josh Anbil",
     photo: "/images/team/josh-anbil.jpg",
     role: "Advisor",
     linkedin: "https://www.linkedin.com/in/josh-anbil-09190a3/",
-    bio: "Josh is founder & CEO of Anbil Consulting, a compensation consulting firm focused exclusively on the real estate industry. He has 20+ years of experience and has completed over 1,200 compensation consulting projects for real estate companies. Previously he was President - Consulting at Ferguson Partners. Josh holds a B.S. in Finance from the University of Illinois.",
+    bio: "Josh is founder and CEO of Anbil Consulting, a compensation consulting firm for the real estate industry. He has 20+ years of experience and has completed over 1,200 compensation projects.",
   },
   {
     name: "Michelle Brown",
     photo: "/images/team/michelle-brown.jpg",
     role: "Advisor",
     linkedin: "https://www.linkedin.com/in/michelle-brown-04314590",
-    bio: "Michelle is CFO of Contrary Capital and has nearly 15 years of experience in financial services. After beginning her career at PwC, she has spent the better part of the last decade scaling finance and operations at venture capital and private equity firms including Astira Capital Partners and General Catalyst. She is a CPA in the Commonwealth of Massachusetts.",
+    bio: "Michelle is CFO of Contrary Capital with nearly 15 years in financial services. She has scaled finance and operations at venture capital and private equity firms including Astira Capital Partners and General Catalyst.",
   },
   {
     name: "Kristine Tech",
     photo: "/images/team/kristine-tech.jpg",
     role: "Advisor",
     linkedin: "https://www.linkedin.com/in/kristine-tech/",
-    bio: "With over 20 years of accounting experience, Kristine brings deep knowledge of long-term incentive programs. She spent 12+ years with the Carlyle Group working on carried interest transactions and financial reporting, where she led a business transformation initiative for the carried interest group and improved the automated data flow for realized and unrealized carried interest.",
+    bio: "Kristine has over 20 years of accounting experience and deep knowledge of long-term incentive programs. She spent 12+ years at the Carlyle Group on carried interest transactions and reporting.",
   },
   {
     name: "Leonard Speiser",
     photo: "/images/team/leonard-speiser.jpg",
     role: "Advisor",
-    bio: "Leonard founded Clover, currently serving over $230B in credit card processing a year, in addition to working at Intuit, eBay, Yahoo! and Credit Suisse First Boston. Leonard founded the Corporate Venture Studio model and launched it with partner Jones Lang LaSalle.",
+    bio: "Leonard founded Clover, which processes over $230B a year, and has worked at Intuit, eBay, Yahoo! and Credit Suisse First Boston. He also founded the Corporate Venture Studio model.",
   },
   {
     name: "Ronnie Mongan",
     photo: "/images/team/ronnie-mongan.jpg",
     role: "Operating Advisor",
-    bio: "With 20+ years in fintech, Ronnie Mongan has extensive experience in product operations and customer success. She led teams within Fiserv and Clover focused on scaling operations, managing partnership platforms and delivering technology integration programs.",
+    bio: "Ronnie has 20+ years in fintech across product operations and customer success, leading operations scaling and technology integration teams at Fiserv and Clover.",
   },
 ];
 
@@ -109,13 +109,13 @@ export default function AboutPage() {
   return (
     <>
       <PageHero
-        eyebrow="About Navable"
+        eyebrow="About us"
         title={
           <>
-            Empowering Alternative <span className="text-orange">Asset Managers</span>
+            About Navable: <span className="text-orange">Empowering the Private Fund Ecosystem</span>
           </>
         }
-        description="Navable provides cutting-edge technology tools and services for alternative asset managers to keep up with the changing investor landscape."
+        description="Navable provides cutting-edge tools and services for finance, HR and operations teams to keep up with evolving needs."
       >
         <Button href="#contact" variant="secondary" size="lg">
           Contact us&nbsp;
@@ -142,11 +142,6 @@ export default function AboutPage() {
               We are an experienced team of professionals with deep expertise spanning Wall Street
               and Silicon Valley.
             </p>
-            <p className="mt-4 text-[15px] leading-[25px] text-body">
-              We are passionate about providing solutions in the alternative asset space with the
-              goal of expanding investment opportunities and access for all different categories of
-              investors, from traditional LPs to retail investors to employees.
-            </p>
           </div>
           <div className="border-t border-line bg-soft px-6 py-12 lg:border-t-0 lg:px-12 lg:py-[72px]">
             <h2 className={eyebrowClass}>
@@ -154,15 +149,9 @@ export default function AboutPage() {
               Our team
             </h2>
             <p className="mt-6 text-[15px] leading-[25px] text-body">
-              Our seasoned team of financial services and technology professionals brings
-              world-class resources and capabilities to alternative asset management LPs. We
-              launched Navable as a purpose-built end-to-end digital platform to manage employee
-              co-investment, and we see the future of investor relations in the private markets to
-              include retail investors at scale.
-            </p>
-            <p className="mt-4 text-[15px] leading-[25px] text-body">
-              Leveraging next-generation technology tools on behalf of all private market investors
-              is our vision for the future, whether these investors are institutional or retail.
+              Our team of financial services and technology professionals launched Navable as a
+              purpose-built, end-to-end digital platform for employee co-investment, carried
+              interest and compensation.
             </p>
           </div>
         </div>
@@ -190,6 +179,7 @@ export default function AboutPage() {
                 width={160}
                 height={160}
                 className="w-24 h-24 rounded-full object-cover bg-line mb-4"
+                unoptimized
               />
               <h3 className="text-xl font-medium leading-7 text-ink">{member.name}</h3>
               <p className="mb-4 flex items-center gap-2.5 font-mono text-[10px] uppercase leading-none tracking-[0.16em] text-subtle">
@@ -222,6 +212,7 @@ export default function AboutPage() {
                 width={128}
                 height={128}
                 className="w-16 h-16 rounded-full object-cover bg-line mb-3"
+                unoptimized
               />
               <h3 className="text-lg font-medium leading-6 text-ink">{advisor.name}</h3>
               <p className="mb-3 mt-2 flex items-center gap-2.5 font-mono text-[10px] uppercase leading-none tracking-[0.16em] text-subtle">

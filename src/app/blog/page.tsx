@@ -22,9 +22,9 @@ export default function BlogPage() {
         <h2 id="articles-heading" className="sr-only">
           Latest articles
         </h2>
-        <ul className="grid md:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid gap-6 p-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 lg:p-8">
           {posts.map((post, index) => (
-            <PostCard key={post.slug} post={post} priority={index < 3} />
+            <PostCard key={post.slug} post={post} priority={index < 3} spaced />
           ))}
         </ul>
       </Section>
