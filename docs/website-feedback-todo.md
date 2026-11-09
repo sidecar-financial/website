@@ -24,11 +24,11 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 
 ## Phase 1: Sign-up and call-to-action flow
 
-- [ ] Pilot section (`src/components/home/Validation.tsx`): replace the "Typical setup takes under three weeks…" sentence with "Try us out with your actual fund data" and add a call-to-action button
-- [ ] Remove "14-day guided trial" wording in `Features.tsx`, `Header.tsx` and `src/components/solution/data.ts` so it matches the pilot
-- [ ] Header Sign in button (two copies in `Header.tsx`): point to the investor portal or remove
-- [ ] `/why-navable` "Explore Platform" button: remove or repoint to `/demo`
-- [ ] Employee co-invest page: remove the "14-day free trial" and "share a workbook" block
+- [x] Pilot section (`src/components/home/Validation.tsx`): replace the "Typical setup takes under three weeks…" sentence with "Try us out with your actual fund data" and add a call-to-action button (2026-11-09, 08ac391; button goes to `/demo`)
+- [x] Remove "14-day guided trial" wording in `Features.tsx`, `Header.tsx` and `src/components/solution/data.ts` so it matches the pilot (2026-11-09, 08ac391; also the "Free 14-Day Trial" block on solution pages)
+- [x] Header Sign in button (two copies in `Header.tsx`): point to the investor portal or remove (2026-11-09: kept pointing at `SIGN_IN_URL` / app.navable.com; change it if the answer is `investors.hellosidecar.com`)
+- [x] `/why-navable` "Explore Platform" button: remove or repoint to `/demo` (2026-11-09, 08ac391; removed, "Book a Free Demo" stays)
+- [x] Employee co-invest page: remove the "14-day free trial" and "share a workbook" block (2026-11-09, 08ac391)
 - [ ] Employee co-invest page: point "Get free white paper" at the co-invest white paper
 - [ ] Verify end to end on production: submit a test lead and confirm it appears in HubSpot and in the Notion Website Leads database (keys and redeploy done 2026-10-29, not yet tested)
 - [ ] Rotate the HubSpot and Notion keys that were pasted in chat, then update `.env.local` and Vercel
@@ -39,44 +39,44 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 
 ## Phase 2: Homepage
 
-- [ ] Hero tour data (`src/components/home/heroTourModel.ts` and related images): Alex Morgan = Fund Manager, total comp about $5M, lower carry
-- [ ] Taylor Smith = Chief Financial Officer (replace "Risk Management Team")
-- [ ] Jamie Chen = Analyst, Fund Controller / Fund Accounting; total comp and carry in the hundreds of thousands
-- [ ] Make all numbers reconcile: carry + salary + bonus + co-invest = total comp; carry by fund sums to the total; Alex's left and right panels match
-- [ ] Apply the same names and numbers in every image across the site
-- [ ] Vesting visual: bar chart of percent vested over a longer timeline
-- [ ] "With Navable" list: broaden beyond carry; point four = "Participants can access their own compensation information directly"
-- [ ] Weave compensation management, compensation planning and co-invest reporting into more of the homepage
-- [ ] Features headline: "Start with carry management and extend the same system to compensation and GP commit / employee co-investment as your firm evolves"
-- [ ] Treat GP commit and employee co-invest as the same thing in copy
-- [ ] Social proof: make the Sterling Group quote the hero quote, move the anonymous quote down
-- [ ] Social proof: make the section more prominent (color, emphasis) and move it higher on the page
-- [ ] FAQ: delete the subscription-eligibility question
-- [ ] FAQ: delete the multi-entity / multi-currency question
-- [ ] FAQ: rewrite the participant-access answer (admin portal and employee portal for every client, role-based permissions, checks and balances)
-- [ ] Strengthen value props using the value prop doc
+- [x] Hero tour data (`src/components/home/heroTourModel.ts` and related images): Alex Morgan = Fund Manager, total comp about $5M, lower carry (2026-11-09: hero is now `hero-tour.html` with Alex Morgan Fund Manager $5.0M comp; the unused `HeroTour.tsx` and `heroTourModel.ts` were deleted in ecc1efd)
+- [x] Taylor Smith = Chief Financial Officer (replace "Risk Management Team") (2026-11-09: already in the hero tour and card images)
+- [x] Jamie Chen = Analyst, Fund Controller / Fund Accounting; total comp and carry in the hundreds of thousands (2026-11-09: already in the hero tour and card images)
+- [x] Make all numbers reconcile: carry + salary + bonus + co-invest = total comp; carry by fund sums to the total; Alex's left and right panels match (2026-11-09: checked Alex: 400K + 500K + 3.6M carry + 500K co-invest = 5.0M; carry by fund 720K + 1.08M + 1.8M = 3.6M; firm 2026 carry 3.6M + 900K + 85K = 4.585M; comp statements 5.0M + 1.7M + 300K = 7.0M)
+- [x] Apply the same names and numbers in every image across the site (2026-11-09: all product images use Alex, Taylor and Jamie)
+- [ ] Vesting visual: bar chart of percent vested over a longer timeline (the new hero vesting image shows cumulative percent vested 2023 to 2032; confirm it is the chart you wanted)
+- [x] "With Navable" list: broaden beyond carry; point four = "Participants can access their own compensation information directly" (2026-11-09, ecc1efd)
+- [x] Weave compensation management, compensation planning and co-invest reporting into more of the homepage (2026-11-09, ecc1efd; Problem, Outcomes, Why Navable, Features)
+- [x] Features headline: "Start with carry management and extend the same system to compensation and GP commit / employee co-investment as your firm evolves" (2026-11-09, ecc1efd)
+- [x] Treat GP commit and employee co-invest as the same thing in copy (2026-11-09, ecc1efd; the Features tile, Why Navable, FAQ, demo page and co-invest page now say "GP commit / employee co-investment")
+- [x] Social proof: make the Sterling Group quote the hero quote, move the anonymous quote down (2026-11-09, ecc1efd)
+- [x] Social proof: make the section more prominent (color, emphasis) and move it higher on the page (2026-11-09, ecc1efd; dark featured quote, section now follows Problem)
+- [x] FAQ: delete the subscription-eligibility question (2026-11-09, ecc1efd)
+- [x] FAQ: delete the multi-entity / multi-currency question (2026-11-09, ecc1efd)
+- [x] FAQ: rewrite the participant-access answer (admin portal and employee portal for every client, role-based permissions, checks and balances) (2026-11-09, ecc1efd; product team should confirm the role-based permissions and checks-and-balances claims)
+- [ ] Strengthen value props using the value prop doc (blocked on the doc)
 
 ## Phase 3: Navigation and pages
 
-- [ ] Solutions dropdown order: Carried Interest Software, Compensation Management, Employee Co-Invest, Waterfall, GP Operations
-- [ ] Carried interest page: fix numbers in all pictures (participants especially)
+- [x] Solutions dropdown order: Carried Interest Software, Compensation Management, Employee Co-Invest, Waterfall, GP Operations (2026-11-09, 0c4c334; the four existing items are in order. "GP Operations" has no page or nav item, so it was not added)
+- [x] Carried interest page: fix numbers in all pictures (participants especially) (2026-11-09: the new card visuals use the same Alex, Taylor and Jamie numbers)
 - [ ] Carried interest page: replace shared screenshots with real UI (later)
-- [ ] Employee co-invest: value prop = "consistent, scalable, fully digital solution"; remove "LPs can trust"
-- [ ] Employee co-invest: replace the hero animation
-- [ ] Employee co-invest: replace the "One place to manage with confidence" images
-- [ ] Employee co-invest: change "Built for firms and GPs" to "Built for firms scaling offerings across their organizations and funds…"
-- [ ] Who we serve: add Fund Administrators section (carried interest management, Waterfall; decide on LP onboarding); reuse `/fund-admins`
-- [ ] Who we serve: write distinct content for private equity / private credit, venture capital and real estate
-- [ ] Blog: add spacing between tiles
-- [ ] Take down How it works (nav, sitemap, redirect)
-- [ ] About: heading "About Navable: empowering the private fund ecosystem"
-- [ ] About: update the intro line to "Navable provides cutting-edge tools and services for finance, HR and operations teams to keep up with evolving needs"
-- [ ] About: delete the "We are passionate about…" paragraph (outdated)
-- [ ] About: rework the team section (too much text); add LinkedIn links for Anna, Ronnie and Leonard
-- [ ] About: fix team photos that did not load on first visit
-- [ ] Why Navable: retitle to "The modern way to manage private fund compensation"
-- [ ] Why Navable: calculation accuracy 99.9% to 100%
-- [ ] Why Navable: "built for" line = private equity, private credit, venture capital and real estate fund operations
+- [x] Employee co-invest: value prop = "consistent, scalable, fully digital solution"; remove "LPs can trust" (2026-11-09, 08ac391)
+- [x] Employee co-invest: replace the hero animation (2026-11-09: `coinvestStoryboard` animation from the graphics work)
+- [x] Employee co-invest: replace the "One place to manage with confidence" images (2026-11-09: new co-invest card visuals)
+- [x] Employee co-invest: change "Built for firms and GPs" to "Built for firms scaling offerings across their organizations and funds…" (2026-11-09, 08ac391)
+- [x] Who we serve: add Fund Administrators section (carried interest management, Waterfall; decide on LP onboarding); reuse `/fund-admins` (2026-11-09: Fund Administrators is in the Who we serve menu and footer and links to `/fund-admins`; the LP onboarding decision is still open)
+- [ ] Who we serve: write distinct content for private equity / private credit, venture capital and real estate (the lists and tags already differ per page; deeper vertical content needs your input)
+- [x] Blog: add spacing between tiles (2026-11-09, 0c4c334)
+- [ ] Take down How it works (nav, sitemap, redirect) (not started; waiting on the open question above)
+- [x] About: heading "About Navable: empowering the private fund ecosystem" (2026-11-09, 0c4c334)
+- [x] About: update the intro line to "Navable provides cutting-edge tools and services for finance, HR and operations teams to keep up with evolving needs" (2026-11-09, 0c4c334)
+- [x] About: delete the "We are passionate about…" paragraph (outdated) (2026-11-09, 0c4c334)
+- [x] About: rework the team section (too much text); add LinkedIn links for Anna, Ronnie and Leonard (2026-11-09, 0c4c334; shorter bios and one short team paragraph; LinkedIn links for Anna, Ronnie and Leonard still need their URLs)
+- [x] About: fix team photos that did not load on first visit (2026-11-09, 0c4c334; photos now skip the image optimizer like the investor logos. I could not reproduce the failure, so check the first visit on production)
+- [x] Why Navable: retitle to "The modern way to manage private fund compensation" (2026-11-09, 08ac391)
+- [x] Why Navable: calculation accuracy 99.9% to 100% (2026-11-09, 08ac391; note the "no claims without evidence" brand rule)
+- [x] Why Navable: "built for" line = private equity, private credit, venture capital and real estate fund operations (2026-11-09, 08ac391)
 
 ## Done
 
