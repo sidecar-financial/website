@@ -18,7 +18,6 @@ export type NavIconName =
   | "resource-hub"
   | "blog"
   | "faq"
-  | "how-it-works"
   | "about"
   | "why-navable";
 
@@ -127,12 +126,6 @@ const resources: NavItem[] = [
     href: "/faq",
     description: "Common questions about Navable",
     icon: "faq",
-  },
-  {
-    label: "How it works",
-    href: "/how-it-works",
-    description: "Simple setup in three steps",
-    icon: "how-it-works",
   },
 ];
 

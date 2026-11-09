@@ -8,10 +8,10 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 
 ## Open questions (blocking some items)
 
-- [ ] Is "sign-up flow" only the Phase 1 items, or is there more feedback coming?
-- [ ] Sign in button: point to `investors.hellosidecar.com` or remove? (`src/lib/site.ts` defines a customer app URL.)
+- [x] Is "sign-up flow" only the Phase 1 items, or is there more feedback coming?
+- [x] Sign in button: point to `investors.hellosidecar.com` or remove? (`src/lib/site.ts` defines a customer app URL.) (2026-11-09: decided to remove; Sign in links and `SIGN_IN_URL` deleted)
 - [ ] Spelling: code says "Sterling Group", the Loom says "Starling Group". Which is right?
-- [ ] OK to take down How it works with a redirect to `/`?
+- [x] OK to take down How it works with a redirect to `/`? (2026-11-09: yes, taken down)
 - [ ] Pilot call to action destination: `/demo` or something else?
 
 ## Waiting on materials from Ashlyn
@@ -26,7 +26,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 
 - [x] Pilot section (`src/components/home/Validation.tsx`): replace the "Typical setup takes under three weeks…" sentence with "Try us out with your actual fund data" and add a call-to-action button (2026-11-09, 08ac391; button goes to `/demo`)
 - [x] Remove "14-day guided trial" wording in `Features.tsx`, `Header.tsx` and `src/components/solution/data.ts` so it matches the pilot (2026-11-09, 08ac391; also the "Free 14-Day Trial" block on solution pages)
-- [x] Header Sign in button (two copies in `Header.tsx`): point to the investor portal or remove (2026-11-09: kept pointing at `SIGN_IN_URL` / app.navable.com; change it if the answer is `investors.hellosidecar.com`)
+- [x] Header Sign in button (two copies in `Header.tsx`): point to the investor portal or remove (2026-11-09: removed both copies)
 - [x] `/why-navable` "Explore Platform" button: remove or repoint to `/demo` (2026-11-09, 08ac391; removed, "Book a Free Demo" stays)
 - [x] Employee co-invest page: remove the "14-day free trial" and "share a workbook" block (2026-11-09, 08ac391)
 - [ ] Employee co-invest page: point "Get free white paper" at the co-invest white paper
@@ -68,7 +68,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 - [x] Who we serve: add Fund Administrators section (carried interest management, Waterfall; decide on LP onboarding); reuse `/fund-admins` (2026-11-09: Fund Administrators is in the Who we serve menu and footer and links to `/fund-admins`; the LP onboarding decision is still open)
 - [ ] Who we serve: write distinct content for private equity / private credit, venture capital and real estate (the lists and tags already differ per page; deeper vertical content needs your input)
 - [x] Blog: add spacing between tiles (2026-11-09, 0c4c334)
-- [ ] Take down How it works (nav, sitemap, redirect) (not started; waiting on the open question above)
+- [x] Take down How it works (nav, sitemap, redirect) (2026-11-09: page deleted, nav and sitemap entries removed, 308 redirect `/how-it-works` to `/` in `next.config.ts`)
 - [x] About: heading "About Navable: empowering the private fund ecosystem" (2026-11-09, 0c4c334)
 - [x] About: update the intro line to "Navable provides cutting-edge tools and services for finance, HR and operations teams to keep up with evolving needs" (2026-11-09, 0c4c334)
 - [x] About: delete the "We are passionate about…" paragraph (outdated) (2026-11-09, 0c4c334)

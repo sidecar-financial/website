@@ -15,7 +15,6 @@ const staticRoutes = [
   "/who-we-serve/real-estate",
   "/fund-admins",
   "/why-navable",
-  "/how-it-works",
   "/about",
   "/demo",
   "/faq",

@@ -27,7 +27,6 @@ const paths: Record<NavIconName, string[]> = {
   // question mark in circle
   faq: ["M12 3a9 9 0 100 18 9 9 0 000-18z", "M9.6 9.6a2.5 2.5 0 114 2c-.9.6-1.6 1.1-1.6 2.2", "M12 17h.01"],
   // checklist
-  "how-it-works": ["M4 6l1.5 1.5L8 5", "M4 12l1.5 1.5L8 11", "M4 18l1.5 1.5L8 17", "M12 6h8M12 12h8M12 18h8"],
   // compass
   about: ["M12 3a9 9 0 100 18 9 9 0 000-18z", "M15.5 8.5l-2 5-5 2 2-5 5-2z"],
   // shield with check
