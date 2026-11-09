@@ -2,15 +2,15 @@ import { Section } from "@/components/ui/Frame";
 
 const featuredTestimonial = {
   quote:
-    "We switched to Navable due to data accuracy issues with our legacy provider. It's paramount that our software gets these things right.",
-  attribution: ["Director of Finance", "$4Bn AUM Venture Capital Firm"],
+    "Probably one of the more thoughtful, comprehensive software solutions we've seen built for our industry.",
+  attribution: ["CFO at The Sterling Group"],
 };
 
 const sideTestimonials = [
   {
     quote:
-      "Probably one of the more thoughtful, comprehensive software solutions we've seen built for our industry.",
-    attribution: ["CFO at The Sterling Group"],
+      "We switched to Navable due to data accuracy issues with our legacy provider. It's paramount that our software gets these things right.",
+    attribution: ["Director of Finance", "$4Bn AUM Venture Capital Firm"],
   },
   {
     quote: "It's easy, intuitive, and seamless.",
@@ -37,7 +37,7 @@ export default function Testimonials() {
       </div>
 
       {/* Featured quote */}
-      <figure className="bg-soft px-6 pb-14 pt-12 lg:min-h-[514px] lg:px-12 lg:pb-[100px] lg:pt-[63px]">
+      <figure className="on-dark bg-navy px-6 pb-14 pt-12 text-white lg:min-h-[514px] lg:px-12 lg:pb-[100px] lg:pt-[63px]">
         <svg
           className="h-11 w-14 text-orange"
           viewBox="0 0 36 30"
@@ -46,10 +46,10 @@ export default function Testimonials() {
         >
           <path d="M0 30V17.2C0 7.1 5.1 1.6 13.6 0l2.1 4.6C11.9 6 10 8.6 9.7 12.4H16V30H0Zm20 0V17.2C20 7.1 25.1 1.6 33.6 0l2.1 4.6c-3.8 1.4-5.7 4-6 7.8H36V30H20Z" />
         </svg>
-        <blockquote className="mt-10 max-w-[640px] text-2xl font-semibold leading-[1.45] text-ink lg:text-[32px] lg:leading-[46px]">
+        <blockquote className="mt-10 max-w-[640px] text-2xl font-semibold leading-[1.45] text-white lg:text-[32px] lg:leading-[46px]">
           <p>{featuredTestimonial.quote}</p>
         </blockquote>
-        <figcaption className="mt-8 text-[13px] leading-5 text-muted">
+        <figcaption className="mt-8 text-[13px] leading-5 text-navy-text">
           {featuredTestimonial.attribution.map((line, i) => (
             <span key={line} className="block">
               {i === 0 ? "– " : ""}

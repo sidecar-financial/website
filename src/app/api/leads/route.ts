@@ -1,5 +1,5 @@
 import { createHubSpotLead, isHubSpotConfigured } from "@/lib/hubspot";
-import { parseLead, looksLikeSpam, partialCaptureAllowed } from "@/lib/leads";
+import { isFastSubmit, looksLikeSpam, parseLead, partialCaptureAllowed } from "@/lib/leads";
 import { createNotionLead, isNotionConfigured } from "@/lib/notion";
 
 /**
@@ -13,6 +13,9 @@ import { createNotionLead, isNotionConfigured } from "@/lib/notion";
  * A request with stage "partial" is a visitor who entered a name and email but has not clicked
  * submit yet; it is saved with consent "Not submitted" (see lib/leads.ts for the region rule).
  */
+/** Each HubSpot/Notion call is bounded at 15s, and a submit makes a few in a row; leave room for them. */
+export const maxDuration = 60;
+
 export async function POST(request: Request) {
   // Browsers always send Origin on cross-site POSTs; reject anything not from our own site.
   const origin = request.headers.get("origin");
@@ -54,13 +57,16 @@ export async function POST(request: Request) {
     return Response.json({ ok: true });
   }
 
-  const tasks: Promise<unknown>[] = [];
-  if (notionOn) tasks.push(createNotionLead(lead, spam).then(() => "notion"));
-  if (hubspotOn && !spam) tasks.push(createHubSpotLead(lead).then(() => "hubspot"));
+  // Fast fills are real people far more often than bots (autofill), so keep them and flag them.
+  const fast = !spam && isFastSubmit(lead);
 
-  const results = await Promise.allSettled(tasks);
-  results.forEach((r) => {
-    if (r.status === "rejected") console.error("[leads] destination failed:", r.reason);
+  const tasks: Array<{ name: string; run: Promise<unknown> }> = [];
+  if (notionOn) tasks.push({ name: "notion", run: createNotionLead(lead, spam, fast) });
+  if (hubspotOn && !spam) tasks.push({ name: "hubspot", run: createHubSpotLead(lead) });
+
+  const results = await Promise.allSettled(tasks.map((t) => t.run));
+  results.forEach((r, i) => {
+    if (r.status === "rejected") console.error(`[leads] ${tasks[i].name} failed (${lead.stage}):`, r.reason);
   });
 
   const succeeded = results.some((r) => r.status === "fulfilled");

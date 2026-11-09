@@ -1,3 +1,4 @@
+import Button from "@/components/ui/Button";
 import { Section } from "@/components/ui/Frame";
 
 const steps = [
@@ -14,7 +15,7 @@ const steps = [
   {
     number: "3",
     title: "Validate the Fit",
-    description: "Use your working fund in a 14-day guided trial to decide.",
+    description: "Use your working fund in a guided pilot to decide.",
   },
 ];
 
@@ -30,8 +31,13 @@ export default function Validation() {
         </h2>
         <p className="mx-auto mt-5 max-w-[680px] text-[15px] leading-[25px] text-muted">
           You don&apos;t need to decide whether Navable works for your carry structure based on a
-          generic demo. Typical setup takes under three weeks, with support for legacy plan setup.
+          generic demo. Try us out with your actual fund data.
         </p>
+        <div className="mt-8 flex justify-center">
+          <Button href="/demo" size="lg">
+            Start a Pilot
+          </Button>
+        </div>
       </div>
 
       <div className="relative pb-[47px]">

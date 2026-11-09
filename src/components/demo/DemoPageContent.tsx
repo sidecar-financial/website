@@ -21,6 +21,7 @@ export default function DemoPageContent() {
     errors,
     isSubmitting,
     status,
+    saveFailed,
     firstName,
     submittedContact,
     fieldId,
@@ -31,7 +32,7 @@ export default function DemoPageContent() {
 
   const demoFeatures = [
     "Manage allocations, vesting, and participant changes.",
-    "Connect carry, compensation, and GP commit workflows.",
+    "Connect carry, compensation, and GP commit / employee co-investment workflows.",
     "Configure Navable to fit your firm's carry workflows.",
   ];
 
@@ -84,7 +85,7 @@ export default function DemoPageContent() {
         {/* Right form (navy panel, same field treatment as the landing page demo form) */}
         <div className="on-dark bg-navy px-6 py-12 text-white lg:px-12 lg:py-[72px]">
           {status === "success" ? (
-            <DemoSuccess firstName={firstName} contact={submittedContact} headingLevel="h2" />
+            <DemoSuccess firstName={firstName} contact={submittedContact} saveFailed={saveFailed} headingLevel="h2" />
           ) : (
             <>
               <h2 className="mb-8 text-[28px] font-semibold leading-9 text-white">
@@ -188,12 +189,6 @@ export default function DemoPageContent() {
                     triggerClassName={`${fieldBase} border-navy-border`}
                   />
                 </div>
-
-                {status === "error" && (
-                  <p className={errorClass} role="alert">
-                    There was an error submitting your request. Please try again.
-                  </p>
-                )}
 
                 <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
                   {isSubmitting ? "Submitting..." : "Book a Free Demo"}

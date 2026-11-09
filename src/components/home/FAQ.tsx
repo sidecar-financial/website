@@ -17,24 +17,14 @@ const faqs = [
       "Yes. Navable supports single sign-on and connects with the systems your team already relies on. We review your integration requirements during onboarding.",
   },
   {
-    question: "Can subscription workflows accommodate different eligibility requirements?",
-    answer:
-      "Yes. Election and subscription workflows can be configured by participant group, so eligibility can vary across employees, vehicles, and jurisdictions.",
-  },
-  {
     question: "Can we use our own DocuSign account?",
     answer:
       "Yes. Navable can connect to your firm's existing DocuSign account for award documents and subscription paperwork.",
   },
   {
-    question: "Does Navable support investment reporting across multiple entities or currencies?",
-    answer:
-      "Yes. Reporting spans funds, vehicles, and entities, with built-in multi-currency support.",
-  },
-  {
     question: "Can participant access be separated from administrative access?",
     answer:
-      "Yes. Participants see their own status, while administrators see the whole picture.",
+      "Yes. Every client gets an admin portal for their team and an employee portal for participants. Role-based permissions control who can see and change what, with checks and balances on changes. Participants see only their own information, while administrators see the whole picture.",
   },
 ];
 

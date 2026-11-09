@@ -11,6 +11,8 @@ const nextConfig: NextConfig = {
 
       // --- Legacy navable.com URLs -> current local routes (308) ---
       { source: "/about-us", destination: "/about", permanent: true },
+      // How it works was taken down; send old links to the homepage.
+      { source: "/how-it-works", destination: "/", permanent: true },
       // /platform was retired; the carried-interest page now lives at its legacy navable.com URL.
       { source: "/platform", destination: "/solutions/carried-interest-software", permanent: true },
       { source: "/features-and-services/employee-solutions", destination: "/solutions/compensation-management", permanent: true },

@@ -4,7 +4,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { SIGN_IN_URL } from "@/lib/site";
 import NavIcon from "./NavIcon";
 import { groupItems, navGroups, type NavGroup, type NavItem, type NavSection } from "./navigation";
 
@@ -372,12 +371,6 @@ export default function Header() {
 
           {/* Right side */}
           <div className="ml-auto hidden items-center gap-8 lg:flex">
-            <a
-              href={SIGN_IN_URL}
-              className={`px-1 py-0.5 text-sm text-ink transition-opacity hover:opacity-70 ${focusRing}`}
-            >
-              Sign in
-            </a>
             <Link
               href="/demo"
               className="inline-flex h-10 items-center rounded-lg bg-ink px-[18px] text-sm font-medium text-white transition-[color,background-color,box-shadow] hover:bg-[#2c2c5a] hover:shadow-[0_8px_24px_-4px_rgba(76,70,163,0.55)] focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
@@ -490,16 +483,9 @@ export default function Header() {
 
           {/* Pinned actions */}
           <div className="shrink-0 border-t border-line pb-4 pt-2">
-            <a
-              href={SIGN_IN_URL}
-              className={`flex min-h-[44px] items-center rounded-md px-2 py-3 text-sm text-ink hover:bg-soft ${mobileRowFocus}`}
-              onClick={() => closeMobile(false)}
-            >
-              Sign in
-            </a>
             <Link
               href="/demo"
-              className="mt-2 flex min-h-[44px] w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
+              className="flex min-h-[44px] w-full items-center justify-center rounded-lg bg-ink px-5 py-3 text-sm font-medium text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-ink focus-visible:ring-offset-2"
               onClick={() => closeMobile(true)}
             >
               Book a Free Demo

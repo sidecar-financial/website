@@ -8,6 +8,8 @@ type Props = {
   borders?: string;
   /** Eager-load the cover (use for above-the-fold cards). */
   priority?: boolean;
+  /** Standalone bordered tile for grids that use a gap, instead of flush ruled cells. */
+  spaced?: boolean;
 };
 
 export const POST_GRID_BORDERS =
@@ -17,9 +19,14 @@ export const POST_GRID_BORDERS =
  * One bordered cell of the blog grid. The title is the only link; its ::after stretches
  * over the whole card so the card is fully clickable without nesting links.
  */
-export default function PostCard({ post, borders = POST_GRID_BORDERS, priority = false }: Props) {
+export default function PostCard({
+  post,
+  borders = POST_GRID_BORDERS,
+  priority = false,
+  spaced = false,
+}: Props) {
   return (
-    <li className={`border-b border-line ${borders}`}>
+    <li className={spaced ? "overflow-hidden rounded-lg border border-line" : `border-b border-line ${borders}`}>
       <article className="group relative flex h-full flex-col transition-colors hover:bg-soft">
         <div className="relative aspect-video overflow-hidden border-b border-line bg-soft">
           <Image

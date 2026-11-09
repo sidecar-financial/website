@@ -18,7 +18,6 @@ export type NavIconName =
   | "resource-hub"
   | "blog"
   | "faq"
-  | "how-it-works"
   | "about"
   | "why-navable";
 
@@ -55,14 +54,6 @@ export type NavGroup = {
 };
 
 const products: NavItem[] = [
-  // Waterfall is announced but not launched: /waterfall is its
-  // "coming soon" waitlist page.
-  {
-    label: "Waterfall",
-    href: "/waterfall",
-    description: "Distribution waterfalls in the same system",
-    icon: "waterfall",
-  },
   {
     label: "Carried Interest Software",
     href: "/solutions/carried-interest-software",
@@ -80,6 +71,13 @@ const products: NavItem[] = [
     href: "/solutions/employee-co-invest",
     description: "Compliant co-invest, built for scale",
     icon: "co-invest",
+  },
+  // Waterfall is announced but not launched: /waterfall is its "coming soon" waitlist page.
+  {
+    label: "Waterfall",
+    href: "/waterfall",
+    description: "Distribution waterfalls in the same system",
+    icon: "waterfall",
   },
 ];
 
@@ -128,12 +126,6 @@ const resources: NavItem[] = [
     href: "/faq",
     description: "Common questions about Navable",
     icon: "faq",
-  },
-  {
-    label: "How it works",
-    href: "/how-it-works",
-    description: "Simple setup in three steps",
-    icon: "how-it-works",
   },
 ];
 

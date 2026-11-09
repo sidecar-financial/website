@@ -51,7 +51,7 @@ const tiles: Tile[] = [
     height: 260,
   },
   {
-    title: "GP Commit & Co-Investment",
+    title: "GP Commit / Employee Co-Investment",
     description:
       "Manage commitments, onboarding, subscriptions, and co-invest reporting.",
     image: "/images/co-invest-card.png",
@@ -101,7 +101,7 @@ export default function Features() {
             <span className="text-orange">Co-Invest With Control</span>
           </>
         }
-        description="Start with carry management, then extend the same system to compensation, GP commit, and employee co-investment as your firm's needs evolve."
+        description="Start with carry management and extend the same system to compensation and GP commit / employee co-investment as your firm evolves."
       />
 
       <div className="grid lg:grid-cols-3 lg:gap-px lg:bg-line">

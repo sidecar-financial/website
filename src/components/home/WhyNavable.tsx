@@ -5,7 +5,7 @@ const reasons = [
     number: "01",
     title: "Configured to Your Firm",
     description:
-      "Adapt Navable to your actual carry structures and workflows without forcing a rigid template.",
+      "Adapt Navable to your actual carry, compensation, and co-invest structures without forcing a rigid template.",
   },
   {
     number: "02",
@@ -17,13 +17,13 @@ const reasons = [
     number: "03",
     title: "Self-Service by Design",
     description:
-      "Let Finance manage day-to-day changes directly instead of relying on consultants or vendor support.",
+      "Let Finance manage day-to-day carry, compensation planning, and co-invest changes directly instead of relying on consultants or vendor support.",
   },
   {
     number: "04",
     title: "Hands-On Partnership",
     description:
-      "Get expert support through onboarding and as your carry program evolves.",
+      "Get expert support through onboarding and as your carry, compensation, and co-invest programs evolve.",
   },
 ];
 
@@ -41,8 +41,9 @@ export default function WhyNavable() {
             <br className="hidden lg:block" /> <span className="text-orange">Choose Navable</span>
           </h2>
           <p className="mt-5 max-w-[430px] text-[15px] leading-[25px] text-navy-text">
-            Moving carry off Excel only works if the replacement preserves the flexibility and
-            control Finance already has, without creating another operational burden.
+            Moving carry, compensation, and co-invest reporting off Excel only works if the
+            replacement preserves the flexibility and control Finance already has, without
+            creating another operational burden.
           </p>
         </div>
 

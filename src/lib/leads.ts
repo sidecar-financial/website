@@ -119,12 +119,27 @@ export function parseLead(body: unknown): ValidationResult {
 /** Minimum plausible time (ms) between a form appearing and being submitted by a person. */
 export const MIN_FILL_MS = 2500;
 
-/** True when the submission looks automated. Spam is still recorded (as Spam) but never reaches HubSpot. */
-export function looksLikeSpam(lead: LeadPayload, now = Date.now()): boolean {
+/**
+ * True when the submission is clearly automated: the hidden honeypot was filled in, or the request
+ * has no start time (it did not come from our form). Spam is still recorded (as Spam) but never
+ * reaches HubSpot. A fast fill alone is NOT spam: autofill and quick typists are real people, so
+ * those leads are kept and flagged instead (see `isFastSubmit`).
+ */
+export function looksLikeSpam(lead: LeadPayload): boolean {
   if (lead.website) return true; // honeypot filled
   if (!lead.startedAt) return true; // missing timestamp: not our form
+  return false;
+}
+
+/**
+ * True when the form was submitted faster than a person plausibly types (but the honeypot was
+ * empty). These leads are recorded normally and flagged for a human to glance at. A start time in
+ * the future means the visitor's clock is ahead of ours, so it says nothing about speed.
+ */
+export function isFastSubmit(lead: LeadPayload, now = Date.now()): boolean {
+  if (!lead.startedAt) return false;
   const elapsed = now - lead.startedAt;
-  return elapsed < MIN_FILL_MS || elapsed < 0;
+  return elapsed >= 0 && elapsed < MIN_FILL_MS;
 }
 
 export function splitName(fullName: string): { firstName: string; lastName: string } {

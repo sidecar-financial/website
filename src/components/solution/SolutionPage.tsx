@@ -40,9 +40,11 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
         <Button href="/demo" size="lg">
           Book a Free Demo
         </Button>
-        <Button href="/resource-hub" variant="secondary" size="lg">
-          Get Free White Paper
-        </Button>
+        {page.whitePaper !== false && (
+          <Button href="/resource-hub" variant="secondary" size="lg">
+            Get Free White Paper
+          </Button>
+        )}
       </PageHero>
 
       {page.heroVisual && (
@@ -167,7 +169,7 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
       {page.comparison && <ComparisonTable id={id("compare")} />}
 
       <CustomerTestimonials id={id("proof")} />
-      <TrialSteps id={id("trial")} />
+      {page.trialSteps !== false && <TrialSteps id={id("trial")} />}
 
       <Gap />
       <DemoForm
@@ -346,8 +348,8 @@ function TrialSteps({ id }: { id: string }) {
     <Section labelledBy={id}>
       <SectionIntro
         id={id}
-        title="See How It Works With a Free 14-Day Trial"
-        description="No commitment or credit card required. We set up a working fund so you fully experience Navable's platform, and our expert team gets you live in under three weeks."
+        title="Try Us Out With Your Actual Fund Data"
+        description="We set up a working fund from your own plans so you can test Navable against your real structure before you commit."
       />
       <ol role="list" className="grid gap-y-10 pb-14 md:grid-cols-3">
         {TRIAL_STEPS.map((step, index) => (
