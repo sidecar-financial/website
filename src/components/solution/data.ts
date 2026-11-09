@@ -292,19 +292,19 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       {
         title: "Numbers Your Auditors Can Recalculate",
         body: "Every figure traces back to its inputs and rules, so GPs and auditors can verify a result without taking it on trust.",
-        image: "award-document",
+        visual: productVisuals.fundAdminAuditorRecalculation,
         alt: "Award documents with signature requirements",
       },
       {
         title: "Carry Calculated From the Same Source",
         body: "Allocations, vesting and participant changes follow from the waterfall results, so carry never drifts from the distributions behind it.",
-        image: "carry-management",
+        visual: productVisuals.fundAdminSameSource,
         alt: "Carry plan allocating points to participants",
       },
       {
         title: "Review Many Funds Consistently",
         body: "Apply the same controls, approvals and outputs across the funds you service, without a specialist rebuilding each one.",
-        image: "vesting-timeline",
+        visual: productVisuals.fundAdminReviewFunds,
         alt: "Vesting timeline with upcoming vest",
       },
     ],
