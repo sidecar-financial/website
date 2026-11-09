@@ -31,7 +31,7 @@ export default function DemoPageContent() {
 
   const demoFeatures = [
     "Manage allocations, vesting, and participant changes.",
-    "Connect carry, compensation, and GP commit workflows.",
+    "Connect carry, compensation, and GP commit / employee co-investment workflows.",
     "Configure Navable to fit your firm's carry workflows.",
   ];
 

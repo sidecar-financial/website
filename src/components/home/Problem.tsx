@@ -13,11 +13,11 @@ const spreadsheetProblems = [
 ];
 
 const navableSolutions = [
-  "Plans, participants, and history live in one system",
+  "Carry, compensation, and co-invest data live in one system",
   "Run forfeitures, dilutions, and reallocations",
   "Keep changes, records and documents connected",
-  "Participants can access their own carry information directly",
-  "Scale carry without needing more spreadsheets",
+  "Participants can access their own compensation information directly",
+  "Scale carry, compensation, and co-invest without more spreadsheets",
 ];
 
 const MinusIcon = () => (
@@ -88,7 +88,7 @@ export default function Problem() {
             </span>
           </>
         }
-        description="As carry complexity grows, spreadsheets create more risk, more manual work, and less control. Navable brings it into one system built for alternative asset firms."
+        description="As carry, compensation, and co-invest complexity grows, spreadsheets create more risk, more manual work, and less control. Navable brings it into one system built for alternative asset firms."
       />
 
       <ProblemIllustrations className="grid lg:grid-cols-2">

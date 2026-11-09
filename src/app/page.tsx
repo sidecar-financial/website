@@ -29,11 +29,11 @@ export default function Home() {
       <Hero />
       <TrustBadges />
       <Problem />
+      <Testimonials />
       <Features />
       <Outcomes />
       <Gap />
       <WhyNavable />
-      <Testimonials />
       <Validation />
       <Gap />
       <DemoForm />

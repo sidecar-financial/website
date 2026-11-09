@@ -14,7 +14,7 @@ const faqs = [
   {
     question: "Who is Navable for?",
     answer:
-      "Navable serves private equity firms, venture capital funds, real estate investment managers, and other alternative asset managers who need to manage carry plans, GP commit programs, and compensation structures.",
+      "Navable serves private equity firms, venture capital funds, real estate investment managers, and other alternative asset managers who need to manage carry plans, GP commit / employee co-investment programs, and compensation structures.",
   },
   {
     question: "How long does implementation take?",

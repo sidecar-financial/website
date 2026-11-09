@@ -10,7 +10,7 @@ const iconProps = {
 const outcomes = [
   {
     title: "More Senior Capacity",
-    description: "Spend less time checking, reconciling, and maintaining carry.",
+    description: "Spend less time checking, reconciling, and maintaining carry and compensation data.",
     icon: (
       <svg {...iconProps}>
         <circle cx="14" cy="14" r="11.5" stroke="#1b1b3d" strokeWidth="1.25" />
@@ -33,7 +33,7 @@ const outcomes = [
   },
   {
     title: "More Capacity as You Grow",
-    description: "Manage more funds and participants without adding admin work.",
+    description: "Manage more funds, participants, and co-invest programs without adding admin work.",
     icon: (
       <svg {...iconProps}>
         <path d="M14 3l10.5 5.5L14 14 3.5 8.5 14 3Z" stroke="#f5a61d" strokeWidth="1.5" strokeLinejoin="round" />
@@ -58,7 +58,7 @@ export default function Outcomes() {
             <br className="hidden lg:block" /> Operations Teams
           </>
         }
-        description="The value of better carry infrastructure isn't more software. It's less senior attention spent keeping the process under control."
+        description="The value of better carry and compensation infrastructure isn't more software. It's less senior attention spent keeping the process under control."
       />
 
       <ul className="grid lg:grid-cols-3">
