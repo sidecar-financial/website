@@ -2,6 +2,8 @@
 
 import { useEffect, useId, useRef, useState, type FormEvent } from "react";
 import Button from "@/components/ui/Button";
+import HoneypotField from "@/components/ui/HoneypotField";
+import { submitLead, useLeadGuards } from "@/lib/leads-client";
 
 /**
  * Email-only early-access signup for the Waterfall "coming soon" page.
@@ -15,6 +17,8 @@ export default function WaitlistForm({ className = "mt-10 max-w-[560px]" }: { cl
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const { startedAt, honeypot } = useLeadGuards();
   const successRef = useRef<HTMLParagraphElement>(null);
   const id = useId();
   const inputId = `${id}-email`;
@@ -37,17 +41,26 @@ export default function WaitlistForm({ className = "mt-10 max-w-[560px]" }: { cl
     if (done) successRef.current?.focus();
   }, [done]);
 
-  const handleSubmit = (event: FormEvent) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
+    if (submitting) return;
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       setError("Enter a valid work email.");
       document.getElementById(inputId)?.focus();
       return;
     }
-    // TODO: The email is NOT transmitted anywhere yet (no HubSpot or other API
-    // integration exists, same as the demo forms). Send `email` to the real
-    // waitlist endpoint here and show the error state if it fails.
-    setDone(true);
+    setSubmitting(true);
+    try {
+      await submitLead(
+        { source: "waterfall-waitlist", fullName: "", email: email.trim(), company: "", interest: "waterfall" },
+        { startedAt, honeypot },
+      );
+      setDone(true);
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (done) {
@@ -84,6 +97,7 @@ export default function WaitlistForm({ className = "mt-10 max-w-[560px]" }: { cl
       aria-label="Get early access to Navable Waterfall"
       className={`flex w-full flex-col gap-2 text-left ${className}`}
     >
+      <HoneypotField inputRef={honeypot} />
       <div
         className={`flex flex-col gap-2 rounded-[14px] border bg-white p-1.5 shadow-[0_1px_2px_rgba(27,27,61,0.04)] transition-[border-color,box-shadow,transform] duration-200 ease-out sm:flex-row sm:items-center ${
           error
@@ -114,6 +128,7 @@ export default function WaitlistForm({ className = "mt-10 max-w-[560px]" }: { cl
         <Button
           type="submit"
           size="lg"
+          disabled={submitting}
           className="h-[56px] flex-none !px-8 !text-[17px] !font-semibold"
         >
           Get Early Access

@@ -1,4 +1,5 @@
-import HeroTour from "@/components/home/HeroTour";
+import { ProductAnimation } from "@/components/product/ProductAnimation";
+import { productVisuals } from "@/components/product/productVisuals";
 
 /**
  * Browser-chrome frame around the animated product tour. Shared by the home
@@ -27,7 +28,7 @@ export default function TourFrame() {
             Product tour
           </span>
         </div>
-        <HeroTour />
+        <ProductAnimation visual={productVisuals.heroTour} />
       </figure>
     </div>
   );

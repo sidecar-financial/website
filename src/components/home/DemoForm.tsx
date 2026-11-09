@@ -1,8 +1,10 @@
 "use client";
 
+import HoneypotField from "@/components/ui/HoneypotField";
 import type { ReactNode } from "react";
 import { DarkSection } from "@/components/ui/Frame";
 import DemoSuccess from "@/components/demo/DemoSuccess";
+import DraftNotice from "@/components/demo/DraftNotice";
 import Select from "@/components/ui/Select";
 import { INTEREST_OPTIONS, useDemoRequest } from "@/components/demo/useDemoRequest";
 
@@ -48,8 +50,19 @@ export default function DemoForm({
   submitLabel = "Book a Free Demo",
   showTrust = true,
 }: DemoFormProps = {}) {
-  const { formData, setField, errors, isSubmitting, status, firstName, fieldId, handleSubmit } =
-    useDemoRequest();
+  const {
+    formData,
+    setField,
+    errors,
+    isSubmitting,
+    status,
+    firstName,
+    submittedContact,
+    fieldId,
+    saveDraft,
+    handleSubmit,
+    honeypot,
+  } = useDemoRequest();
   const headingId = `${id}-heading`;
 
   const borderFor = (field: "fullName" | "email" | "company") =>
@@ -75,9 +88,11 @@ export default function DemoForm({
         {/* Right form */}
         <div className="px-6 pb-12 lg:px-0 lg:pb-[49px] lg:pr-12 lg:pt-[59px]">
           {status === "success" ? (
-            <DemoSuccess firstName={firstName} headingLevel="h3" />
+            <DemoSuccess firstName={firstName} contact={submittedContact} headingLevel="h3" />
           ) : (
             <form onSubmit={handleSubmit} noValidate className="space-y-3">
+              <HoneypotField inputRef={honeypot} />
+              <DraftNotice className="!mb-1" />
               <div>
                 <label htmlFor={`${fieldId("fullName")}`} className="sr-only">
                   Full Name (required)
@@ -94,6 +109,7 @@ export default function DemoForm({
                   className={`${fieldBase} ${borderFor("fullName")}`}
                   value={formData.fullName}
                   onChange={(e) => setField("fullName", e.target.value)}
+                  onBlur={saveDraft}
                   autoComplete="name"
                 />
                 {errors.fullName && (
@@ -119,6 +135,7 @@ export default function DemoForm({
                   className={`${fieldBase} ${borderFor("email")}`}
                   value={formData.email}
                   onChange={(e) => setField("email", e.target.value)}
+                  onBlur={saveDraft}
                   autoComplete="email"
                 />
                 {errors.email && (

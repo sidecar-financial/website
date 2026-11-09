@@ -16,14 +16,18 @@ type PageHeroProps = {
   description?: ReactNode;
   /** Optional vertical tab label hanging off the left edge. */
   label?: string;
+  /** Draw the hairline under the hero. Turn off when a graphic continues straight from it. */
+  ruled?: boolean;
   children?: ReactNode;
 };
 
 /** Centered dot-grid hero (same treatment as the landing page and the Resource Hub). */
-export function PageHero({ id = "page-heading", eyebrow, title, description, label, children }: PageHeroProps) {
+export function PageHero({ id = "page-heading", eyebrow, title, description, label, ruled = true, children }: PageHeroProps) {
   return (
     <Section labelledBy={id} label={label} noBorder>
-      <div className="dot-grid flex flex-col items-center border-b border-line px-6 pb-14 pt-16 text-center lg:pb-[64px] lg:pt-[88px]">
+      <div
+        className={`dot-grid flex flex-col items-center px-6 pb-14 pt-16 text-center lg:pb-[64px] lg:pt-[88px] ${ruled ? "border-b border-line" : ""}`}
+      >
         {eyebrow && (
           <p className="mb-9 flex items-center gap-2.5 font-mono text-[10px] uppercase leading-none tracking-[0.16em] text-subtle">
             <span aria-hidden="true" className="block size-2 bg-orange" />

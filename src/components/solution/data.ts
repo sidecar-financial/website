@@ -1,4 +1,9 @@
 import type { Metadata } from "next";
+import {
+  productVisuals,
+  staticFrameOf,
+  type ProductVisual,
+} from "@/components/product/productVisuals";
 
 /**
  * Typed content for the six solution pages (/solutions/*, /who-we-serve/*).
@@ -29,7 +34,8 @@ export const solutionImages: Record<SolutionImageKey, SolutionImage> = {
 export type SolutionFeature = {
   title: string;
   body: string;
-  image: SolutionImageKey;
+  image?: SolutionImageKey;
+  visual?: ProductVisual;
   alt: string;
 };
 
@@ -41,6 +47,7 @@ export type SolutionPageData = {
   eyebrow: string;
   title: string;
   sub: string;
+  heroVisual?: ProductVisual;
   featuresTitle?: string;
   features?: SolutionFeature[];
   listTitle: string;
@@ -57,7 +64,8 @@ export type SolutionPageKey =
   | "compensation"
   | "private-equity"
   | "venture-capital"
-  | "real-estate";
+  | "real-estate"
+  | "fund-admins";
 
 export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
   "carried-interest": {
@@ -74,24 +82,28 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
         title: "Centralized Carry Plans & Allocations",
         body: "Bring all carry plans, waterfall rules, and allocations into one reliable environment.",
         image: "carry-management",
+        // Static final frame: animating neighbouring cards side by side is distracting.
+        visual: staticFrameOf(productVisuals.createPlan),
         alt: "Carry plan allocating points to participants",
       },
       {
         title: "Structured Rules & Vesting Logic",
         body: "Apply vesting, forfeiture, and reallocation rules consistently across participants and vehicles.",
         image: "vesting-timeline",
+        visual: staticFrameOf(productVisuals.forfeiture),
         alt: "Vesting timeline with upcoming vest",
       },
       {
         title: "Clear Visibility for Finance & Leadership",
         body: "Move beyond static spreadsheets, and provide real-time insights and trusted results.",
         image: "gp-portal",
+        visual: productVisuals.carryFirmOverview,
         alt: "Carry by fund with vesting progress",
       },
       {
         title: "Audit-Ready Trail & Reporting",
         body: "Every edit and calculation is traceable, producing outputs you can defend with confidence.",
-        image: "award-document",
+        visual: productVisuals.carryAuditTrail,
         alt: "Award documents with signature requirements",
       },
     ],
@@ -112,30 +124,31 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
     eyebrow: "Turnkey employee co-invest",
     title: "Employee Co-Invest Programs. Built for Scale.",
     sub: "Provide a consistent, compliant framework that your team and your LPs can trust.",
+    heroVisual: productVisuals.coinvestStoryboard,
     featuresTitle: "One Place to Manage With Confidence",
     features: [
       {
         title: "End-to-End Employee Co-Invest Workflow",
         body: "Digitize elections, capital allocation, distributions, and performance tracking across vehicles.",
-        image: "co-invest",
+        visual: productVisuals.coinvestProgress,
         alt: "Co-invest total value and return",
       },
       {
         title: "Customizable Investor Portal",
         body: "Quarterly metrics, K-1s and subdocs all in one place with built-in multi-currency support.",
-        image: "award-document",
+        visual: productVisuals.coinvestInvestorPortal,
         alt: "Investor documents with signature requirements",
       },
       {
         title: "Aligned Transparency for All Participants",
         body: "Participants see their status; administrators see the whole picture.",
-        image: "gp-portal",
+        visual: productVisuals.coinvestAlignedTransparency,
         alt: "Participant compensation and carry by fund",
       },
       {
         title: "Scalable Participant Management",
         body: "Onboard and manage employees consistently, with secure records and compliance support.",
-        image: "carry-management",
+        visual: productVisuals.coinvestParticipantOnboarding,
         alt: "Participant records within a fund plan",
       },
     ],
@@ -160,25 +173,25 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       {
         title: "Unified Total Compensation View",
         body: "Bring carry, cash, and earnings history together in one branded, secure portal.",
-        image: "gp-portal",
+        visual: productVisuals.compTotalCompensation,
         alt: "Total compensation summary with carry by fund",
       },
       {
         title: "Replace Inquiries with Transparency",
         body: "Employees and leadership get trusted visibility, reducing ad-hoc requests to finance.",
-        image: "vesting-timeline",
+        visual: productVisuals.compEmployeePortal,
         alt: "Vesting timeline showing upcoming vest",
       },
       {
         title: "Firm-Wide Insights",
         body: "View firm-wide carry exposure by fund, employee level, office, or structure, helping leadership plan future awards with clarity and control.",
-        image: "carry-management",
+        visual: productVisuals.compFirmCarry,
         alt: "Firm-wide participant carry overview",
       },
       {
         title: "Annual Statements",
         body: "Generate comprehensive annual statements in a single click, providing a clear, holistic view of total compensation and easy comparison across prior years.",
-        image: "award-document",
+        visual: productVisuals.compAnnualStatements,
         alt: "Stack of compensation documents",
       },
     ],
@@ -258,6 +271,56 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       "Project-level promotes",
       "Multi-asset platforms",
       "Long-duration investments with evolving economics",
+    ],
+  },
+  "fund-admins": {
+    slug: "fund-admins",
+    metaTitle: "Waterfall and Carry Software for Fund Administrators | Navable",
+    metaDescription:
+      "Run distribution waterfalls and carry calculations in one auditable system. Built for fund administrators who need every number to be checked, not just trusted.",
+    eyebrow: "For fund administrators",
+    title: "Distribution Waterfalls and Carry, Built to Be Checked",
+    sub: "Run waterfalls for the funds you administer, then carry on the same data, with a trail that lets GPs and auditors recalculate every number.",
+    featuresTitle: "Waterfalls First. Carry on the Same Data.",
+    features: [
+      {
+        title: "Distribution Waterfalls Without the Workbook",
+        body: "Set up each fund's waterfall rules once and run every distribution from the same engine, instead of rebuilding a spreadsheet for every fund.",
+        visual: productVisuals.fundAdminWaterfall,
+        alt: "Carry by fund with vesting progress",
+      },
+      {
+        title: "Numbers Your Auditors Can Recalculate",
+        body: "Every figure traces back to its inputs and rules, so GPs and auditors can verify a result without taking it on trust.",
+        image: "award-document",
+        alt: "Award documents with signature requirements",
+      },
+      {
+        title: "Carry Calculated From the Same Source",
+        body: "Allocations, vesting and participant changes follow from the waterfall results, so carry never drifts from the distributions behind it.",
+        image: "carry-management",
+        alt: "Carry plan allocating points to participants",
+      },
+      {
+        title: "Review Many Funds Consistently",
+        body: "Apply the same controls, approvals and outputs across the funds you service, without a specialist rebuilding each one.",
+        image: "vesting-timeline",
+        alt: "Vesting timeline with upcoming vest",
+      },
+    ],
+    listTitle: "Built for Administrators Who:",
+    listItems: [
+      "Run distribution waterfalls across many funds and structures",
+      "Calculate carry for GPs alongside fund accounting",
+      "Need results that GPs approve and auditors can recalculate",
+      "Want to replace one-off spreadsheets with a controlled, repeatable process",
+    ],
+    tagsTitle: "Supporting Administrators With:",
+    tags: [
+      "Distribution waterfalls",
+      "Carried interest and promote",
+      "Multi-fund, multi-entity structures",
+      "Audit-ready calculation trails",
     ],
   },
 };

@@ -34,3 +34,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Lead capture setup
+
+The demo and Waterfall waitlist forms POST to `/api/leads` (`src/app/api/leads/route.ts`), which writes each lead to HubSpot and Notion independently (one failing doesn't block the other). Set these in Vercel (Production and Preview):
+
+| Variable | What |
+| --- | --- |
+| `HUBSPOT_PRIVATE_APP_TOKEN` | Private-app token with `crm.objects.contacts.read/write` and `crm.objects.companies.read/write` |
+| `NOTION_API_KEY` | Notion internal integration token (the integration must be shared with the database) |
+| `NOTION_LEADS_DATABASE_ID` | ID of the "Website Leads" database |
+
+The Notion database needs these properties (names must match exactly): `Name` (title), `Email` (email), `Company` (text), `Interest` (select), `Source page` (text), `Status` (select: New / Contacted / Spam). The row time is the built-in Created time column.
+
+Slack alerts are a Notion automation on that database (trigger: page added, filter: `Status` is `New`, so bot submissions marked `Spam` don't alert). They are not site code.
+
+In production with neither destination configured the endpoint returns 503; locally it just logs the lead.
+
+## Tracking
+
+GTM (`GTM-PJQBDPVX`) and the HubSpot tracking script are loaded from `src/components/analytics/TrackingScripts.tsx` in production builds only. Successful form submissions push a `generate_lead` event to `dataLayer` for GTM triggers.

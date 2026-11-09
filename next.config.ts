@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
       { source: "/policies/terms-of-service", destination: "/terms", permanent: true },
       // Waterfall is a standalone product page, not a sub-section of /solutions.
       { source: "/solutions/waterfall", destination: "/waterfall", permanent: true },
-      // TODO: /fund-admins and /webinar exist on navable.com but have no local pages yet.
+      // /fund-admins keeps its legacy navable.com URL (now a real page). TODO: /webinar still has no local page.
 
       // The app lives on its own host; /sign-in is kept as a stable, bookmarkable entry point.
       // Temporary (307) on purpose so browsers don't cache the external destination forever.

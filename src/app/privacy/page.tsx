@@ -32,6 +32,13 @@ export default function PrivacyPage() {
               <li>Account credentials</li>
               <li>Communications you send to us</li>
             </ul>
+            <p className="text-body mb-4">
+              When you fill in our demo request form, we save your name and email address as soon
+              as you enter them, even if you do not click submit, so we can follow up about your
+              interest in Navable. We record whether you completed the form. We do not do this for
+              visitors in the European Economic Area, the United Kingdom, or Switzerland. To have
+              your information removed, contact us and we will delete it.
+            </p>
 
             <h2 className="text-2xl font-semibold leading-8 text-ink mt-10 mb-4 first:mt-0">How We Use Your Information</h2>
             <p className="text-body mb-4">

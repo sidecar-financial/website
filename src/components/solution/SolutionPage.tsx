@@ -1,6 +1,6 @@
 import Image from "next/image";
 import DemoForm from "@/components/home/DemoForm";
-import TourFrame from "@/components/home/TourFrame";
+import { ProductVisual } from "@/components/product/ProductVisual";
 import Button from "@/components/ui/Button";
 import { Gap, Section } from "@/components/ui/Frame";
 import { CheckBadge, PageHero, SectionIntro } from "@/components/ui/PageBlocks";
@@ -22,10 +22,20 @@ import {
  */
 export default function SolutionPage({ page }: { page: SolutionPageData }) {
   const id = (name: string) => `${page.slug}-${name}`;
+  // Every feature card on a page shares the aspect ratio of its graphics so rows line up,
+  // including cards that still use a plain image.
+  const cardVisual = page.features?.find((feature) => feature.visual)?.visual;
+  const slotAspect = cardVisual ? cardVisual.width / cardVisual.height : undefined;
 
   return (
     <>
-      <PageHero id={id("hero")} eyebrow={page.eyebrow} title={page.title} description={page.sub}>
+      <PageHero
+        id={id("hero")}
+        eyebrow={page.eyebrow}
+        title={page.title}
+        description={page.sub}
+        ruled={!page.heroVisual}
+      >
         <Button href="/demo" size="lg">
           Book a Free Demo
         </Button>
@@ -34,10 +44,17 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
         </Button>
       </PageHero>
 
-      {/* Animated product tour under the hero (same as the home page) */}
-      <Section noBorder>
-        <TourFrame />
-      </Section>
+      {page.heroVisual && (
+        <Section noBorder>
+          <div className="dot-grid border-b border-line px-3 sm:px-8 lg:px-12">
+            <ProductVisual
+              visual={page.heroVisual}
+              sizes="(min-width: 1128px) 1030px, 100vw"
+              className="w-full overflow-hidden rounded-t-xl border border-b-0 border-line-strong bg-white shadow-[0_-2px_0_4px_rgba(27,27,61,0.04),0_30px_60px_-30px_rgba(30,27,54,0.35)]"
+            />
+          </div>
+        </Section>
+      )}
 
       <CustomerQuote />
       <CustomerLogos id={id("trust")} />
@@ -47,22 +64,42 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
           <SectionIntro id={id("features")} title={page.featuresTitle} ruled />
           <ul role="list" className="grid md:grid-cols-2">
             {page.features.map((feature) => {
-              const image = solutionImages[feature.image];
+              const image = feature.image
+                ? solutionImages[feature.image]
+                : undefined;
               return (
                 <li
                   key={feature.title}
                   className="border-b border-line px-6 pb-10 pt-8 last:border-b-0 md:border-b-0 md:[&:nth-child(-n+2)]:border-b md:[&:nth-child(odd)]:border-r lg:px-8"
                 >
-                  <div className="flex h-[240px] items-center justify-center overflow-hidden rounded bg-soft sm:h-[280px]">
-                    <Image
-                      src={image.src}
-                      alt={feature.alt}
-                      width={image.width}
-                      height={image.height}
-                      sizes="(min-width: 1128px) 524px, (min-width: 768px) 50vw, 100vw"
-                      className="h-auto max-h-full w-auto max-w-full object-contain"
-                      unoptimized
-                    />
+                  <div
+                    className={
+                      slotAspect
+                        ? "flex w-full items-center justify-center rounded bg-soft"
+                        : "flex h-[240px] items-center justify-center overflow-hidden rounded bg-soft sm:h-[280px]"
+                    }
+                    style={slotAspect ? { aspectRatio: slotAspect } : undefined}
+                  >
+                    {feature.visual ? (
+                      <ProductVisual
+                        visual={feature.visual}
+                        sizes="(min-width: 1128px) 524px, (min-width: 768px) 50vw, 100vw"
+                        className="w-full"
+                        controlPlacement="below"
+                      />
+                    ) : (
+                      image && (
+                        <Image
+                          src={image.src}
+                          alt={feature.alt}
+                          width={image.width}
+                          height={image.height}
+                          sizes="(min-width: 1128px) 524px, (min-width: 768px) 50vw, 100vw"
+                          className="h-auto max-h-full w-auto max-w-full object-contain"
+                          unoptimized
+                        />
+                      )
+                    )}
                   </div>
                   <h3 className="mt-8 text-xl font-medium leading-7 text-ink">{feature.title}</h3>
                   <p className="mt-3 text-[15px] leading-[25px] text-body">{feature.body}</p>

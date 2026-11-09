@@ -14,6 +14,7 @@ export type NavIconName =
   | "private-equity"
   | "venture-capital"
   | "real-estate"
+  | "fund-admins"
   | "resource-hub"
   | "blog"
   | "faq"
@@ -101,7 +102,12 @@ const whoWeServe: NavItem[] = [
     description: "Carry and promote for real asset firms",
     icon: "real-estate",
   },
-  // TODO: add "Fund Administrators" (/who-we-serve/fund-administrators) when that page exists.
+  {
+    label: "Fund Administrators",
+    href: "/fund-admins",
+    description: "Waterfalls and carry you can audit",
+    icon: "fund-admins",
+  },
 ];
 
 const resources: NavItem[] = [

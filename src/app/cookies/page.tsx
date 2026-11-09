@@ -140,13 +140,44 @@ export default function CookiesPage() {
             </ul>
 
             <h2 className="text-2xl font-semibold leading-8 text-ink mt-10 mb-4 first:mt-0">
-              Third-Party Cookies
+              Third-Party Cookies and Trackers We Use
             </h2>
             <p className="text-body mb-4">
-              Some cookies on our website are set by third parties, such as
-              analytics providers and advertising networks. These third parties
-              may use cookies to collect information about your online activities
-              across different websites.
+              We load the following third-party tools through Google Tag Manager
+              or directly on our pages. Each may set cookies or use similar
+              technologies to recognize your browser:
+            </p>
+            <ul className="list-disc pl-6 marker:text-orange text-body mb-4 space-y-2">
+              <li>
+                <strong className="font-semibold text-ink">Google Tag Manager:</strong> loads and manages the other
+                marketing and analytics tags on this site.
+              </li>
+              <li>
+                <strong className="font-semibold text-ink">Google Analytics 4:</strong> measures how visitors use our
+                website (pages viewed, traffic sources, devices).
+              </li>
+              <li>
+                <strong className="font-semibold text-ink">Google Ads:</strong> measures the performance of our Google
+                advertising and the actions visitors take after clicking an ad.
+              </li>
+              <li>
+                <strong className="font-semibold text-ink">LinkedIn Insight Tag:</strong> measures LinkedIn ad
+                performance and provides aggregated audience insights.
+              </li>
+              <li>
+                <strong className="font-semibold text-ink">Meta Pixel:</strong> measures the performance of our Meta
+                (Facebook and Instagram) advertising.
+              </li>
+              <li>
+                <strong className="font-semibold text-ink">HubSpot:</strong> tracks visits and form submissions and
+                connects them to a contact record when you give us your details.
+              </li>
+            </ul>
+            <p className="text-body mb-4">
+              These providers process data under their own privacy policies. We
+              also store a small preference in your browser&apos;s local storage
+              to remember that you dismissed our announcement banner; it is not
+              a cookie and is never sent to us.
             </p>
 
             <h2 className="text-2xl font-semibold leading-8 text-ink mt-10 mb-4 first:mt-0">
