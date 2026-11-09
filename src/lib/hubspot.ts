@@ -60,12 +60,6 @@ async function findOrCreateCompany(name: string, domain: string | null): Promise
   return created.id;
 }
 
-/**
- * Custom contact property recording whether the visitor clicked submit ("not_submitted" for a
- * lead saved from a half-finished form). Created once by `scripts/setup-consent-fields.mjs`.
- */
-export const CONSENT_PROPERTY = "website_form_consent";
-
 type ExistingContact = { id: string; properties: Record<string, string | null> };
 
 const FILLABLE_PROPERTIES = ["firstname", "lastname", "company", "hs_lead_status"];
@@ -87,7 +81,6 @@ export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
   const emailDomain = lead.email.split("@")[1]?.toLowerCase() ?? "";
   const domain = emailDomain && !FREE_MAIL.has(emailDomain) ? emailDomain : null;
   const partial = lead.stage === "partial";
-  const consent = partial ? "not_submitted" : "submitted";
 
   const existing = await findContact(lead.email);
 
@@ -107,33 +100,18 @@ export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
     // A repeat submit from someone already in HubSpot: only fill in what is blank. Names, companies
     // and lead statuses people already have are never replaced by what a form visitor typed.
     const update = fillBlankProperties(existing.properties, incoming);
-    const patch = (props: Record<string, string>) =>
-      hs(`/crm/v3/objects/contacts/${existing.id}`, { method: "PATCH", body: JSON.stringify({ properties: props }) });
-    try {
-      await patch({ ...update, [CONSENT_PROPERTY]: consent });
-    } catch (error) {
-      // Property not created yet: still record what we can rather than losing it.
-      if (!String(error).includes(CONSENT_PROPERTY)) throw error;
-      console.error(`[leads] HubSpot '${CONSENT_PROPERTY}' property is missing; run scripts/setup-consent-fields.mjs`);
-      if (Object.keys(update).length > 0) await patch(update);
+    if (Object.keys(update).length > 0) {
+      await hs(`/crm/v3/objects/contacts/${existing.id}`, {
+        method: "PATCH",
+        body: JSON.stringify({ properties: update }),
+      });
     }
     contactId = existing.id;
   } else {
-    const upsert = (props: Record<string, string>) =>
-      hs<{ results: { id: string }[] }>("/crm/v3/objects/contacts/batch/upsert", {
-        method: "POST",
-        body: JSON.stringify({ inputs: [{ idProperty: "email", id: lead.email, properties: props }] }),
-      });
-    const contactProps = { email: lead.email, ...incoming };
-    let contact;
-    try {
-      contact = await upsert({ ...contactProps, [CONSENT_PROPERTY]: consent });
-    } catch (error) {
-      // Property not created yet: still record the lead rather than losing it.
-      if (!String(error).includes(CONSENT_PROPERTY)) throw error;
-      console.error(`[leads] HubSpot '${CONSENT_PROPERTY}' property is missing; run scripts/setup-consent-fields.mjs`);
-      contact = await upsert(contactProps);
-    }
+    const contact = await hs<{ results: { id: string }[] }>("/crm/v3/objects/contacts/batch/upsert", {
+      method: "POST",
+      body: JSON.stringify({ inputs: [{ idProperty: "email", id: lead.email, properties: { email: lead.email, ...incoming } }] }),
+    });
     contactId = contact.results[0]?.id;
   }
   if (!contactId) throw new Error("HubSpot contact has no id");
