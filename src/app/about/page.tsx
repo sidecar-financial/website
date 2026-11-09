@@ -33,6 +33,7 @@ const team: Person[] = [
     name: "Anna Enns",
     photo: "/images/team/anna-enns.jpg",
     role: "COO",
+    linkedin: "https://www.linkedin.com/in/anna-enns",
     bio: "Anna is a fintech executive with more than a decade in product development, strategy, operations and compliance. She specializes in B2B fintech and has launched multiple startups.",
   },
 ];
@@ -70,12 +71,14 @@ const advisors: Person[] = [
     name: "Leonard Speiser",
     photo: "/images/team/leonard-speiser.jpg",
     role: "Advisor",
+    linkedin: "https://www.linkedin.com/in/leonardspeiser",
     bio: "Leonard founded Clover, which processes over $230B a year, and has worked at Intuit, eBay, Yahoo! and Credit Suisse First Boston. He also founded the Corporate Venture Studio model.",
   },
   {
     name: "Ronnie Mongan",
     photo: "/images/team/ronnie-mongan.jpg",
     role: "Operating Advisor",
+    linkedin: "https://www.linkedin.com/in/ronnie-mongan",
     bio: "Ronnie has 20+ years in fintech across product operations and customer success, leading operations scaling and technology integration teams at Fiserv and Clover.",
   },
 ];

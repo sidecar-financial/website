@@ -18,7 +18,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 
 - [ ] Value prop doc (for homepage, About and team copy)
 - [x] Co-invest white paper (for the "Get free white paper" link) (2026-11-09: none exists; dropped)
-- [ ] LinkedIn URLs for Anna, Ronnie and Leonard
+- [x] LinkedIn URLs for Anna, Ronnie and Leonard (2026-11-09: found by web search, each profile matched against the About page bio, and added to `src/app/about/page.tsx`. Anna's profile lists her as Chief Product Officer while the site says COO.)
 - [ ] Co-invest video or screenshots (for the animation and images)
 - [x] Real UI screenshots for the carried interest page (2026-11-09: dropped; generated visuals stay)
 
