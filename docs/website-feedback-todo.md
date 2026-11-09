@@ -44,7 +44,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 - [x] Jamie Chen = Analyst, Fund Controller / Fund Accounting; total comp and carry in the hundreds of thousands (2026-11-09: already in the hero tour and card images)
 - [x] Make all numbers reconcile: carry + salary + bonus + co-invest = total comp; carry by fund sums to the total; Alex's left and right panels match (2026-11-09: checked Alex: 400K + 500K + 3.6M carry + 500K co-invest = 5.0M; carry by fund 720K + 1.08M + 1.8M = 3.6M; firm 2026 carry 3.6M + 900K + 85K = 4.585M; comp statements 5.0M + 1.7M + 300K = 7.0M)
 - [x] Apply the same names and numbers in every image across the site (2026-11-09: all product images use Alex, Taylor and Jamie)
-- [ ] Vesting visual: bar chart of percent vested over a longer timeline (the new hero vesting image shows cumulative percent vested 2023 to 2032; confirm it is the chart you wanted)
+- [x] Vesting visual: bar chart of percent vested over a longer timeline (2026-11-09: `02-hero-b-vesting.png` is a bar chart of cumulative percent vested, 2023 to 2032, and its numbers reconcile)
 - [x] "With Navable" list: broaden beyond carry; point four = "Participants can access their own compensation information directly" (2026-11-09, ecc1efd)
 - [x] Weave compensation management, compensation planning and co-invest reporting into more of the homepage (2026-11-09, ecc1efd; Problem, Outcomes, Why Navable, Features)
 - [x] Features headline: "Start with carry management and extend the same system to compensation and GP commit / employee co-investment as your firm evolves" (2026-11-09, ecc1efd)
@@ -76,6 +76,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 - [x] About: fix team photos that did not load on first visit (2026-11-09, 0c4c334; photos now skip the image optimizer like the investor logos. I could not reproduce the failure, so check the first visit on production)
 - [x] Why Navable: retitle to "The modern way to manage private fund compensation" (2026-11-09, 08ac391)
 - [x] Why Navable: calculation accuracy 99.9% to 100% (2026-11-09, 08ac391; note the "no claims without evidence" brand rule)
+- [x] Why Navable: removed the "under three weeks" onboarding claim from the White-Glove Onboarding card, since she said it is not accurate for the pilot (2026-11-09; the same claim is still in blog and resource hub articles)
 - [x] Why Navable: "built for" line = private equity, private credit, venture capital and real estate fund operations (2026-11-09, 08ac391)
 
 ## Done
