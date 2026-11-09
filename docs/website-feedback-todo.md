@@ -12,7 +12,7 @@ Brand voice reminders: lead with outcomes, active voice, no "seamless" or "effor
 - [x] Sign in button: point to `investors.hellosidecar.com` or remove? (`src/lib/site.ts` defines a customer app URL.) (2026-11-09: decided to remove; Sign in links and `SIGN_IN_URL` deleted)
 - [ ] Spelling: code says "Sterling Group", the Loom says "Starling Group". Which is right?
 - [x] OK to take down How it works with a redirect to `/`? (2026-11-09: yes, taken down)
-- [ ] Pilot call to action destination: `/demo` or something else?
+- [x] Pilot call to action destination: `/demo` or something else? (2026-11-09: keep `/demo`)
 
 ## Waiting on materials from Ashlyn
 
