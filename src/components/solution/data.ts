@@ -75,6 +75,18 @@ export type PageQuote = {
 
 export type QuoteSegment = { text: string; emphasis: boolean };
 
+/** Separates paragraphs inside `PageQuote.quote`; the featured quote renders one <p> per part. */
+export const QUOTE_PARAGRAPH_BREAK = "\n\n";
+
+/**
+ * Splits a quote into paragraphs on QUOTE_PARAGRAPH_BREAK and marks the `emphasis` phrases within
+ * each one. Joining every segment of a paragraph, then the paragraphs with QUOTE_PARAGRAPH_BREAK,
+ * gives back `quote` exactly.
+ */
+export function quoteParagraphs(quote: string, emphasis: string[] = []): QuoteSegment[][] {
+  return quote.split(QUOTE_PARAGRAPH_BREAK).map((paragraph) => splitQuote(paragraph, emphasis));
+}
+
 /**
  * Splits `quote` into runs so the phrases in `emphasis` can be styled without altering the text:
  * joining every segment's `text` always gives back `quote` exactly. Phrases that don't occur in the
@@ -170,7 +182,7 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
     sub: "A consistent, scalable, fully digital solution for GP commit and employee co-investment.",
     quote: {
       quote:
-        "Navable has really helped us stay organized and efficient in administering the program. Just as importantly, it has dramatically improved the employee user experience by replacing a cumbersome manual process with a relatively simple digital process in an intuitive user interface…. We want to make it easy for them. That was really important",
+        "Navable has really helped us stay organized and efficient in administering the program. Just as importantly, it has dramatically improved the employee user experience by replacing a cumbersome manual process with a relatively simple digital process in an intuitive user interface.\n\nWe want to make it easy for them. That was really important.",
       attribution: ["Tim Kessler", "President and COO, LaSalle Investment Management"],
       featured: true,
       emphasis: ["dramatically improved the employee user experience", "We want to make it easy for them."],

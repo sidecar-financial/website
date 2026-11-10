@@ -11,8 +11,8 @@ import {
   TESTIMONIALS,
   TRIAL_STEPS,
   quoteFor,
+  quoteParagraphs,
   solutionImages,
-  splitQuote,
   type PageQuote,
   type SolutionPageData,
 } from "./data";
@@ -216,9 +216,12 @@ function CustomerQuote({ quote, attribution, featured, emphasis }: PageQuote) {
  * default, set larger on a soft panel with a decorative orange mark, highlighted key phrases and a
  * ruled attribution block. Everything orange here is decorative and aria-hidden; text stays ink/body.
  * The curly quotes stay in the DOM (screen-reader-only) so the reading is identical to the default.
+ * A paragraph break in the quote text (QUOTE_PARAGRAPH_BREAK) becomes one <p> per part inside the
+ * single blockquote, so the reading order is natural and no text is repeated.
  */
 function FeaturedQuote({ quote, attribution, emphasis }: PageQuote) {
   const [name, ...roles] = attribution;
+  const paragraphs = quoteParagraphs(quote, emphasis);
   return (
     <Section>
       <figure className="bg-soft px-6 py-12 lg:px-12 lg:py-16">
@@ -234,22 +237,24 @@ function FeaturedQuote({ quote, attribution, emphasis }: PageQuote) {
           />
         </svg>
         <blockquote className="max-w-[31em] text-xl font-medium leading-[1.45] text-ink lg:text-[28px] lg:leading-[1.4]">
-          <p>
-            <span className="sr-only">&ldquo;</span>
-            {splitQuote(quote, emphasis).map((segment, i) =>
-              segment.emphasis ? (
-                <span
-                  key={i}
-                  className="font-semibold [background-image:linear-gradient(transparent_58%,rgba(245,166,29,0.32)_58%)] [box-decoration-break:clone]"
-                >
-                  {segment.text}
-                </span>
-              ) : (
-                segment.text
-              ),
-            )}
-            <span className="sr-only">&rdquo;</span>
-          </p>
+          {paragraphs.map((segments, p) => (
+            <p key={p} className={p > 0 ? "mt-5 lg:mt-6" : undefined}>
+              {p === 0 && <span className="sr-only">&ldquo;</span>}
+              {segments.map((segment, i) =>
+                segment.emphasis ? (
+                  <span
+                    key={i}
+                    className="font-semibold [background-image:linear-gradient(transparent_58%,rgba(245,166,29,0.32)_58%)] [box-decoration-break:clone]"
+                  >
+                    {segment.text}
+                  </span>
+                ) : (
+                  segment.text
+                ),
+              )}
+              {p === paragraphs.length - 1 && <span className="sr-only">&rdquo;</span>}
+            </p>
+          ))}
         </blockquote>
         <figcaption className="mt-8 flex items-start gap-4 border-t border-line-strong pt-6 lg:mt-10">
           <span aria-hidden="true" className="mt-2 block h-0.5 w-8 shrink-0 bg-orange" />
