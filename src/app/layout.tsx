@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { TrackingHead, TrackingNoscript } from "@/components/analytics/TrackingScripts";
+import { resolveMetadataBase } from "@/lib/site";
 import AnnouncementBanner, {
   BANNER_HTML_ATTR,
   BANNER_STORAGE_KEY,
@@ -21,6 +22,7 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(resolveMetadataBase(process.env.VERCEL_PROJECT_PRODUCTION_URL)),
   title: "Navable | Carry Management Software for Private Funds",
   description:
     "One system for carry, commit, and compensation. Give Finance, Ops and HR teams a configurable platform to manage growing complexity with greater accuracy, control, and visibility.",
