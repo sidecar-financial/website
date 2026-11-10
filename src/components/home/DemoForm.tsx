@@ -71,7 +71,7 @@ export default function DemoForm({
 
   return (
     <DarkSection id={id} label={label} labelledBy={headingId} traceLines>
-      <div className="grid lg:grid-cols-[611px_1fr]">
+      <div className="grid grid-cols-1 lg:grid-cols-[611px_1fr]">
         {/* Left content */}
         <div className="dot-grid-dark px-6 pb-10 pt-12 lg:px-12 lg:pb-12 lg:pt-[65px]">
           <h2
