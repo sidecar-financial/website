@@ -42,12 +42,16 @@ The demo and Waterfall waitlist forms POST to `/api/leads` (`src/app/api/leads/r
 | Variable | What |
 | --- | --- |
 | `HUBSPOT_PRIVATE_APP_TOKEN` | Private-app token with `crm.objects.contacts.read/write` and `crm.objects.companies.read/write` |
+| `HUBSPOT_DEMO_FORM_GUID` | GUID of the existing HubSpot "Request a demo" form (`39a9aac0-d014-4ad5-b74d-1ba7038c730d`). Each submitted demo lead is also posted to this form so its form-triggered workflows fire. Unset = no form submission (CRM contact only). |
+| `HUBSPOT_PORTAL_ID` | Optional. HubSpot portal ID for the form submission; defaults to `43584751` |
 | `NOTION_API_KEY` | Notion internal integration token (the integration must be shared with the database) |
 | `NOTION_LEADS_DATABASE_ID` | ID of the "Website Leads" database |
 
 The Notion database needs these properties (names must match exactly): `Name` (title), `Email` (email), `Company` (text), `Interest` (select), `Source page` (text), `Status` (select: New / Contacted / Spam). The row time is the built-in Created time column.
 
 Slack alerts are a Notion automation on that database (trigger: page added, filter: `Status` is `New`, so bot submissions marked `Spam` don't alert). They are not site code.
+
+The form submission (`src/lib/hubspot-form.ts`) uses HubSpot's public Forms API, so it needs no token scope. It sends email, first name, last name and company (the form's four required fields), and only for submitted demo leads: never partial drafts, spam or the Waterfall waitlist (no name or company). It runs after the CRM write, is independent of it, and a failure is logged as `[leads] hubspot-form failed (...)` without affecting the visitor.
 
 In production with neither destination configured the endpoint returns 503; locally it just logs the lead.
 

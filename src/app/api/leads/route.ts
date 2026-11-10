@@ -1,4 +1,5 @@
-import { createHubSpotLead, isHubSpotConfigured } from "@/lib/hubspot";
+import { createHubSpotLead, isHubSpotConfigured, submitHubSpotDemoForm } from "@/lib/hubspot";
+import { demoFormConfig } from "@/lib/hubspot-form";
 import { isFastSubmit, looksLikeSpam, parseLead, partialCaptureAllowed } from "@/lib/leads";
 import { createNotionLead, isNotionConfigured } from "@/lib/notion";
 
@@ -64,7 +65,22 @@ export async function POST(request: Request) {
   if (notionOn) tasks.push({ name: "notion", run: createNotionLead(lead, spam, fast) });
   if (hubspotOn && !spam) tasks.push({ name: "hubspot", run: createHubSpotLead(lead) });
 
-  const results = await Promise.allSettled(tasks.map((t) => t.run));
+  // Also record a real submission of the HubSpot demo form so its form-triggered workflows fire.
+  // Submitted demo leads only (never partial drafts, never spam), run after the CRM write so the
+  // contact exists first. Fully independent: a failure is logged and never reaches the visitor or
+  // affects whether the lead counts as saved.
+  const hubspotTask = tasks.find((t) => t.name === "hubspot");
+  const formRun =
+    !spam && lead.stage === "submitted" && lead.source === "demo" && demoFormConfig()
+      ? (hubspotTask ? hubspotTask.run.catch(() => undefined) : Promise.resolve())
+          .then(() => submitHubSpotDemoForm(lead))
+          .then((r) => {
+            if (!r.submitted) console.info(`[leads] hubspot-form skipped (${lead.stage}): ${r.reason}`);
+          })
+          .catch((err) => console.error(`[leads] hubspot-form failed (${lead.stage}):`, err))
+      : undefined;
+
+  const [results] = await Promise.all([Promise.allSettled(tasks.map((t) => t.run)), formRun]);
   results.forEach((r, i) => {
     if (r.status === "rejected") console.error(`[leads] ${tasks[i].name} failed (${lead.stage}):`, r.reason);
   });

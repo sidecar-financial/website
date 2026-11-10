@@ -1,6 +1,8 @@
 import "server-only";
 import { fillBlankProperties } from "@/lib/contact-merge";
+import { demoFormConfig, submitDemoForm, type SubmitResult } from "@/lib/hubspot-form";
 import { splitName, type LeadPayload } from "@/lib/leads";
+import { SITE_URL } from "@/lib/site";
 
 /**
  * Creates (or updates) a HubSpot contact + company and links them. Company + contact only:
@@ -74,6 +76,24 @@ async function findContact(email: string): Promise<ExistingContact | null> {
     }),
   });
   return found.results[0] ?? null;
+}
+
+/**
+ * Records the lead as a real submission of the existing HubSpot demo form so that its
+ * form-triggered workflows fire. Independent of createHubSpotLead: the caller runs it after the CRM
+ * write and treats any failure as non-fatal. A no-op unless HUBSPOT_DEMO_FORM_GUID is set.
+ */
+export async function submitHubSpotDemoForm(lead: LeadPayload): Promise<SubmitResult> {
+  const config = demoFormConfig();
+  if (!config) return { submitted: false, reason: "HUBSPOT_DEMO_FORM_GUID not set" };
+
+  // A form submission overwrites contact values, so send back what the contact already has.
+  // If the lookup fails (or there is no token) fall back to what the visitor typed.
+  let existing: ExistingContact["properties"] | undefined;
+  if (isHubSpotConfigured()) {
+    existing = (await findContact(lead.email).catch(() => null))?.properties;
+  }
+  return submitDemoForm(config, lead, { siteUrl: SITE_URL, existing });
 }
 
 export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
