@@ -60,7 +60,11 @@ export type SolutionPageData = {
   trialSteps?: boolean;
   /** Set to false to hide the "Get Free White Paper" button (default: shown). */
   whitePaper?: boolean;
+  /** Replaces the shared customer quote on this page; `attribution` is one entry per line. */
+  quote?: PageQuote;
 };
+
+export type PageQuote = { quote: string; attribution: string[] };
 
 export type SolutionPageKey =
   | "carried-interest"
@@ -128,6 +132,11 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
     eyebrow: "Turnkey employee co-invest",
     title: "Employee Co-Invest Programs. Built for Scale.",
     sub: "A consistent, scalable, fully digital solution for GP commit and employee co-investment.",
+    quote: {
+      quote:
+        "Navable has really helped us stay organized and efficient in administering the program. Just as importantly, it has dramatically improved the employee user experience by replacing a cumbersome manual process with a relatively simple digital process in an intuitive user interface…. We want to make it easy for them. That was really important",
+      attribution: ["Tim Kessler", "President and COO, LaSalle Investment Management"],
+    },
     heroVisual: productVisuals.coinvestStoryboard,
     featuresTitle: "One Place to Manage With Confidence",
     features: [
@@ -341,6 +350,11 @@ export const CUSTOMER_QUOTE = {
     "Navable dramatically improved employee user experiences by replacing a cumbersome manual process with a relatively simple digital process in an intuitive user interface.",
   attribution: "COO, $85B AUM Global Private Equity Firm",
 };
+
+/** The quote a page shows: its own override, else the shared one. */
+export function quoteFor(page: SolutionPageData): PageQuote {
+  return page.quote ?? { quote: CUSTOMER_QUOTE.quote, attribution: [CUSTOMER_QUOTE.attribution] };
+}
 
 export const CUSTOMER_LOGOS = [
   { name: "Riverside", src: "/images/logos/riverside.png", width: 137, height: 56 },

@@ -8,10 +8,11 @@ import { CheckBadge, PageHero, SectionIntro } from "@/components/ui/PageBlocks";
 import {
   COMPARE,
   CUSTOMER_LOGOS,
-  CUSTOMER_QUOTE,
   TESTIMONIALS,
   TRIAL_STEPS,
+  quoteFor,
   solutionImages,
+  type PageQuote,
   type SolutionPageData,
 } from "./data";
 
@@ -59,7 +60,7 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
         </Section>
       )}
 
-      <CustomerQuote />
+      <CustomerQuote {...quoteFor(page)} />
       <CustomerLogos id={id("trust")} />
 
       {page.features && page.featuresTitle && (
@@ -186,17 +187,22 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
   );
 }
 
-function CustomerQuote() {
+function CustomerQuote({ quote, attribution }: PageQuote) {
   return (
     <Section>
       <figure className="flex flex-wrap items-baseline gap-x-12 gap-y-4 px-6 py-9 lg:px-12 lg:py-12">
         <blockquote className="min-w-0 flex-[3_1_480px]">
           <p className="text-xl font-medium leading-[1.4] text-ink lg:text-2xl">
-            &ldquo;{CUSTOMER_QUOTE.quote}&rdquo;
+            &ldquo;{quote}&rdquo;
           </p>
         </blockquote>
         <figcaption className="flex-[1_1_220px] text-[15px] leading-6 text-body">
-          – {CUSTOMER_QUOTE.attribution}
+          {attribution.map((line, i) => (
+            <span key={line} className="block">
+              {i === 0 ? "– " : ""}
+              {line}
+            </span>
+          ))}
         </figcaption>
       </figure>
     </Section>
