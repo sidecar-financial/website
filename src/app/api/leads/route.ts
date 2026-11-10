@@ -5,8 +5,9 @@ import {
   submitHubSpotWaitlistForm,
 } from "@/lib/hubspot";
 import { formTargetForLead } from "@/lib/hubspot-form";
+import { hubspotPortalId, linkNotionRowToHubSpot } from "@/lib/hubspot-link";
 import { isFastSubmit, looksLikeSpam, parseLead, partialCaptureAllowed } from "@/lib/leads";
-import { createNotionLead, isNotionConfigured } from "@/lib/notion";
+import { createNotionLead, isNotionConfigured, updateNotionRowProperties } from "@/lib/notion";
 
 /**
  * Lead capture for the demo and Waterfall waitlist forms.
@@ -15,6 +16,10 @@ import { createNotionLead, isNotionConfigured } from "@/lib/notion";
  * database at the same time. The two are independent: if one fails the other still
  * runs, so a lead is only lost when both are down (and then the visitor sees an error).
  * Bots are recorded in Notion as Spam only and never reach HubSpot.
+ *
+ * Once both have settled, the Notion row gets a "HubSpot contact" link to the contact record, as a
+ * separate best-effort write (only when both the row and the contact are known). It never blocks or
+ * fails either sink and is never shown to the visitor.
  *
  * A request with stage "partial" is a visitor who entered a name and email but has not clicked
  * submit yet; it is saved with consent "Not submitted" (see lib/leads.ts for the region rule).
@@ -66,9 +71,11 @@ export async function POST(request: Request) {
   // Fast fills are real people far more often than bots (autofill), so keep them and flag them.
   const fast = !spam && isFastSubmit(lead);
 
+  const notionRun = notionOn ? createNotionLead(lead, spam, fast) : undefined;
+  const hubspotRun = hubspotOn && !spam ? createHubSpotLead(lead) : undefined;
   const tasks: Array<{ name: string; run: Promise<unknown> }> = [];
-  if (notionOn) tasks.push({ name: "notion", run: createNotionLead(lead, spam, fast) });
-  if (hubspotOn && !spam) tasks.push({ name: "hubspot", run: createHubSpotLead(lead) });
+  if (notionRun) tasks.push({ name: "notion", run: notionRun });
+  if (hubspotRun) tasks.push({ name: "hubspot", run: hubspotRun });
 
   // Also record a real submission of the matching HubSpot form so its form-triggered workflows
   // fire: demo leads to the demo form, Waterfall waitlist signups to the waitlist form (see
@@ -76,9 +83,8 @@ export async function POST(request: Request) {
   // write so the contact exists first. Fully independent: a failure is logged and never reaches the
   // visitor or affects whether the lead counts as saved.
   const formTarget = spam ? null : formTargetForLead(lead);
-  const hubspotTask = tasks.find((t) => t.name === "hubspot");
   const formRun = formTarget
-    ? (hubspotTask ? hubspotTask.run.catch(() => undefined) : Promise.resolve())
+    ? (hubspotRun ? hubspotRun.catch(() => undefined) : Promise.resolve())
         .then(() => (formTarget.kind === "waitlist" ? submitHubSpotWaitlistForm(lead) : submitHubSpotDemoForm(lead)))
         .then((r) => {
           if (!r.submitted) console.info(`[leads] hubspot-form skipped (${formTarget.kind}, ${lead.stage}): ${r.reason}`);
@@ -86,7 +92,23 @@ export async function POST(request: Request) {
         .catch((err) => console.error(`[leads] hubspot-form failed (${formTarget.kind}, ${lead.stage}):`, err))
     : undefined;
 
-  const [results] = await Promise.all([Promise.allSettled(tasks.map((t) => t.run)), formRun]);
+  // Link the Notion row to the HubSpot contact once both have settled. Each side's failure just means
+  // "no link"; this step has its own bounded Notion call, never throws and is only ever logged.
+  const linkRun = Promise.allSettled([notionRun, hubspotRun]).then(async ([notionResult, hubspotResult]) => {
+    const link = await linkNotionRowToHubSpot({
+      spam,
+      pageId: notionResult.status === "fulfilled" ? notionResult.value : undefined,
+      contactId: hubspotResult.status === "fulfilled" ? hubspotResult.value : undefined,
+      portalId: hubspotPortalId(),
+      write: updateNotionRowProperties,
+    });
+    if (link.status === "failed") console.error(`[leads] notion link failed (${lead.stage}):`, link.error);
+    if (link.status === "missing-property") {
+      console.warn("[leads] notion link skipped: the 'HubSpot contact' URL property is missing; run scripts/setup-hubspot-link-field.mjs");
+    }
+  }).catch((err) => console.error(`[leads] notion link failed (${lead.stage}):`, err));
+
+  const [results] = await Promise.all([Promise.allSettled(tasks.map((t) => t.run)), formRun, linkRun]);
   results.forEach((r, i) => {
     if (r.status === "rejected") console.error(`[leads] ${tasks[i].name} failed (${lead.stage}):`, r.reason);
   });

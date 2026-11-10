@@ -1,4 +1,5 @@
 import { fillBlankProperties } from "@/lib/contact-merge";
+import { hubspotPortalId } from "@/lib/hubspot-link";
 import { splitName, type LeadPayload } from "@/lib/leads";
 
 /**
@@ -19,9 +20,6 @@ const FORMS_API = "https://api.hsforms.com/submissions/v3/integration/submit";
 /** Same bound as the CRM calls in hubspot.ts, so a slow HubSpot can never hang the request. */
 const FORM_TIMEOUT_MS = 15_000;
 
-/** The Navable HubSpot portal (also used by the tracking script, see lib/site.ts). */
-const DEFAULT_PORTAL_ID = "43584751";
-
 const PAGE_NAME = "Request a demo";
 
 const WAITLIST_PAGE_NAME = "Waterfall waitlist";
@@ -33,7 +31,7 @@ type Env = Record<string, string | undefined>;
 function formConfig(env: Env, guidVar: string): DemoFormConfig | null {
   const formGuid = env[guidVar]?.trim();
   if (!formGuid) return null;
-  return { portalId: env.HUBSPOT_PORTAL_ID?.trim() || DEFAULT_PORTAL_ID, formGuid };
+  return { portalId: hubspotPortalId(env), formGuid };
 }
 
 /** Null (feature off, a no-op) unless HUBSPOT_DEMO_FORM_GUID is set. */

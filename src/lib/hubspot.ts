@@ -108,7 +108,11 @@ export async function submitHubSpotWaitlistForm(lead: LeadPayload): Promise<Subm
   return submitWaitlistForm(config, lead, { siteUrl: SITE_URL });
 }
 
-export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
+/**
+ * Upserts the contact (and, for a submitted lead, its company) and returns the HubSpot contact id,
+ * so the Notion row can link straight to the record. Throws if HubSpot fails.
+ */
+export async function createHubSpotLead(lead: LeadPayload): Promise<string> {
   const { firstName, lastName } = splitName(lead.fullName);
   const emailDomain = lead.email.split("@")[1]?.toLowerCase() ?? "";
   const domain = emailDomain && !FREE_MAIL.has(emailDomain) ? emailDomain : null;
@@ -118,7 +122,7 @@ export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
 
   // A half-finished form only ever creates a brand-new contact: it must never overwrite or
   // downgrade a contact that already exists (e.g. someone who submitted earlier).
-  if (partial && existing) return;
+  if (partial && existing) return existing.id;
 
   const incoming: Record<string, string> = {};
   if (firstName) incoming.firstname = firstName;
@@ -150,12 +154,13 @@ export async function createHubSpotLead(lead: LeadPayload): Promise<void> {
 
   // Waitlist signups have no company name; the contact alone is still a valid lead.
   // Partial leads stay contact-only: no company record until the visitor submits.
-  if (!lead.company || partial) return;
+  if (!lead.company || partial) return contactId;
   // A contact that already has a company keeps it; do not attach a second, newly typed one.
-  if ((existing?.properties.company ?? "").trim() !== "") return;
+  if ((existing?.properties.company ?? "").trim() !== "") return contactId;
 
   const companyId = await findOrCreateCompany(lead.company, domain);
   await hs(`/crm/v4/objects/contacts/${contactId}/associations/default/companies/${companyId}`, {
     method: "PUT",
   });
+  return contactId;
 }

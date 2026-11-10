@@ -9,13 +9,16 @@ import { CONSENT_LABEL, interestLabel, type LeadPayload } from "@/lib/leads";
  *   Name (title) · Email (email) · Company (text) · Interest (select) · Source page (text)
  *   · Status (select: New / Contacted / Spam / Partial)
  *   · Consent (select: Not submitted / Submitted)
+ *   · HubSpot contact (url): link to the contact record, set after the fact by the leads route
+ *     (see lib/hubspot-link.ts). Optional: the site works without it.
  * "Time" is the database's built-in Created time column.
  *
  * Partial leads (name + email entered, submit not clicked) are saved as Status = Partial, never New,
  * so they do not trigger the Slack automation. When the visitor does submit, a fresh New row is
  * created (which fires the automation) and the Partial row for that email is archived.
  *
- * Run `scripts/setup-consent-fields.mjs` once to add the Consent property.
+ * Run `scripts/setup-consent-fields.mjs` once to add the Consent property, and
+ * `scripts/setup-hubspot-link-field.mjs` once to add the HubSpot contact property.
  * Needs a Notion internal integration shared with the database.
  */
 
@@ -80,20 +83,38 @@ async function findRecentNewRows(email: string): Promise<string[]> {
   return found.results.map((r) => r.id);
 }
 
+/**
+ * Best-effort write of properties onto an existing row (used for the "HubSpot contact" link). Throws on
+ * failure; linkNotionRowToHubSpot turns that into a result so callers never see it.
+ */
+export async function updateNotionRowProperties(pageId: string, properties: Record<string, unknown>): Promise<void> {
+  await notion(`/pages/${pageId}`, "PATCH", { properties });
+}
+
+/**
+ * Records the lead and returns the id of the row that now represents it (the new row, or the
+ * existing one when this is a repeat/duplicate), so the caller can link it to HubSpot. Undefined
+ * only when no row could be identified.
+ */
 export async function createNotionLead(
   lead: LeadPayload,
   spam: boolean,
   /** The form was submitted faster than a person usually types; kept as a real lead, flagged for review. */
   fast = false,
-): Promise<void> {
+): Promise<string | undefined> {
   const partial = lead.stage === "partial";
 
   // One Partial row per email is enough; do not add another if this email is already recorded.
-  if (partial && (await findRows(lead.email)).length > 0) return;
+  if (partial) {
+    const existingRows = await findRows(lead.email);
+    if (existingRows.length > 0) return existingRows[0];
+  }
 
   // The visitor already submitted moments ago (a retry after a slow response, or a double click):
   // keep the one row, but still clear their earlier Partial row below.
-  const alreadyRecorded = !partial && !spam && (await findRecentNewRows(lead.email)).length > 0;
+  const recentRows = !partial && !spam ? await findRecentNewRows(lead.email) : [];
+  const alreadyRecorded = recentRows.length > 0;
+  let pageId: string | undefined = recentRows[0];
 
   const interest = interestLabel(lead.interest);
   const properties: Record<string, unknown> = {
@@ -111,14 +132,14 @@ export async function createNotionLead(
   const parent = { database_id: process.env.NOTION_LEADS_DATABASE_ID };
   if (!alreadyRecorded) {
     try {
-      await notion("/pages", "POST", { parent, properties });
+      pageId = (await notion<{ id: string }>("/pages", "POST", { parent, properties })).id;
     } catch (error) {
       // Consent column not added yet: still record the lead rather than losing it.
       if (!String(error).includes("Consent is not a property")) throw error;
       console.error("[leads] Notion 'Consent' property is missing; run scripts/setup-consent-fields.mjs");
       const withoutConsent = { ...properties };
       delete withoutConsent.Consent;
-      await notion("/pages", "POST", { parent, properties: withoutConsent });
+      pageId = (await notion<{ id: string }>("/pages", "POST", { parent, properties: withoutConsent })).id;
     }
   }
 
@@ -132,4 +153,5 @@ export async function createNotionLead(
       console.error("[leads] could not archive partial Notion row:", error);
     }
   }
+  return pageId;
 }
