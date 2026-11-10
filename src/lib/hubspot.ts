@@ -1,6 +1,6 @@
 import "server-only";
 import { fillBlankProperties } from "@/lib/contact-merge";
-import { demoFormConfig, submitDemoForm, type SubmitResult } from "@/lib/hubspot-form";
+import { demoFormConfig, submitDemoForm, submitWaitlistForm, waitlistFormConfig, type SubmitResult } from "@/lib/hubspot-form";
 import { splitName, type LeadPayload } from "@/lib/leads";
 import { SITE_URL } from "@/lib/site";
 
@@ -94,6 +94,18 @@ export async function submitHubSpotDemoForm(lead: LeadPayload): Promise<SubmitRe
     existing = (await findContact(lead.email).catch(() => null))?.properties;
   }
   return submitDemoForm(config, lead, { siteUrl: SITE_URL, existing });
+}
+
+/**
+ * Records a Waterfall waitlist signup as a real submission of the HubSpot waitlist form so its
+ * form-triggered workflows fire. Only the email is sent (the form's only field), which leaves an
+ * existing contact's other properties untouched, so no contact lookup is needed. Same contract as
+ * submitHubSpotDemoForm. A no-op unless HUBSPOT_WAITLIST_FORM_GUID is set.
+ */
+export async function submitHubSpotWaitlistForm(lead: LeadPayload): Promise<SubmitResult> {
+  const config = waitlistFormConfig();
+  if (!config) return { submitted: false, reason: "HUBSPOT_WAITLIST_FORM_GUID not set" };
+  return submitWaitlistForm(config, lead, { siteUrl: SITE_URL });
 }
 
 export async function createHubSpotLead(lead: LeadPayload): Promise<void> {

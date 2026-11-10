@@ -1,5 +1,10 @@
-import { createHubSpotLead, isHubSpotConfigured, submitHubSpotDemoForm } from "@/lib/hubspot";
-import { demoFormConfig } from "@/lib/hubspot-form";
+import {
+  createHubSpotLead,
+  isHubSpotConfigured,
+  submitHubSpotDemoForm,
+  submitHubSpotWaitlistForm,
+} from "@/lib/hubspot";
+import { formTargetForLead } from "@/lib/hubspot-form";
 import { isFastSubmit, looksLikeSpam, parseLead, partialCaptureAllowed } from "@/lib/leads";
 import { createNotionLead, isNotionConfigured } from "@/lib/notion";
 
@@ -65,20 +70,21 @@ export async function POST(request: Request) {
   if (notionOn) tasks.push({ name: "notion", run: createNotionLead(lead, spam, fast) });
   if (hubspotOn && !spam) tasks.push({ name: "hubspot", run: createHubSpotLead(lead) });
 
-  // Also record a real submission of the HubSpot demo form so its form-triggered workflows fire.
-  // Submitted demo leads only (never partial drafts, never spam), run after the CRM write so the
-  // contact exists first. Fully independent: a failure is logged and never reaches the visitor or
-  // affects whether the lead counts as saved.
+  // Also record a real submission of the matching HubSpot form so its form-triggered workflows
+  // fire: demo leads to the demo form, Waterfall waitlist signups to the waitlist form (see
+  // formTargetForLead). Submitted leads only (never partial drafts, never spam), run after the CRM
+  // write so the contact exists first. Fully independent: a failure is logged and never reaches the
+  // visitor or affects whether the lead counts as saved.
+  const formTarget = spam ? null : formTargetForLead(lead);
   const hubspotTask = tasks.find((t) => t.name === "hubspot");
-  const formRun =
-    !spam && lead.stage === "submitted" && lead.source === "demo" && demoFormConfig()
-      ? (hubspotTask ? hubspotTask.run.catch(() => undefined) : Promise.resolve())
-          .then(() => submitHubSpotDemoForm(lead))
-          .then((r) => {
-            if (!r.submitted) console.info(`[leads] hubspot-form skipped (${lead.stage}): ${r.reason}`);
-          })
-          .catch((err) => console.error(`[leads] hubspot-form failed (${lead.stage}):`, err))
-      : undefined;
+  const formRun = formTarget
+    ? (hubspotTask ? hubspotTask.run.catch(() => undefined) : Promise.resolve())
+        .then(() => (formTarget.kind === "waitlist" ? submitHubSpotWaitlistForm(lead) : submitHubSpotDemoForm(lead)))
+        .then((r) => {
+          if (!r.submitted) console.info(`[leads] hubspot-form skipped (${formTarget.kind}, ${lead.stage}): ${r.reason}`);
+        })
+        .catch((err) => console.error(`[leads] hubspot-form failed (${formTarget.kind}, ${lead.stage}):`, err))
+    : undefined;
 
   const [results] = await Promise.all([Promise.allSettled(tasks.map((t) => t.run)), formRun]);
   results.forEach((r, i) => {

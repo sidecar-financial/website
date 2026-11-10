@@ -2,7 +2,8 @@ import { fillBlankProperties } from "@/lib/contact-merge";
 import { splitName, type LeadPayload } from "@/lib/leads";
 
 /**
- * Submits each real demo lead to the existing HubSpot "Request a demo" form through the Forms API.
+ * Submits each real lead to its HubSpot form through the Forms API: demo leads to the "Request a
+ * demo" form, Waterfall waitlist signups to the "Waterfall waitlist" form.
  *
  * Creating a contact through the CRM API does not record a form submission, so workflows that are
  * triggered by "Form submission" (confirmation email, internal alert) never fire. A genuine form
@@ -23,13 +24,40 @@ const DEFAULT_PORTAL_ID = "43584751";
 
 const PAGE_NAME = "Request a demo";
 
+const WAITLIST_PAGE_NAME = "Waterfall waitlist";
+
 export type DemoFormConfig = { portalId: string; formGuid: string };
 
-/** Null (feature off, a no-op) unless HUBSPOT_DEMO_FORM_GUID is set. */
-export function demoFormConfig(env: Record<string, string | undefined> = process.env): DemoFormConfig | null {
-  const formGuid = env.HUBSPOT_DEMO_FORM_GUID?.trim();
+type Env = Record<string, string | undefined>;
+
+function formConfig(env: Env, guidVar: string): DemoFormConfig | null {
+  const formGuid = env[guidVar]?.trim();
   if (!formGuid) return null;
   return { portalId: env.HUBSPOT_PORTAL_ID?.trim() || DEFAULT_PORTAL_ID, formGuid };
+}
+
+/** Null (feature off, a no-op) unless HUBSPOT_DEMO_FORM_GUID is set. */
+export function demoFormConfig(env: Env = process.env): DemoFormConfig | null {
+  return formConfig(env, "HUBSPOT_DEMO_FORM_GUID");
+}
+
+/** Null (feature off, a no-op) unless HUBSPOT_WAITLIST_FORM_GUID is set. */
+export function waitlistFormConfig(env: Env = process.env): DemoFormConfig | null {
+  return formConfig(env, "HUBSPOT_WAITLIST_FORM_GUID");
+}
+
+export type FormTarget = { kind: "demo" | "waitlist"; config: DemoFormConfig };
+
+/**
+ * Which form (if any) a lead is posted to: demo leads only to the demo form, waitlist signups only
+ * to the waitlist form, never partial drafts. Null when the matching form's env var is unset.
+ */
+export function formTargetForLead(lead: LeadPayload, env: Env = process.env): FormTarget | null {
+  if (lead.stage !== "submitted") return null;
+  const kind = lead.source === "waterfall-waitlist" ? "waitlist" : lead.source === "demo" ? "demo" : null;
+  if (!kind) return null;
+  const config = kind === "waitlist" ? waitlistFormConfig(env) : demoFormConfig(env);
+  return config ? { kind, config } : null;
 }
 
 export type DemoFormBody = {
@@ -49,6 +77,28 @@ type BuildOptions = {
    */
   existing?: Record<string, string | null | undefined>;
 };
+
+function pageUri(siteUrl: string, pagePath: string): string {
+  const path = pagePath.startsWith("/") ? pagePath : `/${pagePath}`;
+  return `${siteUrl.replace(/\/$/, "")}${path}`;
+}
+
+/**
+ * Pure: waitlist lead -> Forms API payload. The waitlist form has a single field, email, so only the
+ * email is sent: a submission only writes the fields it contains, so an existing contact's name,
+ * company and other properties are left untouched.
+ */
+export function buildWaitlistFormSubmission(lead: LeadPayload, { siteUrl }: BuildOptions): DemoFormBuild {
+  if (lead.stage !== "submitted") return { ok: false, reason: "partial lead, not submitted yet" };
+  if (lead.source !== "waterfall-waitlist") return { ok: false, reason: "not a waitlist signup" };
+  return {
+    ok: true,
+    body: {
+      fields: [{ name: "email", value: lead.email }],
+      context: { pageUri: pageUri(siteUrl, lead.pagePath), pageName: WAITLIST_PAGE_NAME },
+    },
+  };
+}
 
 /** Pure: lead -> Forms API payload, or the reason this lead is not sent to the form. */
 export function buildDemoFormSubmission(lead: LeadPayload, { siteUrl, existing = {} }: BuildOptions): DemoFormBuild {
@@ -71,7 +121,6 @@ export function buildDemoFormSubmission(lead: LeadPayload, { siteUrl, existing =
   if (!merged.lastname) return { ok: false, reason: "no last name (the demo form requires one)" };
   if (!merged.company) return { ok: false, reason: "no company (the demo form requires one)" };
 
-  const path = lead.pagePath.startsWith("/") ? lead.pagePath : `/${lead.pagePath}`;
   return {
     ok: true,
     body: {
@@ -81,14 +130,32 @@ export function buildDemoFormSubmission(lead: LeadPayload, { siteUrl, existing =
         { name: "lastname", value: merged.lastname },
         { name: "company", value: merged.company },
       ],
-      context: { pageUri: `${siteUrl.replace(/\/$/, "")}${path}`, pageName: PAGE_NAME },
+      context: { pageUri: pageUri(siteUrl, lead.pagePath), pageName: PAGE_NAME },
     },
   };
 }
 
 export type SubmitResult = { submitted: true } | { submitted: false; reason: string };
 
-/** Builds and POSTs the submission. Throws if HubSpot rejects it; the caller logs and carries on. */
+async function postForm(
+  config: DemoFormConfig,
+  body: DemoFormBody,
+  fetchImpl: typeof fetch | undefined,
+): Promise<SubmitResult> {
+  const doFetch = fetchImpl ?? fetch;
+  const res = await doFetch(`${FORMS_API}/${config.portalId}/${config.formGuid}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(FORM_TIMEOUT_MS),
+  });
+  if (!res.ok) {
+    throw new Error(`HubSpot form submit -> ${res.status} ${(await res.text()).slice(0, 300)}`);
+  }
+  return { submitted: true };
+}
+
+/** Builds and POSTs the demo submission. Throws if HubSpot rejects it; the caller logs and carries on. */
 export async function submitDemoForm(
   config: DemoFormConfig,
   lead: LeadPayload,
@@ -96,16 +163,16 @@ export async function submitDemoForm(
 ): Promise<SubmitResult> {
   const built = buildDemoFormSubmission(lead, options);
   if (!built.ok) return { submitted: false, reason: built.reason };
+  return postForm(config, built.body, options.fetchImpl);
+}
 
-  const doFetch = options.fetchImpl ?? fetch;
-  const res = await doFetch(`${FORMS_API}/${config.portalId}/${config.formGuid}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(built.body),
-    signal: AbortSignal.timeout(FORM_TIMEOUT_MS),
-  });
-  if (!res.ok) {
-    throw new Error(`HubSpot form submit -> ${res.status} ${(await res.text()).slice(0, 300)}`);
-  }
-  return { submitted: true };
+/** Builds and POSTs the waitlist submission. Throws if HubSpot rejects it; the caller logs and carries on. */
+export async function submitWaitlistForm(
+  config: DemoFormConfig,
+  lead: LeadPayload,
+  options: BuildOptions & { fetchImpl?: typeof fetch },
+): Promise<SubmitResult> {
+  const built = buildWaitlistFormSubmission(lead, options);
+  if (!built.ok) return { submitted: false, reason: built.reason };
+  return postForm(config, built.body, options.fetchImpl);
 }

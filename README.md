@@ -43,7 +43,8 @@ The demo and Waterfall waitlist forms POST to `/api/leads` (`src/app/api/leads/r
 | --- | --- |
 | `HUBSPOT_PRIVATE_APP_TOKEN` | Private-app token with `crm.objects.contacts.read/write` and `crm.objects.companies.read/write` |
 | `HUBSPOT_DEMO_FORM_GUID` | GUID of the existing HubSpot "Request a demo" form (`39a9aac0-d014-4ad5-b74d-1ba7038c730d`). Each submitted demo lead is also posted to this form so its form-triggered workflows fire. Unset = no form submission (CRM contact only). |
-| `HUBSPOT_PORTAL_ID` | Optional. HubSpot portal ID for the form submission; defaults to `43584751` |
+| `HUBSPOT_WAITLIST_FORM_GUID` | GUID of the HubSpot "Waterfall waitlist" form (`698ed474-8143-4cb4-8b8b-184d18b30971`, decoded from its share link). Each Waterfall waitlist signup is also posted to this form (email only) so its form-triggered workflows fire. Unset = no form submission (CRM contact only). Demo leads never go to this form. |
+| `HUBSPOT_PORTAL_ID` | Optional. HubSpot portal ID for the form submissions (demo and waitlist); defaults to `43584751` |
 | `NOTION_API_KEY` | Notion internal integration token (the integration must be shared with the database) |
 | `NOTION_LEADS_DATABASE_ID` | ID of the "Website Leads" database |
 
