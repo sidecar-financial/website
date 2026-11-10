@@ -12,6 +12,7 @@ import {
   TRIAL_STEPS,
   quoteFor,
   solutionImages,
+  splitQuote,
   type PageQuote,
   type SolutionPageData,
 } from "./data";
@@ -187,7 +188,8 @@ export default function SolutionPage({ page }: { page: SolutionPageData }) {
   );
 }
 
-function CustomerQuote({ quote, attribution }: PageQuote) {
+function CustomerQuote({ quote, attribution, featured, emphasis }: PageQuote) {
+  if (featured) return <FeaturedQuote quote={quote} attribution={attribution} emphasis={emphasis} />;
   return (
     <Section>
       <figure className="flex flex-wrap items-baseline gap-x-12 gap-y-4 px-6 py-9 lg:px-12 lg:py-12">
@@ -203,6 +205,62 @@ function CustomerQuote({ quote, attribution }: PageQuote) {
               {line}
             </span>
           ))}
+        </figcaption>
+      </figure>
+    </Section>
+  );
+}
+
+/**
+ * Opt-in "featured" quote (PageQuote.featured): same blockquote/figcaption semantics and text as the
+ * default, set larger on a soft panel with a decorative orange mark, highlighted key phrases and a
+ * ruled attribution block. Everything orange here is decorative and aria-hidden; text stays ink/body.
+ * The curly quotes stay in the DOM (screen-reader-only) so the reading is identical to the default.
+ */
+function FeaturedQuote({ quote, attribution, emphasis }: PageQuote) {
+  const [name, ...roles] = attribution;
+  return (
+    <Section>
+      <figure className="bg-soft px-6 py-12 lg:px-12 lg:py-16">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          viewBox="0 0 48 36"
+          className="mb-6 h-7 w-auto text-orange lg:mb-8 lg:h-10"
+        >
+          <path
+            fill="currentColor"
+            d="M0 36V20C0 8 6 2 18 0l2 5C14 7 11 10 10.6 16H20v20H0ZM27 36V20C27 8 33 2 45 0l2 5C41 7 38 10 37.6 16H47v20H27Z"
+          />
+        </svg>
+        <blockquote className="max-w-[31em] text-xl font-medium leading-[1.45] text-ink lg:text-[28px] lg:leading-[1.4]">
+          <p>
+            <span className="sr-only">&ldquo;</span>
+            {splitQuote(quote, emphasis).map((segment, i) =>
+              segment.emphasis ? (
+                <span
+                  key={i}
+                  className="font-semibold [background-image:linear-gradient(transparent_58%,rgba(245,166,29,0.32)_58%)] [box-decoration-break:clone]"
+                >
+                  {segment.text}
+                </span>
+              ) : (
+                segment.text
+              ),
+            )}
+            <span className="sr-only">&rdquo;</span>
+          </p>
+        </blockquote>
+        <figcaption className="mt-8 flex items-start gap-4 border-t border-line-strong pt-6 lg:mt-10">
+          <span aria-hidden="true" className="mt-2 block h-0.5 w-8 shrink-0 bg-orange" />
+          <span>
+            {name && <span className="block text-base font-semibold leading-6 text-ink">{name}</span>}
+            {roles.map((line) => (
+              <span key={line} className="block text-[15px] leading-6 text-body">
+                {line}
+              </span>
+            ))}
+          </span>
         </figcaption>
       </figure>
     </Section>

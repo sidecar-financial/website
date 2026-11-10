@@ -64,7 +64,43 @@ export type SolutionPageData = {
   quote?: PageQuote;
 };
 
-export type PageQuote = { quote: string; attribution: string[] };
+export type PageQuote = {
+  quote: string;
+  attribution: string[];
+  /** Opt in to the larger, framed treatment (soft panel, orange mark, attribution divider). */
+  featured?: boolean;
+  /** Exact substrings of `quote` to set in heavier weight with a soft highlight (featured only). */
+  emphasis?: string[];
+};
+
+export type QuoteSegment = { text: string; emphasis: boolean };
+
+/**
+ * Splits `quote` into runs so the phrases in `emphasis` can be styled without altering the text:
+ * joining every segment's `text` always gives back `quote` exactly. Phrases that don't occur in the
+ * quote, or that overlap an earlier match, are ignored (data.test.ts guards the real data).
+ */
+export function splitQuote(quote: string, emphasis: string[] = []): QuoteSegment[] {
+  const ranges: { start: number; end: number }[] = [];
+  for (const phrase of emphasis) {
+    const start = phrase ? quote.indexOf(phrase) : -1;
+    if (start === -1) continue;
+    const end = start + phrase.length;
+    if (ranges.some((r) => start < r.end && end > r.start)) continue;
+    ranges.push({ start, end });
+  }
+  ranges.sort((a, b) => a.start - b.start);
+
+  const segments: QuoteSegment[] = [];
+  let cursor = 0;
+  for (const { start, end } of ranges) {
+    if (start > cursor) segments.push({ text: quote.slice(cursor, start), emphasis: false });
+    segments.push({ text: quote.slice(start, end), emphasis: true });
+    cursor = end;
+  }
+  if (cursor < quote.length) segments.push({ text: quote.slice(cursor), emphasis: false });
+  return segments;
+}
 
 export type SolutionPageKey =
   | "carried-interest"
@@ -136,6 +172,8 @@ export const solutionPages: Record<SolutionPageKey, SolutionPageData> = {
       quote:
         "Navable has really helped us stay organized and efficient in administering the program. Just as importantly, it has dramatically improved the employee user experience by replacing a cumbersome manual process with a relatively simple digital process in an intuitive user interface…. We want to make it easy for them. That was really important",
       attribution: ["Tim Kessler", "President and COO, LaSalle Investment Management"],
+      featured: true,
+      emphasis: ["dramatically improved the employee user experience", "We want to make it easy for them."],
     },
     heroVisual: productVisuals.coinvestStoryboard,
     featuresTitle: "One Place to Manage With Confidence",
