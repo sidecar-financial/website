@@ -5,83 +5,20 @@ import Button from "@/components/ui/Button";
 import DemoForm from "@/components/home/DemoForm";
 import { PageHero } from "@/components/ui/PageBlocks";
 import { CAREERS_URL } from "@/components/layout/navigation";
+import {
+  LEADERSHIP_HEADING,
+  TEAM_EXPERIENCE_LABEL,
+  TEAM_INTRO,
+  advisors,
+  team,
+  teamExperienceLogos,
+} from "./data";
 
 export const metadata: Metadata = {
   title: "About Us | Navable",
   description:
     "Navable provides cutting-edge tools and services for finance, HR and operations teams to keep up with evolving needs.",
 };
-
-type Person = {
-  name: string;
-  photo: string;
-  role: string;
-  bio: string;
-  /** Omit when the person has no public profile to link to. */
-  linkedin?: string;
-};
-
-const team: Person[] = [
-  {
-    name: "Jen Anderson",
-    photo: "/images/team/jen-anderson.jpg",
-    role: "Co-Founder & CEO",
-    linkedin: "https://www.linkedin.com/in/anderjen/",
-    bio: "Jen has over 20 years in financial services, from the trading floors at Morgan Stanley and Bank of America Securities to product and business development roles at Lending Club, Yapstone and Rapyd, and fintech investing at Citi Ventures.",
-  },
-  {
-    name: "Anna Enns",
-    photo: "/images/team/anna-enns.jpg",
-    role: "COO",
-    linkedin: "https://www.linkedin.com/in/anna-enns",
-    bio: "Anna is a fintech executive with more than a decade in product development, strategy, operations and compliance. She specializes in B2B fintech and has launched multiple startups.",
-  },
-];
-
-const advisors: Person[] = [
-  {
-    name: "Ethan Kennedy",
-    photo: "/images/team/ethan-kennedy.jpg",
-    role: "Advisor",
-    linkedin: "https://www.linkedin.com/in/ethan-kennedy-43587a1/",
-    bio: "Ethan has over two decades in financial services focused on private equity co-investment and carried interest plan management, including 15 years at the Carlyle Group. He founded FaunceHammond LLC in 2019.",
-  },
-  {
-    name: "Josh Anbil",
-    photo: "/images/team/josh-anbil.jpg",
-    role: "Advisor",
-    linkedin: "https://www.linkedin.com/in/josh-anbil-09190a3/",
-    bio: "Josh is founder and CEO of Anbil Consulting, a compensation consulting firm for the real estate industry. He has 20+ years of experience and has completed over 1,200 compensation projects.",
-  },
-  {
-    name: "Michelle Brown",
-    photo: "/images/team/michelle-brown.jpg",
-    role: "Advisor",
-    linkedin: "https://www.linkedin.com/in/michelle-brown-04314590",
-    bio: "Michelle is CFO of Contrary Capital with nearly 15 years in financial services. She has scaled finance and operations at venture capital and private equity firms including Astira Capital Partners and General Catalyst.",
-  },
-  {
-    name: "Kristine Tech",
-    photo: "/images/team/kristine-tech.jpg",
-    role: "Advisor",
-    linkedin: "https://www.linkedin.com/in/kristine-tech/",
-    bio: "Kristine has over 20 years of accounting experience and deep knowledge of long-term incentive programs. She spent 12+ years at the Carlyle Group on carried interest transactions and reporting.",
-  },
-  {
-    name: "Leonard Speiser",
-    photo: "/images/team/leonard-speiser.jpg",
-    role: "Advisor",
-    linkedin: "https://www.linkedin.com/in/leonardspeiser",
-    bio: "Leonard founded Clover, which processes over $230B a year, and has worked at Intuit, eBay, Yahoo! and Credit Suisse First Boston. He also founded the Corporate Venture Studio model.",
-  },
-  {
-    name: "Ronnie Mongan",
-    photo: "/images/team/ronnie-mongan.jpg",
-    role: "Operating Advisor",
-    linkedin: "https://www.linkedin.com/in/ronnie-mongan",
-    bio: "Ronnie has 20+ years in fintech across product operations and customer success, leading operations scaling and technology integration teams at Fiserv and Clover.",
-  },
-];
 
 const investors = [
   { name: "JLL Spark", src: "/images/logos/jll-spark.png", width: 240, height: 53, className: "w-[140px]" },
@@ -151,23 +88,19 @@ export default function AboutPage() {
               <span aria-hidden="true" className="block size-2 bg-orange" />
               Our team
             </h2>
-            <p className="mt-6 text-[15px] leading-[25px] text-body">
-              Our team of financial services and technology professionals launched Navable as a
-              purpose-built, end-to-end digital platform for employee co-investment, carried
-              interest and compensation.
-            </p>
+            <p className="mt-6 text-[15px] leading-[25px] text-body">{TEAM_INTRO}</p>
           </div>
         </div>
       </Section>
 
-      {/* Founding Team */}
-      <Section label="Team" labelledBy="founding-team-heading">
+      {/* Leadership */}
+      <Section label="Team" labelledBy="leadership-heading">
         <div className="border-b border-line px-6 py-12 text-center lg:py-[72px]">
           <h2
-            id="founding-team-heading"
+            id="leadership-heading"
             className="text-[28px] font-semibold leading-[1.25] text-ink lg:text-[40px] lg:leading-[50px]"
           >
-            Founding Team
+            {LEADERSHIP_HEADING}
           </h2>
         </div>
         <ul className="grid md:grid-cols-2">
@@ -194,6 +127,37 @@ export default function AboutPage() {
             </li>
           ))}
         </ul>
+      </Section>
+
+      {/* Where the team has worked */}
+      <Section labelledBy="team-experience-heading">
+        <div className="grid lg:grid-cols-[393px_1fr]">
+          <div className="flex items-center px-6 py-10 lg:px-12 lg:py-0">
+            <h2 id="team-experience-heading" className="text-[22px] font-medium leading-7 text-ink">
+              {TEAM_EXPERIENCE_LABEL}
+            </h2>
+          </div>
+          <ul
+            aria-label="Firms where our team has worked"
+            className="grid grid-cols-2 gap-px border-t border-line bg-line sm:grid-cols-3 lg:border-l lg:border-t-0"
+          >
+            {teamExperienceLogos.map((logo) => (
+              <li
+                key={logo.name}
+                className="flex min-h-[104px] items-center justify-center bg-white px-4 py-7 lg:min-h-[120px]"
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.name}
+                  width={logo.width}
+                  height={logo.height}
+                  className={`h-auto max-w-full grayscale ${logo.className}`}
+                  unoptimized
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
       </Section>
 
       {/* Advisors */}
